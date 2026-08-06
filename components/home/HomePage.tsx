@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useRef } from 'react';
 import { asset } from '@/lib/asset';
 import { orderingSteps, products, programs } from '@/lib/catalog';
 import Reveal from '@/components/Reveal';
@@ -9,6 +10,14 @@ import StatBand from './StatBand';
 
 export default function HomePage() {
   const featured = products.slice(0, 4);
+  const vialVideo = useRef<HTMLVideoElement>(null);
+
+  // Autoplaying motion nobody asked for — hold on the poster frame instead.
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      vialVideo.current?.pause();
+    }
+  }, []);
 
   return (
     <div className="flex flex-col">
@@ -129,20 +138,30 @@ export default function HomePage() {
             </Reveal>
 
             <Reveal delay={200} className="relative pb-[26px] pt-[30px]">
-              <div
-                className="relative mr-14 h-[588px] overflow-hidden rounded-[14px]"
-                style={{ background: 'repeating-linear-gradient(135deg,#C6CEDB 0 14px,#BAC3D1 14px 28px)' }}
-              >
-                <span className="ph-caption absolute bottom-5 left-5">
-                  clinic portrait — provider in practice · pending art direction
-                </span>
-              </div>
-              <div className="absolute bottom-0 right-0 flex h-[336px] w-[296px] flex-col justify-end gap-3.5 rounded-[14px] border border-line bg-surface-alt p-[22px] shadow-floating">
-                <div
-                  className="flex-1 rounded-lg"
-                  style={{ background: 'repeating-linear-gradient(135deg,#DDE2EA 0 12px,#D3D9E3 12px 24px)' }}
+              <div className="relative mr-14 h-[588px] overflow-hidden rounded-[14px]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={asset('assets/home-clinic-portrait.jpg')}
+                  alt="Provider at a desk speaking with a representative"
+                  className="absolute inset-0 h-full w-full object-cover"
                 />
-                <span className="font-mono text-meta-xs text-muted">vial detail shot</span>
+              </div>
+              <div className="absolute bottom-0 right-0 flex h-[336px] w-[296px] flex-col rounded-[14px] border border-line bg-surface-alt p-[22px] shadow-floating">
+                {/* multiply drops the clip's white ground into the card, so the
+                    vial reads as sitting on the panel rather than in a box. */}
+                <video
+                  ref={vialVideo}
+                  className="h-full w-full rounded-lg object-cover mix-blend-multiply"
+                  poster={asset('assets/nad-round-poster.jpg')}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  aria-label="NAD+ sterile vial, rotating"
+                >
+                  <source src={asset('assets/nad-round.mp4')} type="video/mp4" />
+                </video>
               </div>
               {/* Rotating textPath marquee around the ℞ glyph */}
               <div className="absolute right-[22px] top-0 z-[2] flex h-[142px] w-[142px] items-center justify-center rounded-full border border-[#D6DDEF] bg-brand-tint shadow-[0_16px_36px_rgba(20,37,63,0.14)]">
