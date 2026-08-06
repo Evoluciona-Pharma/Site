@@ -28,10 +28,10 @@ const SLIDE_ART: SlideArt[] = [
   },
 ];
 
-/** Replaces the striped dark panel that used to sit behind the right-aligned
-    headline — real footage needs a floor for the white type. */
+/** Real footage needs a floor for the white type. Weighted to the left, where
+    the headline sits. */
 const MEDIA_SCRIM =
-  'linear-gradient(90deg, rgba(20,37,63,0.20) 0%, rgba(20,37,63,0.52) 42%, rgba(20,37,63,0.72) 100%)';
+  'linear-gradient(90deg, rgba(20,37,63,0.74) 0%, rgba(20,37,63,0.54) 46%, rgba(20,37,63,0.22) 100%)';
 
 const N = homeHeroSlides.length;
 
@@ -89,7 +89,7 @@ export default function HeroCarousel() {
               <>
                 <div className="absolute inset-0" style={{ background: art.bg }} />
                 <div
-                  className="absolute bottom-0 right-0 top-0"
+                  className="absolute bottom-0 left-0 top-0"
                   style={{ width: art.panelWidth, background: art.panelBg }}
                 />
                 <span className="ph-caption absolute bottom-12 left-6">{s.placeholder}</span>
@@ -121,9 +121,11 @@ export default function HeroCarousel() {
                 <div className="absolute inset-0" style={{ background: MEDIA_SCRIM }} />
               </>
             )}
-            <div className="absolute left-0 right-0 top-[200px] flex flex-col items-end gap-6 pr-16">
+            <div className="absolute left-0 right-0 top-[200px] flex flex-col items-start gap-6 pl-14">
               <div className="flex w-[820px] flex-col gap-3.5 [text-shadow:0_2px_24px_rgba(10,20,38,0.3)]">
-                <h2 className="text-[82px] leading-[1.02] text-white">
+                {/* Departs from the Instrument Serif 400 heading rule: the brief
+                    asked for weight here, and Serif ships only at 400. */}
+                <h2 className="font-sans text-[82px] font-bold leading-[0.98] tracking-[-0.025em] text-white">
                   {s.headline} <em>{s.headlineEm}</em>
                 </h2>
               </div>
