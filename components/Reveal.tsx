@@ -9,12 +9,14 @@ type RevealProps = {
   className?: string;
   as?: keyof React.JSX.IntrinsicElements;
   style?: React.CSSProperties;
+  /** Anchor target, so a revealed section can be linked to or identified. */
+  id?: string;
 };
 
 /** Scroll reveal per README §7: fade-up 26px over 700ms, IntersectionObserver at
     threshold 0.08 with -8% bottom rootMargin, unobserve after firing, plus the
     2s failsafe that force-reveals anything still hidden. */
-export default function Reveal({ children, delay = 0, className = '', as = 'div', style }: RevealProps) {
+export default function Reveal({ children, delay = 0, className = '', as = 'div', style, id }: RevealProps) {
   const ref = useRef<HTMLElement>(null);
   const [shown, setShown] = useState(false);
 
@@ -48,6 +50,7 @@ export default function Reveal({ children, delay = 0, className = '', as = 'div'
     as,
     {
       ref,
+      id,
       className: `${className} ${shown ? 'reveal-in' : 'reveal-init'}`.trim(),
       style: { ...style, transitionDelay: delay ? `${delay}ms` : undefined },
     },

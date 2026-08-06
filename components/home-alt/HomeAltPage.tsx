@@ -248,48 +248,30 @@ export default function HomeAltPage({
         </div>
       </Reveal>
 
-      {/* 5 · Editorial */}
-      <Reveal
-        as="section"
-        className="grid grid-cols-[520px_1fr] items-start gap-16 bg-white px-14 py-20"
-      >
-        <div className="flex h-[520px] items-center justify-center rounded-[20px] bg-[#F1F3F8] p-10">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={asset(editorial.image)}
-            alt={`${editorial.name} sterile vial`}
-            className="h-full w-full object-contain mix-blend-multiply"
-          />
-        </div>
-        <div className="flex flex-col gap-5 pt-2">
-          <span className="font-mono text-meta-xs uppercase tracking-[0.22em] text-brand">
-            Why providers order here
-          </span>
-          <h2 className="text-[52px] leading-[1.05] text-navy">A pharmacy that answers the phone.</h2>
-          <p className="text-[16.5px] leading-7 text-ink-600">
-            Every request is read by the pharmacy team before anything is prepared. A representative
-            confirms the formulation, the presentation, and the prescriber on file — so questions are
-            answered by the people who compound the preparation, not a queue.
-          </p>
-          <p className="text-[16.5px] leading-7 text-ink-600">
-            That is also why there is no checkout button. Ordering is gated on license verification
-            and a patient-specific prescription, so the list you build here starts a conversation
-            rather than a transaction. No pricing appears online at any point.
-          </p>
-          <div className="mt-4 flex gap-12">
-            <div className="flex flex-col gap-1">
-              <CountUp value={products.length} className="font-display text-[46px] leading-none text-navy" />
-              <span className="text-[13px] text-muted">Formulations</span>
-            </div>
-            <div className="flex flex-col gap-1">
-              <CountUp value={programs.length} className="font-display text-[46px] leading-none text-navy" />
-              <span className="text-[13px] text-muted">Clinical programs</span>
-            </div>
-            <div className="flex flex-col gap-1">
-              <span className="font-display text-[46px] leading-none text-navy">1:1</span>
-              <span className="text-[13px] text-muted">Representative support</span>
-            </div>
-          </div>
+      {/* 5 · Program grid */}
+      <Reveal as="section" id="programs" className="bg-surface-alt px-14 py-16">
+        <div className="grid grid-cols-3 gap-5">
+          {programs.map((g) => (
+            <Link
+              key={g.slug}
+              href={`/shop?program=${g.slug}`}
+              className="flex items-center gap-4 rounded-2xl border border-line bg-white p-4 no-underline transition-all duration-[250ms] hover:-translate-y-[3px] hover:border-line-strongest hover:shadow-programHover"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={asset(g.cardImage)}
+                alt={`${g.label} formulations`}
+                className="h-[72px] w-[72px] shrink-0 rounded-xl border border-line bg-white object-cover"
+              />
+              <div className="flex flex-1 flex-col gap-1">
+                <span className="font-display text-[21px] leading-[1.1] text-navy">{g.label}</span>
+                <span className="text-[13px] text-muted-2">{g.count} formulations</span>
+              </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#14258F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+                <path d="M5 12 L19 12 M13 6 L19 12 L13 18" />
+              </svg>
+            </Link>
+          ))}
         </div>
       </Reveal>
 
@@ -373,30 +355,48 @@ export default function HomeAltPage({
         </div>
       </Reveal>
 
-      {/* 8 · Program grid */}
-      <Reveal as="section" className="bg-surface-alt px-14 py-16">
-        <div className="grid grid-cols-3 gap-5">
-          {programs.map((g) => (
-            <Link
-              key={g.slug}
-              href={`/shop?program=${g.slug}`}
-              className="flex items-center gap-4 rounded-2xl border border-line bg-white p-4 no-underline transition-all duration-[250ms] hover:-translate-y-[3px] hover:border-line-strongest hover:shadow-programHover"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={asset(g.cardImage)}
-                alt={`${g.label} formulations`}
-                className="h-[72px] w-[72px] shrink-0 rounded-xl border border-line bg-white object-cover"
-              />
-              <div className="flex flex-1 flex-col gap-1">
-                <span className="font-display text-[21px] leading-[1.1] text-navy">{g.label}</span>
-                <span className="text-[13px] text-muted-2">{g.count} formulations</span>
-              </div>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#14258F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
-                <path d="M5 12 L19 12 M13 6 L19 12 L13 18" />
-              </svg>
-            </Link>
-          ))}
+      {/* 8 · Editorial */}
+      <Reveal
+        as="section"
+        className="grid grid-cols-[520px_1fr] items-start gap-16 bg-white px-14 py-20"
+      >
+        <div className="flex h-[520px] items-center justify-center rounded-[20px] bg-[#F1F3F8] p-10">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={asset(editorial.image)}
+            alt={`${editorial.name} sterile vial`}
+            className="h-full w-full object-contain mix-blend-multiply"
+          />
+        </div>
+        <div className="flex flex-col gap-5 pt-2">
+          <span className="font-mono text-meta-xs uppercase tracking-[0.22em] text-brand">
+            Why providers order here
+          </span>
+          <h2 className="text-[52px] leading-[1.05] text-navy">A pharmacy that answers the phone.</h2>
+          <p className="text-[16.5px] leading-7 text-ink-600">
+            Every request is read by the pharmacy team before anything is prepared. A representative
+            confirms the formulation, the presentation, and the prescriber on file — so questions are
+            answered by the people who compound the preparation, not a queue.
+          </p>
+          <p className="text-[16.5px] leading-7 text-ink-600">
+            That is also why there is no checkout button. Ordering is gated on license verification
+            and a patient-specific prescription, so the list you build here starts a conversation
+            rather than a transaction. No pricing appears online at any point.
+          </p>
+          <div className="mt-4 flex gap-12">
+            <div className="flex flex-col gap-1">
+              <CountUp value={products.length} className="font-display text-[46px] leading-none text-navy" />
+              <span className="text-[13px] text-muted">Formulations</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              <CountUp value={programs.length} className="font-display text-[46px] leading-none text-navy" />
+              <span className="text-[13px] text-muted">Clinical programs</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="font-display text-[46px] leading-none text-navy">1:1</span>
+              <span className="text-[13px] text-muted">Representative support</span>
+            </div>
+          </div>
         </div>
       </Reveal>
 
