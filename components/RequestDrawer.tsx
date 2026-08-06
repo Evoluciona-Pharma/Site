@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect } from 'react';
+import { asset } from '@/lib/asset';
 import { compliance, productByName } from '@/lib/catalog';
 import { useRequestList } from './RequestListContext';
 
@@ -49,7 +50,7 @@ export default function RequestDrawer() {
               <div key={it.name} className="flex items-center gap-3.5 border-b border-line-soft py-[18px]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={product ? `/${product.image}` : '/assets/vials/nad.jpg'}
+                  src={asset(product ? product.image : 'assets/vials/nad.jpg')}
                   alt={`${it.name} sterile vial`}
                   className="h-16 w-16 shrink-0 rounded-[10px] border border-line bg-white object-cover"
                 />

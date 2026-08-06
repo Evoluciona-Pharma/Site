@@ -24,9 +24,10 @@ which remains the design source of truth.
 
 ```bash
 npm install
-npm run dev     # development server on :3000
-npm run build   # production build (all routes prerender)
-npm run start   # serve the production build
+npm run dev          # development server on :3000
+npm run build        # production build (all routes prerender)
+npm run start        # serve the production build
+npm run build:pages  # static export to out/ (GitHub Pages)
 ```
 
 ## Project structure
@@ -94,9 +95,29 @@ These are deliberate and carried from the legally-reviewed handoff (§10):
 
 ## Deployment
 
-The build is fully static, so any Node host or static-capable platform works. Vercel is the
-zero-config path:
+### GitHub Pages (current)
+
+`.github/workflows/pages.yml` builds a static export and publishes it on every push to `main`.
+Live at **https://evoluciona-pharma.github.io/Site/**.
+
+Pages serves the site from a subdirectory, which the workflow handles by setting
+`NEXT_PUBLIC_BASE_PATH=/Site`. Two consequences worth knowing:
+
+- Raw `<img src>` does not get `basePath` prefixed by Next, so **every public-asset path must go
+  through `asset()` in `lib/asset.ts`** — a hardcoded `/assets/...` will 404 in production while
+  working fine locally.
+- The export uses `trailingSlash: true` so each route emits `<route>/index.html`; without it Pages
+  404s on deep links.
+
+To preview the Pages build exactly as it will be served:
 
 ```bash
-npx vercel --prod
+NEXT_PUBLIC_BASE_PATH=/Site npm run build:pages
+mkdir -p /tmp/pages/Site && cp -R out/* /tmp/pages/Site/
+cd /tmp/pages && python3 -m http.server 4321   # → http://localhost:4321/Site/
 ```
+
+### Other hosts
+
+The build is fully static, so any Node host or static platform works. For Vercel (the CLI is a
+dev dependency), `npx vercel --prod` — no base path needed there, since it serves from the root.

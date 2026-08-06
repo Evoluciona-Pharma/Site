@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { asset } from '@/lib/asset';
 import { orderingSteps, products, programs } from '@/lib/catalog';
 import Reveal from '@/components/Reveal';
 import { useRequestList } from '@/components/RequestListContext';
@@ -37,7 +38,7 @@ export default function HomePage() {
                 <div className="group relative h-[220px] overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={`/${p.image}`}
+                    src={asset(p.image)}
                     alt={`${p.name} sterile vial`}
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-[400ms] group-hover:scale-105"
                   />
@@ -84,7 +85,7 @@ export default function HomePage() {
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={`/${g.cardImage}`}
+                  src={asset(g.cardImage)}
                   alt={`${g.label} formulations`}
                   className="h-[76px] w-[76px] shrink-0 rounded-xl border border-line bg-white object-cover"
                 />

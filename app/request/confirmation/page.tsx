@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { asset } from '@/lib/asset';
 import { confirmationSteps, productByName } from '@/lib/catalog';
 import Reveal from '@/components/Reveal';
 import { useWizard } from '@/components/request/RequestWizardContext';
@@ -35,7 +36,7 @@ export default function ConfirmationPage() {
                 <div key={it.name} className="flex items-center gap-3 border-t border-line-softest py-[13px]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={product ? `/${product.image}` : '/assets/vials/nad.jpg'}
+                    src={asset(product ? product.image : 'assets/vials/nad.jpg')}
                     alt={`${it.name} sterile vial`}
                     className="h-[54px] w-[54px] shrink-0 rounded-[10px] border border-line bg-white object-cover"
                   />

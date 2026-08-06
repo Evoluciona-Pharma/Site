@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { asset } from '@/lib/asset';
 import { productByName } from '@/lib/catalog';
 import { useRequestList } from '@/components/RequestListContext';
 
@@ -27,7 +28,7 @@ export default function RequestSummaryRail({ full }: { full: boolean }) {
           <div key={it.name} className="flex items-center gap-3 border-t border-line-softest py-[13px]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={product ? `/${product.image}` : '/assets/vials/nad.jpg'}
+              src={asset(product ? product.image : 'assets/vials/nad.jpg')}
               alt={`${it.name} sterile vial`}
               className="h-[54px] w-[54px] shrink-0 rounded-[10px] border border-line bg-white object-cover"
             />

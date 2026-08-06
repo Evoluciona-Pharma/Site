@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { asset } from '@/lib/asset';
 import {
   alsoReview,
   compliance,
@@ -82,7 +83,7 @@ export default function ProductPage({ product }: { product: Product }) {
             {imgIndex === 0 ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src={`/${product.image}`}
+                src={asset(product.image)}
                 alt={`${product.name} sterile vial`}
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-[ease] group-hover:scale-[1.06]"
               />
@@ -111,7 +112,7 @@ export default function ProductPage({ product }: { product: Product }) {
               >
                 {i === 0 ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={`/${product.image}`} alt={`${product.name} vial`} className="h-full w-full object-cover" />
+                  <img src={asset(product.image)} alt={`${product.name} vial`} className="h-full w-full object-cover" />
                 ) : (
                   <span className="font-mono text-[9px] text-muted-2">0{i + 1}</span>
                 )}
@@ -225,7 +226,7 @@ export default function ProductPage({ product }: { product: Product }) {
               <div className="flex items-center gap-3.5 rounded-[14px] border border-line px-3.5 py-3">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={`/${pair.image}`}
+                  src={asset(pair.image)}
                   alt={`${pair.name} sterile vial`}
                   className="h-14 w-14 shrink-0 rounded-[10px] border border-line bg-white object-cover"
                 />
@@ -287,7 +288,7 @@ export default function ProductPage({ product }: { product: Product }) {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={`/${r.image}`}
+                src={asset(r.image)}
                 alt={`${r.name} sterile vial`}
                 className="h-40 w-full border-b border-line-soft bg-white object-cover"
               />
@@ -304,7 +305,7 @@ export default function ProductPage({ product }: { product: Product }) {
       <div className="absolute inset-x-0 bottom-0 z-10 flex items-center gap-4 border-t border-line bg-white px-14 py-3 shadow-stickyBar">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={`/${product.image}`}
+          src={asset(product.image)}
           alt={`${product.name} sterile vial`}
           className="h-[46px] w-[46px] shrink-0 rounded-[10px] border border-line bg-white object-cover"
         />

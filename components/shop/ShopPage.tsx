@@ -13,6 +13,7 @@ import {
   shopHeroAll,
   sortOptions,
 } from '@/lib/catalog';
+import { asset } from '@/lib/asset';
 import { filterProducts, SortId, sortProducts } from '@/lib/search';
 import Reveal from '@/components/Reveal';
 import { useRequestList } from '@/components/RequestListContext';
@@ -310,7 +311,7 @@ export default function ShopPage() {
                   <div className="group relative h-[300px] overflow-hidden rounded-[20px] border border-line bg-white">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={`/${p.image}`}
+                      src={asset(p.image)}
                       alt={`${p.name} sterile vial`}
                       className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-reveal group-hover:scale-105"
                     />

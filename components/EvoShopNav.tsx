@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
+import { asset } from '@/lib/asset';
 import { compliance, popularSearches, products, programs } from '@/lib/catalog';
 import { navSearch, SearchHit } from '@/lib/search';
 import { useRequestList } from './RequestListContext';
@@ -27,7 +28,7 @@ function toCard(hit: SearchHit): ResultCard {
       name: p.name,
       meta: p.spec.replace(/^Sterile vial · /, ''),
       badge: p.badge ?? '',
-      img: `/${p.image}`,
+      img: asset(p.image),
       isProgram: false,
       href: `/products/${p.slug}`,
     };
@@ -180,7 +181,7 @@ export default function EvoShopNav() {
       <div className="flex h-[76px] items-center justify-between gap-8 border-b border-line px-10">
         <Link href="/" className="flex shrink-0 items-center gap-2.5 no-underline">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/brand/evoluciona-logo.png" alt="Evoluciona Pharma" className="block h-[30px] w-auto shrink-0" />
+          <img src={asset('assets/brand/evoluciona-logo.png')} alt="Evoluciona Pharma" className="block h-[30px] w-auto shrink-0" />
         </Link>
 
         <nav className="flex items-center gap-8">

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { asset } from '@/lib/asset';
 import { compliance } from '@/lib/catalog';
 
 const colHeading = 'font-sans text-xs font-semibold tracking-[0.1em] text-footer-label';
@@ -38,7 +39,7 @@ export default function EvoShopFooter() {
       <div className="flex items-start justify-between gap-12">
         <div className="flex max-w-[300px] flex-col gap-3.5">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/brand/evoluciona-logo-white.svg" alt="Evoluciona Pharma" className="block h-[34px] w-auto shrink-0 self-start" />
+          <img src={asset('assets/brand/evoluciona-logo-white.svg')} alt="Evoluciona Pharma" className="block h-[34px] w-auto shrink-0 self-start" />
           <p className="font-sans text-[13px] leading-5 text-footer-text">{compliance.footerBlurb}</p>
           <div className="flex flex-wrap gap-2 pt-1">
             <span className="rounded-full border border-footer-chip px-[11px] py-[5px] font-sans text-meta-xs font-medium text-onDark">
