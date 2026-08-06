@@ -4,12 +4,10 @@ import Link from 'next/link';
 import { asset } from '@/lib/asset';
 import { orderingSteps, products, programs } from '@/lib/catalog';
 import Reveal from '@/components/Reveal';
-import { useRequestList } from '@/components/RequestListContext';
 import HeroCarousel from './HeroCarousel';
 import StatBand from './StatBand';
 
 export default function HomePage() {
-  const { add } = useRequestList();
   const featured = products.slice(0, 4);
 
   return (
@@ -18,11 +16,11 @@ export default function HomePage() {
 
       {/* Content sheet — lifts over the sticky hero (README §6.4) */}
       <div className="relative z-[2] -mt-8 flex flex-col overflow-hidden rounded-t-[28px] bg-white shadow-overlap">
-        {/* Featured formulations */}
+        {/* Featured products */}
         <Reveal className="flex flex-col gap-7 px-14 pb-[60px] pt-11">
           <div className="flex items-end justify-between gap-6">
             <div className="flex flex-col gap-1.5">
-              <h3 className="text-[40px] leading-none text-navy">Featured formulations</h3>
+              <h3 className="text-[40px] leading-none text-navy">Featured Products</h3>
               <span className="text-sm text-muted">Sterile compounded vials, photographed as supplied.</span>
             </div>
             <Link href="/shop" className="text-sm font-semibold no-underline">
@@ -56,16 +54,12 @@ export default function HomePage() {
                     {p.name}
                   </Link>
                   <span className="flex-1 text-[13px] leading-[19px] text-muted">{p.spec}</span>
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      add({ name: p.name, program: p.program, presentation: p.defaultPresentation });
-                    }}
-                    className="relative z-10 mt-1.5 h-11 w-full cursor-pointer rounded-full border-none bg-brand font-sans text-[13px] font-semibold text-white hover:bg-brand-hover"
+                  <Link
+                    href={`/products/${p.slug}`}
+                    className="relative z-10 mt-1.5 flex h-11 w-full items-center justify-center rounded-full bg-brand font-sans text-[13px] font-semibold text-white no-underline hover:bg-brand-hover hover:text-white"
                   >
-                    Add to Request List
-                  </button>
+                    Product Details
+                  </Link>
                 </div>
               </div>
             ))}
