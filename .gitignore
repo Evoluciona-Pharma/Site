@@ -17,3 +17,6 @@ next-env.d.ts
 
 # design handoff archive (extracted copy is committed)
 *.zip
+
+# Raw step photography (optimised copies live in public/assets/steps/)
+/design-sources/

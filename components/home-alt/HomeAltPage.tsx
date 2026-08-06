@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useRef } from 'react';
 import { asset } from '@/lib/asset';
-import { orderingSteps, productBySlug, products, programs } from '@/lib/catalog';
+import { productBySlug, products, programs } from '@/lib/catalog';
 import Reveal from '@/components/Reveal';
 import { useRequestList } from '@/components/RequestListContext';
 import CountUp from './CountUp';
@@ -14,6 +14,70 @@ const STRIPES = 'repeating-linear-gradient(115deg,#9BA6B6 0 14px,#8A96A9 14px 28
 
 /** Hairline between adjacent brand-blue bands, so they don't merge into one slab. */
 const BAND_RULE = 'border-t border-[rgba(255,255,255,0.16)]';
+
+/** Photography is matched to step meaning, not filename order. */
+const STEPS = [
+  {
+    number: '01',
+    image: 'assets/steps/step-01-verify.jpg',
+    alt: 'Provider standing in a clinic wearing an identification badge',
+    cadence: 'one-time',
+    title: 'Verify your license',
+    summary:
+      'Verification of your license or NPI happens once. Browsing stays open to everyone — ordering unlocks after the pharmacy team clears your practice.',
+    bullets: [
+      'State license number or NPI for the prescribing provider',
+      'DEA registration, where the formulation requires it',
+      'Practice name and the shipping address orders go to',
+      'Reviewed by the pharmacy team, not an automated check',
+    ],
+  },
+  {
+    number: '02',
+    image: 'assets/steps/step-02-request-list.jpg',
+    alt: 'Provider at a desk building a request list on a tablet',
+    cadence: 'each order',
+    title: 'Build a request list',
+    summary:
+      'Shop the catalog the way you would a store. The list carries into the request form — no pricing is shown anywhere online.',
+    bullets: [
+      'Add formulations from any product page or the catalog rail',
+      'Choose the presentation per line where more than one exists',
+      'Edit or remove items right up until you submit',
+      'Intended quantity or patient count for each formulation',
+    ],
+  },
+  {
+    number: '03',
+    image: 'assets/steps/step-03-representative.jpg',
+    alt: 'Provider on the phone with a representative at a desk',
+    cadence: 'each order',
+    title: 'Consult a representative',
+    summary:
+      'A representative follows up on the request with program details and answers formulation questions before anything is prepared.',
+    bullets: [
+      'Program structure and pricing are shared directly, one to one',
+      'Presentation or concentration questions answered by the pharmacy',
+      'Any value still marked pending is confirmed before it is prepared',
+      'A phone number and the best window to reach you',
+    ],
+  },
+  {
+    number: '04',
+    image: 'assets/steps/step-04-compounded.jpg',
+    alt: 'Gowned pharmacy technician inspecting sterile vials',
+    cadence: 'each order',
+    title: 'Prescribed and shipped',
+    summary:
+      'Each medication is compounded against a single prescription, labelled for that patient, and shipped to the practice that ordered it.',
+    bullets: [
+      'A valid patient-specific prescription for each named patient',
+      'Compounding begins only after the prescription is received',
+      'Labelled for the named patient, not for stock',
+      'Shipped direct to the practice address on file',
+    ],
+  },
+];
 
 const SPEC_STRIP = [
   { label: 'Patient-specific', sub: 'Every preparation is compounded against a single prescription.' },
@@ -206,32 +270,57 @@ export default function HomeAltPage({
         </div>
       </Reveal>
 
-      {/* 6 · Four steps */}
-      <Reveal as="section" className="bg-brand px-14 py-16">
-        <div className="flex items-end justify-between gap-8 pb-12">
-          <h2 className="text-[52px] leading-[1.05] text-white">
-            Four steps from
-            <br />
-            verification to delivery.
-          </h2>
+      {/* 6 · How ordering works — photography carries the section */}
+      <Reveal as="section" className="flex flex-col gap-11 bg-brand px-14 pb-24 pt-[88px]">
+        <div className="flex items-end justify-between gap-12">
+          <div className="flex max-w-[620px] flex-col gap-4">
+            <span className="font-mono text-meta-xs uppercase tracking-[0.22em] text-[#A9B6E8]">
+              How ordering works
+            </span>
+            <h2 className="text-[60px] leading-none text-white">
+              Four steps from
+              <br />
+              <em className="text-[#A9B6E8]">verification to delivery.</em>
+            </h2>
+            <p className="text-base leading-[26px] text-[#C5CEF0]">
+              Verification happens once. Everything after it repeats per order, and every stage is
+              reviewed by a person before anything is compounded.
+            </p>
+          </div>
           <Link
             href="/request/contact"
-            className="inline-flex h-[52px] shrink-0 items-center rounded-full bg-white px-8 font-sans text-[15px] font-semibold text-brand no-underline hover:bg-[#EEF1FA] hover:text-brand"
+            className="inline-flex h-[52px] shrink-0 items-center rounded-full bg-white px-[30px] font-sans text-[15px] font-semibold text-brand no-underline hover:bg-[#E6EAFA] hover:text-brand"
           >
             Start verification
           </Link>
         </div>
-        <div className="grid grid-cols-4">
-          {orderingSteps.map((s, i) => (
-            <div
-              key={s.step}
-              className={`flex flex-col gap-3 ${i > 0 ? 'border-l border-[rgba(255,255,255,0.24)] pl-8' : 'pr-8'}`}
-            >
-              <span className="font-mono text-xs tracking-[0.12em] text-[#A9B6E8]">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <h3 className="text-[30px] leading-[1.1] text-white">{s.title}</h3>
-              <p className="text-step text-[#C5CEF0]">{s.body}</p>
+
+        <div className="grid grid-cols-2 gap-x-11 gap-y-[52px]">
+          {STEPS.map((s) => (
+            <div key={s.number} className="flex flex-col gap-5">
+              <div className="relative h-[340px] overflow-hidden rounded-[18px] bg-[#1B2F4E]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={asset(s.image)} alt={s.alt} className="absolute inset-0 h-full w-full object-cover" />
+                <span className="absolute left-5 top-5 flex h-16 w-16 items-center justify-center rounded-full bg-white font-display text-[30px] text-brand shadow-[0_8px_22px_rgba(10,20,38,0.28)]">
+                  {s.number}
+                </span>
+                <span className="absolute bottom-[18px] right-[18px] rounded-full bg-[rgba(255,255,255,0.92)] px-[11px] py-[5px] font-mono text-[10.5px] uppercase tracking-[0.14em] text-navy">
+                  {s.cadence}
+                </span>
+              </div>
+
+              <div className="border-t border-[rgba(255,255,255,0.24)]">
+                <h3 className="mt-4 text-[34px] leading-tight text-white">{s.title}</h3>
+                <p className="mt-2 text-[15.5px] leading-[25px] text-[#C5CEF0]">{s.summary}</p>
+                <ul className="mt-4 flex list-none flex-col gap-[9px] p-0">
+                  {s.bullets.map((b) => (
+                    <li key={b} className="flex gap-3">
+                      <span className="mt-[9px] h-[5px] w-[5px] shrink-0 rounded-[1px] bg-[#A9B6E8]" />
+                      <span className="text-[14.5px] leading-[23px] text-[#C5CEF0]">{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           ))}
         </div>
