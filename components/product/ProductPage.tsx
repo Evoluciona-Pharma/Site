@@ -123,6 +123,9 @@ export default function ProductPage({ product }: { product: Product }) {
 
         {/* Details */}
         <div className="flex flex-col gap-4">
+          <Reveal as="h2" delay={80} className="text-[58px] leading-[0.98] text-navy">
+            {product.name}
+          </Reveal>
           <div className="flex flex-wrap gap-2">
             <Link
               href={catHref}
@@ -134,9 +137,6 @@ export default function ProductPage({ product }: { product: Product }) {
               Sterile
             </span>
           </div>
-          <Reveal as="h2" delay={80} className="text-[58px] leading-[0.98] text-navy">
-            {product.name}
-          </Reveal>
           <span className="text-body text-muted">{product.tagline}</span>
 
           {product.presentations.length > 0 && (
