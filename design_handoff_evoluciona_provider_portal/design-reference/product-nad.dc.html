@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { margin:0; background:#EDEFF3; font-family:'Instrument Sans',-apple-system,sans-serif; }
+    a { color:#14258F; }
+    a:hover { color:#0E1C6E; }
+    * { box-sizing:border-box; }
+  </style>
+</helmet>
+<div style="display:flex;flex-direction:column;align-items:center;min-width:max-content">
+  <div data-screen-label="Product detail" style="position:relative;width:1440px;background:#ffffff;display:flex;flex-direction:column">
+    <dc-import name="EvoShopNav" style="position:sticky;top:0;z-index:30" count="{{ listCount }}" onBag="{{ openDrawer }}" hint-size="100%,112px"></dc-import>
+    <div style="padding:22px 56px 0"><span style="font-size:13px;color:#8C93A0"><a href="index.dc.html" style="color:#8C93A0;text-decoration:none">Home</a> / <a href="{{ catHref }}" style="color:#8C93A0;text-decoration:none">{{ cat }}</a> / <span style="color:#14253F;font-weight:600">{{ name }}</span></span></div>
+    <div style="padding:24px 56px 60px;display:grid;grid-template-columns:660px 1fr;gap:52px;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div data-reveal="0" style="position:relative;height:520px;border-radius:18px;overflow:hidden;background:#ffffff;border:1px solid #E5E8ED">
+          <sc-if value="{{ mainIsPhoto }}" hint-placeholder-val="{{ true }}">
+            <img src="{{ img }}" alt="{{ imgAlt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease" style-hover="transform:scale(1.06)">
+          </sc-if>
+          <sc-if value="{{ mainIsPending }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,#EDF0F4 0 10px,#E4E9EF 10px 20px);display:flex;align-items:center;justify-content:center">
+              <span style="font-family:'Fira Code',monospace;font-size:11px;color:#8C93A0;background:rgba(255,255,255,0.92);border-radius:4px;padding:4px 8px">{{ mainShotLabel }}</span>
+            </div>
+          </sc-if>
+        </div>
+        <div style="display:flex;gap:10px">
+          <sc-for list="{{ shots }}" as="sh" hint-placeholder-count="4">
+            <div onClick="{{ sh.pick }}" style="{{ sh.style }}">
+              <sc-if value="{{ sh.photo }}" hint-placeholder-val="{{ true }}"><img src="{{ sh.img }}" alt="{{ sh.alt }}" style="width:100%;height:100%;object-fit:cover"></sc-if>
+              <sc-if value="{{ sh.pending }}" hint-placeholder-val="{{ false }}"><span style="font-family:'Fira Code',monospace;font-size:9px;color:#8C93A0">{{ sh.n }}</span></sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <a href="{{ catHref }}" style="font-size:11px;font-weight:600;color:#14258F;background:#EEF1FA;border-radius:100px;padding:5px 12px;text-decoration:none" style-hover="background:#E2E8F8">{{ cat }}</a>
+          <span style="font-size:11px;font-weight:600;color:#1B8B8A;border:1px solid #B6DEDD;border-radius:100px;padding:4px 12px">Sterile</span>
+        </div>
+        <h2 data-reveal="80" style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:58px;line-height:0.98;color:#14253F">{{ name }}</h2>
+        <span style="font-size:15px;line-height:23px;color:#6B7380">{{ tagline }}</span>
+        <sc-if value="{{ hasSizes }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <span style="font-size:13px;font-weight:600;color:#14253F">Presentation</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <sc-for list="{{ sizes }}" as="sz" hint-placeholder-count="2">
+                <span onClick="{{ sz.pick }}" style="{{ sz.style }}">{{ sz.label }}</span>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ presPending }}" hint-placeholder-val="{{ false }}">
+          <div style="background:#FFFAEF;border:1px solid #EADCB5;border-radius:10px;padding:12px 14px">
+            <span style="font-size:13px;line-height:20px;font-weight:600;color:#8A6410">Presentation pending pharmacy confirmation — source documents conflict.</span>
+          </div>
+        </sc-if>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="width:8px;height:8px;border-radius:4px;background:#1B8B8A"></span>
+          <span style="font-size:13px;font-weight:600;color:#1B8B8A">Available to request — compounded per patient-specific prescription</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <button onClick="{{ addMain }}" style="width:100%;height:52px;border:none;border-radius:100px;background:#14258F;color:#ffffff;font-family:'Instrument Sans',sans-serif;font-size:15px;font-weight:600;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#0E1C6E">Add to Request List</button>
+          <a href="request-contact.dc.html" style="width:100%;height:50px;border:1px solid #C9D0DA;border-radius:100px;background:#ffffff;color:#14253F;font-family:'Instrument Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;text-decoration:none" style-hover="border-color:#14258F;color:#14258F">Contact a representative</a>
+        </div>
+        <p style="margin:0;font-size:15px;line-height:24px;color:#4A5568;text-wrap:pretty">{{ blurb }}</p>
+        <div style="background:#FFFAEF;border:1px solid #EADCB5;border-radius:10px;padding:12px 14px">
+          <span style="font-size:13px;line-height:20px;font-weight:600;color:#8A6410">Available to verified licensed providers through a patient-specific prescription. No pricing online.</span>
+        </div>
+        <div style="display:flex;flex-direction:column;border-bottom:1px solid #EEF0F4">
+          <sc-for list="{{ sections }}" as="s" hint-placeholder-count="4">
+            <div style="display:flex;flex-direction:column;border-top:1px solid #EEF0F4">
+              <div onClick="{{ s.toggle }}" style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px 2px;cursor:pointer">
+                <span style="font-size:15px;font-weight:600;color:#14253F">{{ s.title }}</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8C93A0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="{{ s.chev }}"><path d="M6 9 L12 15 L18 9"></path></svg>
+              </div>
+              <sc-if value="{{ s.open }}" hint-placeholder-val="{{ false }}">
+                <p style="margin:0 0 16px;font-size:13.5px;line-height:21px;color:#6B7380;text-wrap:pretty">{{ s.body }}</p>
+                <sc-if value="{{ s.href }}" hint-placeholder-val="{{ false }}">
+                  <a href="{{ s.href }}" style="margin:-8px 0 16px;font-size:13px;font-weight:600;text-decoration:none">{{ s.linkLabel }}</a>
+                </sc-if>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ showPair }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-size:13px;font-weight:600;color:#14253F">Frequently requested together</span>
+            <div style="display:flex;align-items:center;gap:14px;border:1px solid #E5E8ED;border-radius:14px;padding:12px 14px">
+              <img src="{{ pairImg }}" alt="{{ pairAlt }}" style="width:56px;height:56px;border-radius:10px;object-fit:cover;background:#ffffff;border:1px solid #E5E8ED;flex-shrink:0">
+              <div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0">
+                <a href="{{ pairHref }}" style="font-family:'Instrument Serif',serif;font-size:19px;line-height:1.1;color:#14253F;text-decoration:none" style-hover="color:#14258F">{{ pairName }}</a>
+                <span style="font-size:12.5px;color:#8C93A0">{{ pairSpec }}</span>
+              </div>
+              <button onClick="{{ addPair }}" style="height:38px;padding:0 20px;border:1px solid #14258F;border-radius:100px;background:#ffffff;color:#14258F;font-family:'Instrument Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s ease" style-hover="background:#14258F;color:#ffffff">Add</button>
+            </div>
+          </div>
+        </sc-if>
+        <div style="display:flex;gap:20px;padding-top:2px">
+          <span style="flex:1;font-size:12.5px;line-height:18px;color:#6B7380"><strong style="color:#14253F">Sterile compounding</strong><br>prepared per prescription</span>
+          <span style="flex:1;font-size:12.5px;line-height:18px;color:#6B7380"><strong style="color:#14253F">Patient-specific Rx</strong><br>licensed providers only</span>
+          <span style="flex:1;font-size:12.5px;line-height:18px;color:#6B7380"><strong style="color:#14253F">Practice shipping</strong><br>fulfilled to your practice</span>
+        </div>
+      </div>
+    </div>
+    <div style="margin:0 56px;background:#F5F7FA;border:1px solid #E1E5EB;border-radius:10px;padding:16px 20px">
+      <p style="margin:0;font-size:13px;line-height:21px;color:#5C6879;text-wrap:pretty">Product information is intended for licensed provider education and program support only. Evoluciona Pharma prepares compounded medications pursuant to patient-specific prescriptions from licensed healthcare providers. Product information is not intended to diagnose, treat, cure, or prevent any disease. Clinical decisions remain solely the responsibility of the licensed prescribing provider.</p>
+    </div>
+    <div style="padding:44px 56px 84px;display:flex;flex-direction:column;gap:22px">
+      <h3 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:34px;line-height:1;color:#14253F">You may also review</h3>
+      <div data-reveal="140" style="display:grid;grid-template-columns:repeat(4,1fr);gap:22px">
+        <sc-for list="{{ related }}" as="r" hint-placeholder-count="4">
+          <a href="{{ r.href }}" style="display:flex;flex-direction:column;border:1px solid #E5E8ED;border-radius:16px;overflow:hidden;transition:all 0.25s ease;text-decoration:none" style-hover="transform:translateY(-4px);box-shadow:0 18px 36px rgba(20,37,63,0.12)">
+            <img src="{{ r.img }}" alt="{{ r.alt }}" style="height:160px;width:100%;object-fit:cover;background:#ffffff;border-bottom:1px solid #EEF0F4">
+            <span style="padding:14px 16px 16px;display:flex;flex-direction:column;gap:5px">
+              <span style="font-family:'Instrument Serif',serif;font-size:21px;line-height:1.1;color:#14253F">{{ r.name }}</span>
+              <span style="font-size:12.5px;color:#6B7380">{{ r.spec }}</span>
+            </span>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+    <dc-import name="EvoShopFooter" hint-size="100%,430px"></dc-import>
+    <sc-if value="{{ showStickyBar }}" hint-placeholder-val="{{ true }}">
+      <div style="position:absolute;left:0;right:0;bottom:0;background:#ffffff;border-top:1px solid #E5E8ED;box-shadow:0 -12px 32px rgba(20,37,63,0.10);display:flex;align-items:center;gap:16px;padding:12px 56px">
+        <img src="{{ img }}" alt="{{ imgAlt }}" style="width:46px;height:46px;border-radius:10px;object-fit:cover;background:#ffffff;border:1px solid #E5E8ED;flex-shrink:0">
+        <span style="font-family:'Instrument Serif',serif;font-size:21px;color:#14253F">{{ name }}</span>
+        <span style="font-size:13px;color:#8C93A0">{{ stickySpec }}</span>
+        <div style="flex:1"></div>
+        <button onClick="{{ addMain }}" style="height:44px;padding:0 24px;border:none;border-radius:100px;background:#14258F;color:#ffffff;font-family:'Instrument Sans',sans-serif;font-size:13px;font-weight:600;display:inline-flex;align-items:center;cursor:pointer" style-hover="background:#0E1C6E">Add to Request List</button>
+      </div>
+    </sc-if>
+    <dc-import name="EvoRequestDrawer" open="{{ drawerOpen }}" count="{{ listCount }}" list="{{ list }}" on-close="{{ closeDrawer }}" hint-size="0px,0px"></dc-import>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showStickyBar&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;showPairing&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Modules&quot;}}">
+// One entry per catalog product. The page renders whichever product the hash
+// names: "#product-nad|p=<name>" (router owns the head, page owns the fragment).
+const PRODUCTS = [
+  {
+    name: "NAD+", slug: "nad", cat: "Longevity & Cellular Health", sizes: ["5 mL", "10 mL"], conc: "100 mg/mL",
+    tagline: "Coenzyme / cellular metabolism support compound · Sterile vial · 100 mg/mL",
+    blurb: "NAD+ is a sterile compounded medication. NAD+ is a coenzyme involved in redox reactions, cellular metabolism, mitochondrial electron transport, and cellular signaling pathways.",
+    desc: "NAD+ (nicotinamide adenine dinucleotide) is a coenzyme involved in redox reactions, cellular metabolism, mitochondrial electron transport, and cellular signaling pathways. Format: sterile vial · Presentation: 5 mL, 10 mL · Concentration: 100 mg/mL.",
+    supplied: "Sterile vial in 5 mL and 10 mL presentations at 100 mg/mL. Each order is compounded pursuant to a patient-specific prescription and shipped directly to your practice.",
+    pair: "NAD+ / Glutathione"
+  },
+  {
+    name: "NAD+ / Glutathione", slug: "nad-glutathione", cat: "Longevity & Cellular Health", sizes: ["10 mL"], conc: "",
+    tagline: "Combination sterile compounded formulation · Sterile vial · 10 mL",
+    blurb: "Combination sterile compounded formulation pairing NAD+ with glutathione, prepared as a sterile preparation in vial presentation.",
+    desc: "Combination formulation pairing NAD+ with glutathione. Format: sterile vial · Presentation: 10 mL. Concentration is documented on the pharmacy label for each preparation.",
+    supplied: "Sterile vial in a 10 mL presentation, compounded pursuant to a patient-specific prescription and shipped directly to your practice.",
+    pair: "NAD+"
+  },
+  {
+    name: "MOTS-C", slug: "mots-c", cat: "Longevity & Cellular Health", sizes: [], conc: "", pending: true,
+    tagline: "Mitochondrial-derived peptide · Sterile vial · presentation pending confirmation",
+    blurb: "Mitochondrial-derived peptide compounded as a sterile preparation. Presentation conflicts between source documents — pharmacy confirmation required before it is published.",
+    desc: "Mitochondrial-derived peptide studied in cellular-metabolism contexts. Format: sterile vial · Presentation: pending pharmacy confirmation. No estimated values are shown.",
+    supplied: "Sterile vial. Presentation is pending pharmacy confirmation; your representative will confirm the available presentation with your request.",
+    pair: "NAD+"
+  },
+  {
+    name: "BPC-157", slug: "bpc-157", cat: "Recovery & Regenerative", sizes: ["5 mL"], conc: "",
+    tagline: "Synthetic peptide sequence · Sterile vial · 5 mL",
+    blurb: "BPC-157 is a synthetic peptide sequence studied in tissue and connective structure contexts, compounded as a sterile preparation.",
+    desc: "Synthetic peptide sequence studied in tissue and connective structure contexts. Format: sterile vial · Presentation: 5 mL.",
+    supplied: "Sterile vial in a 5 mL presentation, compounded pursuant to a patient-specific prescription and shipped directly to your practice.",
+    pair: "TB-500"
+  },
+  {
+    name: "TB-500", slug: "tb-500", cat: "Recovery & Regenerative", sizes: ["5 mL"], conc: "",
+    tagline: "Synthetic peptide fragment · Sterile vial · 5 mL",
+    blurb: "TB-500 is a synthetic peptide fragment related to thymosin beta-4, compounded as a sterile preparation.",
+    desc: "Synthetic peptide fragment related to thymosin beta-4. Format: sterile vial · Presentation: 5 mL.",
+    supplied: "Sterile vial in a 5 mL presentation, compounded pursuant to a patient-specific prescription and shipped directly to your practice.",
+    pair: "BPC-157"
+  },
+  {
+    name: "Sermorelin", slug: "sermorelin", cat: "Hormone Optimization", sizes: ["5 mL"], conc: "",
+    tagline: "Growth hormone-releasing hormone analog · Sterile vial · 5 mL",
+    blurb: "Sermorelin is a growth hormone-releasing hormone analog compounded as a sterile preparation in vial presentation.",
+    desc: "Growth hormone-releasing hormone analog. Format: sterile vial · Presentation: 5 mL.",
+    supplied: "Sterile vial in a 5 mL presentation, compounded pursuant to a patient-specific prescription and shipped directly to your practice.",
+    pair: "NAD+"
+  },
+  {
+    name: "Lipo-C", slug: "lipo-c", cat: "Nutrient & Metabolic", sizes: ["10 mL"], conc: "",
+    tagline: "Lipotropic nutrient combination · Sterile vial · 10 mL",
+    blurb: "Lipo-C is a lipotropic nutrient combination compounded as a sterile preparation. The concentration value in the source data awaits pharmacy correction.",
+    desc: "Lipotropic nutrient combination. Format: sterile vial · Presentation: 10 mL · Concentration: pending pharmacy correction.",
+    supplied: "Sterile vial in a 10 mL presentation, compounded pursuant to a patient-specific prescription and shipped directly to your practice.",
+    pair: "NAD+"
+  },
+  {
+    name: "PT-141", slug: "pt-141", cat: "Sexual Wellness", sizes: ["5 mL"], conc: "",
+    tagline: "Melanocortin receptor agonist peptide · Sterile vial · 5 mL",
+    blurb: "PT-141 is a melanocortin receptor agonist peptide compounded as a sterile preparation in vial presentation.",
+    desc: "Melanocortin receptor agonist peptide. Format: sterile vial · Presentation: 5 mL.",
+    supplied: "Sterile vial in a 5 mL presentation, compounded pursuant to a patient-specific prescription and shipped directly to your practice.",
+    pair: "Sermorelin"
+  }
+];
+
+const byName = (n) => PRODUCTS.find(p => p.name.toLowerCase() === String(n || '').toLowerCase());
+const hrefFor = (n) => 'product-nad.dc.html#p=' + encodeURIComponent(n);
+
+class Component extends DCLogic {
+  state = {
+    slug: "nad",
+    img: 0,
+    acc: "desc",
+    size: "5 mL",
+    drawerOpen: false,
+    list: [
+      { name: "NAD+", dose: "5 mL", cat: "Longevity & Cellular Health" },
+      { name: "Sermorelin", dose: "5 mL", cat: "Hormone Optimization" }
+    ]
+  };
+
+  // "#product-nad|p=BPC-157" → which product to show. Idempotent: compare, then set.
+  productFromHash() {
+    const raw = (location.hash || '').replace(/^#\/?/, '');
+    const i = raw.indexOf('|');
+    // In the shell the hash is "product-nad|p=…"; opened standalone it is just "p=…".
+    const frag = i === -1 ? raw : raw.slice(i + 1);
+    const m = frag.match(/(?:^|[|&])p=([^|&]*)/);
+    const p = m && m[1] ? byName(decodeURIComponent(m[1])) : null;
+    return p || PRODUCTS[0];
+  }
+  syncProduct() {
+    const p = this.productFromHash();
+    if (p.slug === this.state.slug) return;
+    this.setState({ slug: p.slug, img: 0, acc: "desc", size: p.sizes[0] || "TBC" });
+    window.scrollTo(0, 0);
+  }
+
+  componentDidMount() {
+    this._onHash = () => this.syncProduct();
+    window.addEventListener('hashchange', this._onHash);
+    this.syncProduct();
+    const els = Array.from(document.querySelectorAll('[data-reveal]'));
+    els.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(26px)';
+      el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+      el.style.transitionDelay = (el.getAttribute('data-reveal') || '0') + 'ms';
+    });
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.style.opacity = '1';
+          en.target.style.transform = 'translateY(0)';
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(el => io.observe(el));
+    // Failsafe: scroll-reveal hides content at mount. If the observer never fires
+    // (odd viewport, zoomed canvas, offscreen mount) the page would stay blank forever.
+    setTimeout(() => els.forEach(el => { if (el.style.opacity !== '1') { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; } }), 2000);
+    this._io = io;
+  }
+  componentWillUnmount() {
+    if (this._io) this._io.disconnect();
+    window.removeEventListener('hashchange', this._onHash);
+  }
+
+  addItem(name, dose, cat) {
+    this.setState(s => ({
+      drawerOpen: true,
+      list: s.list.some(i => i.name === name)
+        ? s.list.map(i => i.name === name ? { ...i, dose } : i)
+        : [...s.list, { name, dose, cat }]
+    }));
+  }
+
+  renderVals() {
+    const p = PRODUCTS.find(x => x.slug === this.state.slug) || PRODUCTS[0];
+    const pending = !!p.pending;
+    const size = p.sizes.includes(this.state.size) ? this.state.size : (p.sizes[0] || "TBC");
+    const views = ["vial front", "label detail", "scale reference", "carton & insert"];
+    const shots = views.map((v, i) => ({
+      n: "0" + (i + 1),
+      photo: i === 0,
+      pending: i !== 0,
+      img: 'assets/vials/' + p.slug + '.jpg',
+      alt: p.name + ' vial',
+      pick: () => this.setState({ img: i }),
+      style: {
+        width: '94px', height: '76px', borderRadius: '10px', cursor: 'pointer', overflow: 'hidden',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        background: i === 0 ? '#ffffff' : 'repeating-linear-gradient(135deg,#EDF0F4 0 8px,#E4E9EF 8px 16px)',
+        border: this.state.img === i ? '2px solid #14258F' : '1px solid #E5E8ED',
+        transition: 'border-color 0.2s ease'
+      }
+    }));
+    const secData = [
+      { id: "desc", title: "Description", body: p.desc },
+      { id: "supplied", title: "How it's supplied", body: p.supplied },
+      { id: "reqs", title: "Provider requirements", body: "An active professional license verified with Evoluciona, a patient-specific prescription for each preparation, and a practice shipping address on file." },
+      { id: "faq", title: "Product FAQ", body: "Prescribing, preparation timelines, storage, and handling — answered in the provider FAQ.", href: "faq.dc.html", linkLabel: "View all FAQs →" }
+    ];
+    const sections = secData.map(s => ({
+      ...s,
+      open: this.state.acc === s.id,
+      toggle: () => this.setState({ acc: this.state.acc === s.id ? null : s.id }),
+      chev: { transition: 'transform 0.25s ease', transform: this.state.acc === s.id ? 'rotate(180deg)' : 'none' }
+    }));
+    const pair = byName(p.pair);
+    const others = PRODUCTS.filter(x => x.slug !== p.slug);
+    const related = [
+      ...others.filter(x => x.cat === p.cat),
+      ...others.filter(x => x.cat !== p.cat)
+    ].slice(0, 4).map(x => ({
+      name: x.name, img: 'assets/vials/' + x.slug + '.jpg', alt: x.name + ' sterile vial',
+      spec: x.cat + ' · Sterile vial', href: hrefFor(x.name)
+    }));
+    return {
+      name: p.name,
+      cat: p.cat,
+      catHref: 'shop.dc.html#cat=' + encodeURIComponent(p.cat),
+      tagline: p.tagline,
+      blurb: p.blurb,
+      img: 'assets/vials/' + p.slug + '.jpg',
+      imgAlt: p.name + ' sterile vial',
+      mainShotLabel: 'product photography · ' + p.slug + ' · ' + views[this.state.img] + ' · 660×520',
+      mainIsPhoto: this.state.img === 0,
+      mainIsPending: this.state.img !== 0,
+      shots,
+      sections,
+      hasSizes: p.sizes.length > 0,
+      presPending: pending,
+      sizes: p.sizes.map(label => ({
+        label,
+        pick: () => this.setState({ size: label }),
+        style: size === label
+          ? { height: '42px', display: 'inline-flex', alignItems: 'center', padding: '0 22px', borderRadius: '100px', background: '#14258F', color: '#ffffff', fontSize: '14px', fontWeight: 600, cursor: 'pointer' }
+          : { height: '42px', display: 'inline-flex', alignItems: 'center', padding: '0 22px', borderRadius: '100px', border: '1px solid #D9DEE5', color: '#3C4757', fontSize: '14px', fontWeight: 500, cursor: 'pointer', transition: 'all 0.2s ease' }
+      })),
+      stickySpec: 'Sterile vial · ' + (pending ? 'presentation pending' : (p.conc ? p.conc + ' · ' + size : size)),
+      addMain: () => this.addItem(p.name, size, p.cat),
+      showPair: (this.props.showPairing ?? true) && !!pair,
+      pairName: pair ? pair.name : '',
+      pairSpec: pair ? (pair.cat + ' · Sterile vial · ' + (pair.sizes[0] || 'presentation pending')) : '',
+      pairImg: pair ? 'assets/vials/' + pair.slug + '.jpg' : '',
+      pairAlt: pair ? pair.name + ' sterile vial' : '',
+      pairHref: pair ? hrefFor(pair.name) : '',
+      addPair: () => { if (pair) this.addItem(pair.name, pair.sizes[0] || 'TBC', pair.cat); },
+      related,
+      showStickyBar: this.props.showStickyBar ?? true,
+      drawerOpen: this.state.drawerOpen,
+      listCount: String(this.state.list.length),
+      list: this.state.list.map(it => ({ ...it, remove: () => this.setState(s => ({ list: s.list.filter(i => i.name !== it.name) })) })),
+      openDrawer: () => this.setState({ drawerOpen: true }),
+      closeDrawer: () => this.setState({ drawerOpen: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

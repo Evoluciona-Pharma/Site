@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shop All — Evoluciona Pharma</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&family=Anek+Latin:wght@500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { margin:0; background:#EDEFF3; font-family:'Instrument Sans',-apple-system,sans-serif; }
+    a { color:#14258F; }
+    a:hover { color:#0E1C6E; }
+    * { box-sizing:border-box; }
+    @keyframes evoFadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes evoProgress { from { width:0; } to { width:140px; } }
+    @keyframes evoSlideIn { from { transform:translateX(100%); } to { transform:translateX(0); } }
+    @keyframes evoFadeIn { from { opacity:0; } to { opacity:1; } }
+    @keyframes evoPop { from { opacity:0; transform:translate(-50%,-50%) scale(0.95); } to { opacity:1; transform:translate(-50%,-50%) scale(1); } }
+  </style>
+</helmet>
+<div style="display:flex;flex-direction:column;align-items:center;min-width:max-content">
+
+      
+      
+      <div style="position:relative;width:1440px;background:#ffffff;display:flex;flex-direction:column">
+        <dc-import name="EvoShopNav" style="position:sticky;top:0;z-index:30" count="{{ listCount }}" onBag="{{ openDrawer }}" hint-size="100%,112px"></dc-import>
+        <div data-reveal="0" style="background:#F5F7FA;padding:44px 56px 36px;display:flex;flex-direction:column;gap:14px">
+          <span style="font-size:13px;color:#8C93A0"><a href="index.dc.html" style="color:#8C93A0;text-decoration:none">Home</a> / <span style="color:#14253F;font-weight:600">Shop All</span></span>
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px">
+            <h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:52px;line-height:1;color:#14253F">All formulations</h2>
+            <span style="font-size:14px;color:#6B7380">Available to verified licensed providers</span>
+          </div>
+        </div>
+        <div style="padding:20px 56px;border-bottom:1px solid #EEF0F4;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span onClick="{{ pickAll }}" style="{{ allChipStyle }}">All · 8</span>
+          <sc-for list="{{ categories }}" as="c" hint-placeholder-count="6">
+            <span onClick="{{ c.pick }}" style="{{ c.chipStyle }}">{{ c.label }}</span>
+          </sc-for>
+        </div>
+        <div style="padding:22px 56px 64px;display:flex;flex-direction:column;gap:20px">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px">
+            <span style="font-size:14px;font-weight:600;color:#14253F">{{ shopCountLabel }}</span>
+            <div style="display:flex;align-items:center;gap:12px">
+              <span style="height:40px;display:inline-flex;align-items:center;gap:8px;border:1px solid #D9DEE5;border-radius:100px;padding:0 16px;font-size:13px;color:#3C4757">Sort: Featured<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8C93A0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9 L12 15 L18 9"></path></svg></span>
+            </div>
+          </div>
+          <div data-reveal="140" style="display:grid;grid-template-columns:repeat(4,1fr);gap:22px">
+            <sc-for list="{{ shopProducts }}" as="p" hint-placeholder-count="8">
+              <div style="display:flex;flex-direction:column;background:#ffffff;border:1px solid #E5E8ED;border-radius:16px;overflow:hidden;transition:all 0.25s ease" style-hover="transform:translateY(-4px);box-shadow:0 18px 36px rgba(20,37,63,0.12);border-color:#C9D0DA">
+                <div style="position:relative;height:220px;overflow:hidden">
+                  <img src="{{ p.img }}" alt="{{ p.name }} sterile vial" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease" style-hover="transform:scale(1.05)">
+                  <sc-if value="{{ p.badgeShown }}" hint-placeholder-val="{{ false }}">
+                    <span style="position:absolute;top:12px;left:12px;font-size:11px;font-weight:600;color:#ffffff;background:#14258F;border-radius:100px;padding:5px 11px">{{ p.badgeShown }}</span>
+                  </sc-if>
+                  <a href="{{ p.href }}" style="position:absolute;bottom:12px;left:50%;transform:translateX(-50%);height:32px;padding:0 16px;border:none;border-radius:100px;background:rgba(255,255,255,0.95);color:#14253F;font-family:'Instrument Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(20,37,63,0.15);transition:all 0.2s ease;display:inline-flex;align-items:center;justify-content:center;text-decoration:none" style-hover="background:#14253F;color:#ffffff">View details</a>
+                </div>
+                <div style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1">
+                  
+                  <a href="{{ p.href }}" style="font-family:'Instrument Serif',serif;font-size:25px;line-height:1.05;color:#14253F;text-decoration:none">{{ p.name }}</a>
+                  <span style="flex:1;font-size:13px;line-height:19px;color:#6B7380">{{ p.spec }}</span>
+                  <button onClick="{{ p.add }}" style="margin-top:6px;width:100%;height:44px;border:none;border-radius:100px;background:#14258F;color:#ffffff;font-family:'Instrument Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer" style-hover="background:#0E1C6E">Add to Request List</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;background:#FFFAEF;border:1px solid #EADCB5;border-radius:10px;padding:13px 16px;margin-top:6px">
+            <span style="font-size:13px;line-height:20px;color:#8A6410;text-wrap:pretty"><strong>Verified providers only.</strong> Products are dispensed against a patient-specific prescription from a licensed healthcare provider. No pricing is shown online.</span>
+          </div>
+        </div>
+        <dc-import name="EvoShopFooter" hint-size="100%,430px"></dc-import>
+
+<dc-import name="EvoRequestDrawer" open="{{ drawerOpen }}" count="{{ listCount }}" list="{{ list }}" on-close="{{ closeDrawer }}" hint-size="0px,0px"></dc-import>
+      </div>
+    
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showBadges&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = {
+    filterCat: null,
+    drawerOpen: false,
+    qv: null,
+    list: [
+      { name: "NAD+", dose: "5 mL", cat: "Longevity & Cellular Health" },
+      { name: "Sermorelin", dose: "5 mL", cat: "Hormone Optimization" }
+    ]
+  };
+  componentDidMount() {
+    this._catSync = () => { const mm = (location.hash || '').match(/(?:^|[#|&])cat=([^|&]*)/); const v = mm && mm[1] ? decodeURIComponent(mm[1].split(',')[0]) : null; if (v !== this.state.filterCat) this.setState({ filterCat: v }); };
+    window.addEventListener('hashchange', this._catSync);
+    this._catSync();
+    const els = Array.from(document.querySelectorAll('[data-reveal]'));
+    els.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(26px)';
+      el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+      el.style.transitionDelay = (el.getAttribute('data-reveal') || '0') + 'ms';
+    });
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.style.opacity = '1';
+          en.target.style.transform = 'translateY(0)';
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(el => io.observe(el));
+    // Failsafe: scroll-reveal hides content at mount. If the observer never fires
+    // (odd viewport, zoomed canvas, offscreen mount) the page would stay blank forever.
+    setTimeout(() => els.forEach(el => { if (el.style.opacity !== '1') { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; } }), 2000);
+    const cts = Array.from(document.querySelectorAll('[data-count]'));
+    const io2 = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        const el = en.target;
+        io2.unobserve(el);
+        const target = parseFloat(el.getAttribute('data-count'));
+        const t0 = performance.now(), dur = 1100;
+        const step = (t) => {
+          const k = Math.min(1, (t - t0) / dur);
+          el.textContent = String(Math.round(target * (1 - Math.pow(1 - k, 3))));
+          if (k < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.4 });
+    cts.forEach(el => io2.observe(el));
+    this._ios = [io, io2];
+  }
+  componentWillUnmount() {
+    (this._ios || []).forEach(io => io.disconnect());
+    window.removeEventListener('hashchange', this._catSync);
+  }
+  setCat(label) {
+    const scr = (location.hash || '').replace('#', '').split('|')[0];
+    const frag = label ? 'cat=' + encodeURIComponent(label) : '';
+    const isRoute = /^[a-z0-9-]+$/i.test(scr) && scr.indexOf('=') === -1;
+    const next = [isRoute ? scr : '', frag].filter(Boolean).join('|'); if (next) { if (location.hash !== '#' + next) location.hash = next; } else if (location.hash && location.hash !== '#') location.hash = '';
+    this.setState({ filterCat: label });
+  }
+  addItem(p) {
+    this.setState(s => ({
+      drawerOpen: true,
+      qv: null,
+      list: s.list.some(i => i.name === p.name) ? s.list : [...s.list, { name: p.name, dose: p.doseDefault, cat: p.cat }]
+    }));
+  }
+  removeItem(name) {
+    this.setState(s => ({ list: s.list.filter(i => i.name !== name) }));
+  }
+  renderVals() {
+    const showBadges = this.props.showBadges ?? true;
+    const base = [
+      { name: "NAD+", slug: "nad", cat: "Longevity & Cellular Health", badge: "Featured", doseDefault: "5 mL", dose2: "10 mL", format: "Sterile vial", presentation: "5 mL, 10 mL", concentration: "100 mg/mL", spec: "Sterile vial · 5 mL and 10 mL · 100 mg/mL", blurb: "Coenzyme involved in redox reactions, cellular metabolism, mitochondrial electron transport, and cellular signaling pathways." },
+      { name: "NAD+ / Glutathione", slug: "nad-glutathione", cat: "Longevity & Cellular Health", badge: "New", doseDefault: "10 mL", dose2: "", format: "Sterile vial", presentation: "10 mL", concentration: "Pending confirmation", spec: "Sterile vial · combination formulation · 10 mL", blurb: "Combination sterile compounded formulation pairing NAD+ with glutathione." },
+      { name: "MOTS-C", slug: "mots-c", cat: "Longevity & Cellular Health", badge: "", doseDefault: "TBC", dose2: "", format: "Sterile vial", presentation: "Pending confirmation", concentration: "Pending confirmation", spec: "Sterile vial · presentation pending confirmation", blurb: "Mitochondrial-derived peptide. Presentation conflicts between source documents — pharmacy confirmation required." },
+      { name: "BPC-157", slug: "bpc-157", cat: "Recovery & Regenerative", badge: "", doseDefault: "5 mL", dose2: "", format: "Sterile vial", presentation: "5 mL", concentration: "Pending confirmation", spec: "Sterile vial · 5 mL", blurb: "Synthetic peptide sequence studied in tissue and connective structure contexts." },
+      { name: "TB-500", slug: "tb-500", cat: "Recovery & Regenerative", badge: "", doseDefault: "5 mL", dose2: "", format: "Sterile vial", presentation: "5 mL", concentration: "Pending confirmation", spec: "Sterile vial · 5 mL", blurb: "Synthetic peptide fragment related to thymosin beta-4." },
+      { name: "Sermorelin", slug: "sermorelin", cat: "Hormone Optimization", badge: "", doseDefault: "5 mL", dose2: "", format: "Sterile vial", presentation: "5 mL", concentration: "Pending confirmation", spec: "Sterile vial · 5 mL", blurb: "Growth hormone-releasing hormone analog compounded as a sterile preparation." },
+      { name: "Lipo-C", slug: "lipo-c", cat: "Nutrient & Metabolic", cat2: "Metabolic Health", badge: "", doseDefault: "10 mL", dose2: "", format: "Sterile vial", presentation: "10 mL", concentration: "Data fix pending", spec: "Sterile vial · 10 mL", blurb: "Lipotropic nutrient combination. Concentration value in the source data awaits pharmacy correction." },
+      { name: "PT-141", slug: "pt-141", cat: "Sexual Wellness", badge: "", doseDefault: "5 mL", dose2: "", format: "Sterile vial", presentation: "5 mL", concentration: "Pending confirmation", spec: "Sterile vial · 5 mL", blurb: "Melanocortin receptor agonist peptide compounded as a sterile preparation." }
+    ];
+    const products = base.map(p => ({
+      ...p,
+      img: 'assets/vials/' + p.slug + '.jpg',
+      href: 'product-nad.dc.html#p=' + encodeURIComponent(p.name),
+      badgeShown: showBadges ? p.badge : "",
+      add: () => this.addItem(p),
+      quick: () => this.setState({ qv: p })
+    }));
+    const fc = this.state.filterCat;
+    const shopProducts = fc ? products.filter(pp => pp.cat === fc || pp.cat2 === fc) : products;
+    const chipBase = { height: '38px', display: 'inline-flex', alignItems: 'center', padding: '0 18px', borderRadius: '100px', fontSize: '13px', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s ease' };
+    const catList = [
+      { label: "Longevity & Cellular Health", count: "3" },
+      { label: "Recovery & Regenerative", count: "2" },
+      { label: "Hormone Optimization", count: "1" },
+      { label: "Nutrient & Metabolic", count: "1" },
+      { label: "Metabolic Health", count: "1" },
+      { label: "Sexual Wellness", count: "1" }
+    ].map(c => ({ ...c, pick: () => this.setCat(c.label), shopHref: 'shop.dc.html#cat=' + encodeURIComponent(c.label), chipStyle: (fc === c.label) ? { ...chipBase, background: '#14258F', color: '#ffffff' } : { ...chipBase, border: '1px solid #D9DEE5', background: '#ffffff', color: '#3C4757' } }));
+    const qv = this.state.qv || {};
+    return {
+      products,
+      shopProducts,
+      shopCount: String(shopProducts.length),
+      shopCountLabel: shopProducts.length + (shopProducts.length === 1 ? ' product' : ' products'),
+      pickAll: () => this.setCat(null),
+      allChipStyle: fc ? { ...chipBase, border: '1px solid #D9DEE5', background: '#ffffff', color: '#3C4757' } : { ...chipBase, background: '#14258F', color: '#ffffff' },
+      featured: products.slice(0, 4),
+      categories: catList,
+      related: [
+        { name: "NAD+ / Glutathione", spec: "Longevity & Cellular Health · Sterile vial" },
+        { name: "MOTS-C", spec: "Longevity & Cellular Health · Sterile vial" },
+        { name: "Sermorelin", spec: "Hormone Optimization · Sterile vial" },
+        { name: "BPC-157", spec: "Recovery & Regenerative · Sterile vial" }
+      ],
+      providerFaqs: [
+        { q: "How do I become a verified provider?" },
+        { q: "What documentation does verification require?" },
+        { q: "How is a patient-specific prescription submitted?" },
+        { q: "What are typical preparation and shipping timelines?" },
+        { q: "Who do I contact about a formulation question?" }
+      ],
+      blockers: [
+        { tag: "BLOCKER", text: "Image assets & art direction not provided [Client / Zenga] — every product shot and the hero are striped placeholders until approved imagery lands." },
+        { tag: "DECISION", text: "Badges (“Featured”, “New”) are merchandising-neutral; confirm allowed wording with compliance before launch." },
+        { tag: "DATA FIX", text: "Lipo-C concentration is mislabeled and MOTS-C presentation conflicts — both render as pending, blank-safe." },
+        { tag: "CONFIRM", text: "Request-list drawer replaces the cart; final submit still routes through the 4-step form with the list attached." }
+      ],
+      showStickyBar: this.props.showStickyBar ?? true,
+      drawerOpen: this.state.drawerOpen,
+      qvOpen: !!this.state.qv,
+      qv,
+      qvAdd: () => { if (this.state.qv) this.addItem(this.state.qv); },
+      listCount: String(this.state.list.length),
+      list: this.state.list.map(it => ({ ...it, remove: () => this.removeItem(it.name) })),
+      openDrawer: () => this.setState({ drawerOpen: true }),
+      closeDrawer: () => this.setState({ drawerOpen: false }),
+      closeQuick: () => this.setState({ qv: null })
+    };
+  }
+}
+</script>
+</body>
+</html>

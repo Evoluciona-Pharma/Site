@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<template id="__bundler_thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><rect width="400" height="400" fill="#14258F"/><text x="200" y="232" text-anchor="middle" font-family="Georgia,serif" font-size="150" fill="#ffffff">E</text></svg>
+</template>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&family=Anek+Latin:wght@500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    html, body { margin:0; background:#EDEFF3; font-family:'Instrument Sans',-apple-system,sans-serif; }
+    a { color:#14258F; }
+    a:hover { color:#0E1C6E; }
+    * { box-sizing:border-box; }
+    @keyframes evoFadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes evoProgress { from { width:0; } to { width:140px; } }
+    @keyframes evoProgressB { from { width:0; } to { width:140px; } }
+    @keyframes evoSlideIn { from { transform:translateX(100%); } to { transform:translateX(0); } }
+    @keyframes evoFadeIn { from { opacity:0; } to { opacity:1; } }
+    @keyframes evoPop { from { opacity:0; transform:translate(-50%,-50%) scale(0.95); } to { opacity:1; transform:translate(-50%,-50%) scale(1); } }
+  </style>
+</helmet>
+<div style="min-height:100vh;background:#EDEFF3">
+
+  <sc-if value="{{ atIndex }}" hint-placeholder-val="{{ true }}">
+    <dc-import name="index" hint-size="100%,3200px"></dc-import>
+  </sc-if>
+  <sc-if value="{{ atShop }}">
+    <dc-import name="shop" hint-size="100%,2400px"></dc-import>
+  </sc-if>
+  <sc-if value="{{ atShopClassic }}">
+    <dc-import name="shop-classic" hint-size="100%,2400px"></dc-import>
+  </sc-if>
+  <sc-if value="{{ atProduct }}">
+    <dc-import name="product-nad" hint-size="100%,2200px"></dc-import>
+  </sc-if>
+  <sc-if value="{{ atFaq }}">
+    <dc-import name="faq" hint-size="100%,2000px"></dc-import>
+  </sc-if>
+  <sc-if value="{{ atContact }}">
+    <dc-import name="request-contact" hint-size="100%,1400px"></dc-import>
+  </sc-if>
+  <sc-if value="{{ atPractice }}">
+    <dc-import name="request-practice" hint-size="100%,1400px"></dc-import>
+  </sc-if>
+  <sc-if value="{{ atProfile }}">
+    <dc-import name="request-profile" hint-size="100%,1400px"></dc-import>
+  </sc-if>
+  <sc-if value="{{ atAdditional }}">
+    <dc-import name="request-additional" hint-size="100%,1400px"></dc-import>
+  </sc-if>
+  <sc-if value="{{ atConfirmation }}">
+    <dc-import name="confirmation" hint-size="100%,1200px"></dc-import>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+const PAGES = [
+  ['index', 'Home'],
+  ['shop', 'Shop All'],
+  ['shop-classic', 'Shop (classic)'],
+  ['product-nad', 'Product — NAD+'],
+  ['faq', 'Provider FAQ'],
+  ['request-contact', 'Request · 1 Contact'],
+  ['request-practice', 'Request · 2 Practice'],
+  ['request-profile', 'Request · 3 Profile'],
+  ['request-additional', 'Request · 4 Additional'],
+  ['confirmation', 'Confirmation']
+];
+
+// The hash is shared: "#<route>" for navigation, "#<route>|key=value" for
+// in-page state (filters, FAQ tabs). The router only ever reads the head.
+function splitHash() {
+  const raw = (location.hash || '').replace(/^#\/?/, '');
+  const i = raw.indexOf('|');
+  const head = (i === -1 ? raw : raw.slice(0, i)).trim().replace(/\.dc\.html$/, '');
+  return { head, isRoute: /^[a-z0-9-]+$/i.test(head) && head.indexOf('=') === -1 };
+}
+
+// `current` keeps us put when the hash carries page state rather than a route.
+function readRoute(current) {
+  const { head, isRoute } = splitHash();
+  if (isRoute && PAGES.some(p => p[0] === head)) return head;
+  return current || 'index';
+}
+
+class Component extends DCLogic {
+  state = { route: readRoute() };
+
+  componentDidMount() {
+    this._onHash = () => {
+      const next = readRoute(this.state.route);
+      if (next === this.state.route) return;   // page-state change, not navigation
+      this.setState({ route: next });
+      window.scrollTo(0, 0);
+    };
+    window.addEventListener('hashchange', this._onHash);
+
+    // Intercept the pages' own relative links (href="shop.dc.html") and route them.
+    this._onClick = (e) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      const a = e.target.closest && e.target.closest('a');
+      if (!a) return;
+      const raw = a.getAttribute('href') || '';
+      // Placeholder links for pages that don't exist yet: swallow, never touch the hash.
+      if (raw === '' || raw === '#') { e.preventDefault(); return; }
+      const m = raw.match(/(?:^|\/)([a-z0-9-]+)\.dc\.html(?:#(.*))?$/i);
+      if (!m) return;
+      const slug = m[1].toLowerCase();
+      if (!PAGES.some(p => p[0] === slug)) return;
+      e.preventDefault();
+      const frag = (m[2] || '').replace(/^#/, '');
+      const next = slug + (frag ? '|' + frag : '');
+      if (location.hash.replace(/^#\/?/, '') === next) {
+        if (slug !== this.state.route) this.setState({ route: slug });
+        window.scrollTo(0, 0);
+        return;
+      }
+      location.hash = next;
+      if (slug === this.state.route) window.scrollTo(0, 0);
+    };
+    document.addEventListener('click', this._onClick, true);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('hashchange', this._onHash);
+    document.removeEventListener('click', this._onClick, true);
+  }
+
+  renderVals() {
+    const r = this.state.route;
+    const active = (s) => r === s;
+    return {
+      atIndex: active('index'),
+      atShop: active('shop'),
+      atShopClassic: active('shop-classic'),
+      atProduct: active('product-nad'),
+      atFaq: active('faq'),
+      atContact: active('request-contact'),
+      atPractice: active('request-practice'),
+      atProfile: active('request-profile'),
+      atAdditional: active('request-additional'),
+      atConfirmation: active('confirmation')
+    };
+  }
+}
+</script>
+</body>
+</html>

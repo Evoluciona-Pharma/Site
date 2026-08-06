@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { margin:0; background:#EDEFF3; font-family:'Instrument Sans',-apple-system,sans-serif; }
+    a { color:#14258F; }
+    a:hover { color:#0E1C6E; }
+    * { box-sizing:border-box; }
+    @keyframes evoFadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes evoFadeIn { from { opacity:0; } to { opacity:1; } }
+  </style>
+</helmet>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#14258F"/><text x="50" y="50" font-family="Georgia,serif" font-size="30" fill="#ffffff" text-anchor="middle" dominant-baseline="central">FAQ</text></svg></template>
+<div style="display:flex;flex-direction:column;align-items:center;min-width:max-content">
+  <div data-screen-label="Provider FAQ" style="width:1440px;background:#ffffff;display:flex;flex-direction:column">
+    <dc-import name="EvoShopNav" style="position:sticky;top:0;z-index:30" count="2" hint-size="100%,112px"></dc-import>
+
+    <div style="position:relative;height:372px;overflow:hidden;flex-shrink:0">
+      <div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,#EDF0F4 0 12px,#E2E7EE 12px 24px)"></div>
+      <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,37,63,0.88) 0%,rgba(20,37,63,0.66) 58%,rgba(20,37,63,0.34) 100%)"></div>
+      <span style="position:absolute;right:20px;bottom:16px;z-index:2;font-family:'Fira Code',monospace;font-size:10px;color:#5E6B83;background:rgba(255,255,255,0.9);border-radius:4px;padding:3px 8px">hero · faq · awaiting art direction</span>
+      <div style="position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;justify-content:center;gap:16px;padding:0 56px;animation:evoFadeUp 0.7s ease both">
+        <span style="font-size:13px;color:rgba(255,255,255,0.72)"><a href="index.dc.html" style="color:rgba(255,255,255,0.72);text-decoration:none">Home</a> / <span style="color:#ffffff;font-weight:500">Frequently Asked Questions</span></span>
+        <h1 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:64px;line-height:0.98;color:#ffffff;text-wrap:balance">Frequently Asked Questions</h1>
+        <p style="margin:0;font-size:15px;line-height:23px;color:rgba(255,255,255,0.85);max-width:530px;text-wrap:pretty">Got questions? We've got answers — ordering, shipping, billing and account handling for verified providers.</p>
+      </div>
+    </div>
+
+    <sc-if value="{{ showNotice }}" hint-placeholder-val="{{ true }}">
+      <div style="padding:28px 56px 0">
+        <div style="display:flex;gap:12px;background:#EEF1FA;border:1px solid #D6DCF2;border-radius:12px;padding:16px 18px">
+          <span style="font-size:14px;line-height:22px;color:#1B2C6B;text-wrap:pretty"><strong>This portal is for licensed providers.</strong> Patients should contact their prescribing provider. Ordering requires verification and a patient-specific prescription.</span>
+        </div>
+      </div>
+    </sc-if>
+
+    <div style="display:grid;grid-template-columns:264px 1fr;gap:44px;padding:36px 56px 76px;align-items:start">
+      <aside style="position:sticky;top:132px;display:flex;flex-direction:column;gap:20px">
+        <span style="font-family:'Instrument Serif',serif;font-size:24px;color:#14253F">Topics</span>
+        <div style="display:flex;flex-direction:column;gap:4px;border-top:1px solid #E5E8ED;padding-top:14px">
+          <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="6">
+            <div onClick="{{ t.pick }}" style="{{ t.style }}">
+              <span style="flex:1;font-size:14px;line-height:20px">{{ t.label }}</span>
+              <span style="font-size:12px;color:#9BA5B7">{{ t.count }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="border:1px solid #E1E5EB;border-radius:14px;background:#FAFBFC;padding:18px;display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:13px;font-weight:600;color:#14253F">Provider support</span>
+          <span style="font-size:13px;line-height:20px;color:#6B7380">Mon–Fri, 8:00–18:00 ET for verification, order and formulation questions.</span>
+          <a href="request-contact.dc.html" style="font-size:13px;font-weight:600;color:#14258F;text-decoration:none">Contact support →</a>
+        </div>
+      </aside>
+
+      <div style="display:flex;flex-direction:column;gap:22px;min-width:0">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:38px;line-height:1.06;color:#14253F">{{ activeLabel }}</h2>
+          <p style="margin:0;font-size:15px;line-height:23px;color:#6B7380;max-width:660px;text-wrap:pretty">{{ activeLede }}</p>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="3">
+            <div style="{{ f.cardStyle }}">
+              <div onClick="{{ f.toggle }}" style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:18px 22px;cursor:pointer">
+                <span style="flex:1;font-size:16px;line-height:24px;font-weight:600;color:#14253F;text-wrap:pretty">{{ f.q }}</span>
+                <span style="font-family:'Instrument Serif',serif;font-size:22px;line-height:24px;color:#8C93A0;flex-shrink:0">{{ f.sign }}</span>
+              </div>
+              <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:14px;padding:0 22px 22px;border-top:1px solid #EDF0F4;padding-top:18px;animation:evoFadeIn 0.25s ease both">
+                  <sc-for list="{{ f.blocks }}" as="b" hint-placeholder-count="2">
+                    <sc-if value="{{ b.isH }}" hint-placeholder-val="{{ false }}">
+                      <span style="font-size:14px;font-weight:600;color:#14253F">{{ b.text }}</span>
+                    </sc-if>
+                    <sc-if value="{{ b.isP }}" hint-placeholder-val="{{ true }}">
+                      <span style="font-size:14px;line-height:23px;color:#4A5563;max-width:680px;text-wrap:pretty">{{ b.text }}</span>
+                    </sc-if>
+                    <sc-if value="{{ b.isUl }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;flex-direction:column;gap:9px">
+                        <sc-for list="{{ b.items }}" as="it" hint-placeholder-count="3">
+                          <div style="display:flex;gap:11px">
+                            <span style="width:5px;height:5px;border-radius:3px;background:#9BA5B7;margin-top:9px;flex-shrink:0"></span>
+                            <span style="flex:1;font-size:14px;line-height:23px;color:#4A5563;max-width:660px;text-wrap:pretty">{{ it }}</span>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{ showAnnotations }}" hint-placeholder-val="{{ true }}">
+          <span style="font-family:'Fira Code',monospace;font-size:12px;line-height:19px;color:#8A6410;background:#FFFAEF;border:1px solid #EADCB5;border-radius:6px;padding:8px 12px;align-self:flex-start">answer copy is structural — timelines and policy wording pending sign-off from the content owner</span>
+        </sc-if>
+
+        <div style="border:1px solid #E1E5EB;border-radius:16px;background:#FAFBFC;padding:24px;display:flex;align-items:center;gap:20px;margin-top:6px">
+          <div style="width:52px;height:52px;border-radius:26px;background:#EEF1FA;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#14258F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M 18 8 C 18 12.418 13.971 16 9 16 M 9 0 C 13.971 0 18 3.582 18 8 M 0 8 C 0 3.582 4.029 0 9 0 M 1.395 12.28 C 0.512 11.042 0 9.574 0 8 M 0 16 L 1.395 12.28 M 4.745 15.051 L 0 16 M 9 16 C 7.461 16 6.012 15.657 4.745 15.051 Z" transform="translate(3 4)"></path></svg></div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:5px">
+            <span style="font-family:'Instrument Serif',serif;font-size:22px;color:#14253F">Still need a hand?</span>
+            <span style="font-size:14px;line-height:21px;color:#6B7380">Providers can reach support directly; patients can contact the Evoluciona Pharma AI assistant for general assistance.</span>
+          </div>
+          <button style="height:46px;padding:0 22px;border:1px solid #14258F;border-radius:100px;background:#ffffff;color:#14258F;font-family:'Instrument Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;flex-shrink:0" style-hover="background:#EEF1FA">Open assistant</button>
+        </div>
+      </div>
+    </div>
+
+    <dc-import name="EvoShopFooter" hint-size="100%,430px"></dc-import>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;singleOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;showNotice&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;showAnnotations&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+class Component extends DCLogic {
+  state = { tab: 0, open: { 0: 0 } };
+
+  componentDidMount() {
+    this._sync = () => {
+      const m = (location.hash || '').match(/faq=([a-z0-9-]+)/i);
+      if (!m) return;
+      const i = this.data().findIndex(t => t.slug === m[1].toLowerCase());
+      if (i >= 0 && i !== this.state.tab) this.setState({ tab: i });
+    };
+    window.addEventListener('hashchange', this._sync);
+    this._sync();
+  }
+  componentWillUnmount() { window.removeEventListener('hashchange', this._sync); }
+
+  setTab(i) {
+    const head = (location.hash || '').replace(/^#\/?/, '').split('|')[0];
+    const route = (/^[a-z0-9-]+$/i.test(head) && head.indexOf('=') === -1) ? head : '';
+    const next = [route, 'faq=' + this.data()[i].slug].filter(Boolean).join('|');
+    if (location.hash !== '#' + next) location.hash = next;
+    this.setState(s => ({ tab: i, open: s.open[i] === undefined ? { ...s.open, [i]: 0 } : s.open }));
+  }
+
+  toggle(qi) {
+    const single = this.props.singleOpen ?? true;
+    this.setState(s => {
+      const t = s.tab;
+      const cur = s.open[t];
+      if (single) return { open: { ...s.open, [t]: cur === qi ? null : qi } };
+      const arr = Array.isArray(cur) ? cur : (cur === null || cur === undefined ? [] : [cur]);
+      return { open: { ...s.open, [t]: arr.includes(qi) ? arr.filter(x => x !== qi) : [...arr, qi] } };
+    });
+  }
+
+  data() {
+    return [
+      {
+        slug: 'secure-ordering', label: 'Secure Ordering',
+        lede: 'How a request moves from submission to release, and how patient data is handled along the way.',
+        qs: [
+          { q: 'How long does it take to process a request?', blocks: [
+            { t: 'h', text: '1. Standard provider requests' },
+            { t: 'ul', items: [
+              'Verification is automatic once an active license is on file — instant for accounts in good standing.',
+              'Clinical review of the patient-specific prescription usually takes 1–2 business days.',
+              'Compounding and release checks add a further 1–3 business days depending on the preparation.'
+            ] },
+            { t: 'h', text: '2. Made-to-order preparations' },
+            { t: 'ul', items: [
+              'Combination formulations and preparations requiring extra quality checks are released more slowly.',
+              'These typically take 5–10 days before they are ready to ship.'
+            ] },
+            { t: 'h', text: '3. Out-of-state requests' },
+            { t: 'ul', items: [
+              'Shipments crossing state lines follow the receiving board\u2019s requirements before release.',
+              'Total time to delivery can run 7–21 days depending on the state and the carrier service selected.'
+            ] },
+            { t: 'h', text: 'In summary' },
+            { t: 'ul', items: ['Standard requests: 2–5 days', 'Made-to-order preparations: 5–10 days', 'Out-of-state requests: 7–21 days or longer'] }
+          ] },
+          { q: 'Is prescription and patient data transmitted securely?', blocks: [
+            { t: 'p', text: 'Every request is submitted over an encrypted connection and stored against your practice record. Patient identifiers are visible only to the prescriber on file and the dispensing pharmacist.' }
+          ] },
+          { q: 'Who is allowed to submit a request?', blocks: [
+            { t: 'p', text: 'Only verified, licensed providers. Patients cannot order directly and should contact their prescribing provider, who submits the patient-specific prescription on their behalf.' }
+          ] }
+        ]
+      },
+      {
+        slug: 'track-order', label: 'Track Order',
+        lede: 'Where to find the status of a request, and what to do when tracking goes quiet.',
+        qs: [
+          { q: 'How can I check the status of an order?', blocks: [
+            { t: 'h', text: '1. Check your email' },
+            { t: 'ul', items: [
+              'A confirmation email is sent as soon as the request is received.',
+              'A second email follows with the tracking number once the order ships.',
+              'Use the tracking link in that email to check status without signing in.'
+            ] },
+            { t: 'h', text: '2. Sign in to the portal' },
+            { t: 'ul', items: [
+              'Open “My Orders” in your practice dashboard.',
+              'Each line shows its current stage — In review, Compounding, Shipped, Delivered — with the estimated release date.'
+            ] },
+            { t: 'h', text: '3. Use the tracking number' },
+            { t: 'ul', items: [
+              'Once shipped, track the parcel on the carrier’s site (FedEx, UPS).',
+              'Cold-chain parcels carry a separate temperature-controlled service level and show their own scans.'
+            ] },
+            { t: 'h', text: '4. Contact provider support' },
+            { t: 'ul', items: ['If the portal and email do not answer it, contact support with your order number and account email.'] }
+          ] },
+          { q: 'What should I do if tracking hasn’t updated?', blocks: [
+            { t: 'p', text: 'Carrier scans can take 24–48 hours to appear, especially over weekends. If nothing changes for more than 3 days, contact provider support and we will trace the parcel.' }
+          ] },
+          { q: 'Are cold-chain shipments handled differently?', blocks: [
+            { t: 'p', text: 'Temperature-sensitive preparations ship in validated packaging and are released only on days that allow delivery inside the qualified window.' }
+          ] }
+        ]
+      },
+      {
+        slug: 'orders-shipping', label: 'Orders & Shipping',
+        lede: 'Timelines, coverage, and what can still be changed after a request is submitted.',
+        qs: [
+          { q: 'How long does shipping usually take?', blocks: [
+            { t: 'p', text: 'Standard shipping is 3–7 business days; express arrives within 1–3 business days. Times vary by state and by the carrier service required for cold-chain parcels.' }
+          ] },
+          { q: 'Can I modify or cancel an order after submitting it?', blocks: [
+            { t: 'h', text: '1. Before the request is processed' },
+            { t: 'ul', items: [
+              'While a request is still in review, most details can be changed or the request withdrawn.',
+              'Do this within a few hours of submitting.',
+              'Changes usually available: shipping address, payment method, adding or removing line items.'
+            ] },
+            { t: 'h', text: '2. After compounding has started' },
+            { t: 'ul', items: [
+              'Once the preparation is in production or packed, changes are no longer possible.',
+              'A cancellation can still be requested, but it is handled as a return once delivered.'
+            ] },
+            { t: 'h', text: '3. Patient-specific preparations' },
+            { t: 'ul', items: ['Made-to-order sterile preparations cannot be modified or cancelled once compounding begins.'] },
+            { t: 'h', text: '4. How to cancel or modify' },
+            { t: 'ul', items: [
+              'Check your confirmation email for the request link.',
+              'Open the request in the portal to see whether Modify or Withdraw is still offered.',
+              'Contact provider support with the order number for anything the portal will not let you change.'
+            ] }
+          ] },
+          { q: 'Do you ship to every state?', blocks: [
+            { t: 'p', text: 'We ship wherever the pharmacy holds an active non-resident license. Eligible states and available service levels are shown at submission.' }
+          ] }
+        ]
+      },
+      {
+        slug: 'payment-credit', label: 'Payment & Account Credit',
+        lede: 'Accepted methods, practice-level invoicing, and how account credit is issued and spent.',
+        qs: [
+          { q: 'How does account credit work?', blocks: [
+            { t: 'h', text: '1. What account credit is' },
+            { t: 'ul', items: [
+              'A prepaid balance held against your practice account and applied to future requests.',
+              'It is usually issued after an approved return or a corrected invoice.',
+              'It is not cash and can only be used on this portal.'
+            ] },
+            { t: 'h', text: '2. How to use it' },
+            { t: 'ul', items: [
+              'Select “Account credit” at submission.',
+              'The request total is deducted from the available balance.',
+              'If the request exceeds the balance, pay the remainder by card or ACH.'
+            ] },
+            { t: 'h', text: '3. How it is issued' },
+            { t: 'ul', items: [
+              'Approved returns: credit is issued in place of a refund to the original method.',
+              'Corrected invoices: pricing or quantity adjustments are returned as credit.',
+              'Cancelled requests: credit is issued when the original charge has already settled.'
+            ] }
+          ] },
+          { q: 'What payment methods do you accept?', blocks: [
+            { t: 'p', text: 'Major credit cards, ACH transfer, and practice-level invoicing on approved accounts. All payments are encrypted.' }
+          ] },
+          { q: 'Can the practice be invoiced instead of paying per order?', blocks: [
+            { t: 'p', text: 'Yes — verified practices can request net terms. Contact provider support to have invoicing enabled against your account.' }
+          ] }
+        ]
+      },
+      {
+        slug: 'returns-refunds', label: 'Returns & Refunds',
+        lede: 'What can be returned, how to report a problem, and when a refund lands.',
+        qs: [
+          { q: 'What is your returns and refunds policy?', blocks: [
+            { t: 'p', text: 'Sterile compounded preparations cannot be returned to stock once they have left the pharmacy. Preparations that arrive damaged, incorrect, or outside their temperature window are replaced or refunded in full.' },
+            { t: 'p', text: 'Report an issue within 7 days of delivery with the order number and lot. Once approved, refunds are processed within 5–7 business days to the original payment method or as account credit.' }
+          ] },
+          { q: 'What if a vial arrives damaged or incorrect?', blocks: [
+            { t: 'p', text: 'Keep the packaging, photograph the parcel and the label, then open a report from the order in the portal. Replacements ship on the next qualified shipping day.' }
+          ] },
+          { q: 'How long do refunds take?', blocks: [
+            { t: 'p', text: '5–7 business days after the return is approved. Card refunds can take one additional statement cycle to appear.' }
+          ] }
+        ]
+      },
+      {
+        slug: 'account-info', label: 'Account Info',
+        lede: 'Verification requirements, account details, and adding prescribers or staff.',
+        qs: [
+          { q: 'Do I need an account to submit a request?', blocks: [
+            { t: 'p', text: 'Yes. Ordering requires a verified provider account — there is no guest submission. Verification confirms your license, practice address, and shipping states.' }
+          ] },
+          { q: 'What documentation does verification require?', blocks: [
+            { t: 'p', text: 'An active state license number, DEA registration where applicable, the practice address, and a licensed contact for formulation questions.' }
+          ] },
+          { q: 'How do I update my account details?', blocks: [
+            { t: 'p', text: 'Update contact details, password, and saved shipping addresses from your account dashboard. License and practice changes are re-verified before they take effect.' }
+          ] },
+          { q: 'How do I add prescribers or staff to a practice account?', blocks: [
+            { t: 'p', text: 'Invite them from Account → Team. Staff can build requests; only verified prescribers can sign and submit them.' }
+          ] }
+        ]
+      }
+    ];
+  }
+
+  renderVals() {
+    const data = this.data();
+    const ti = Math.min(this.state.tab, data.length - 1);
+    const active = data[ti];
+    const itemBase = { display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 12px', borderRadius: '9px', cursor: 'pointer', transition: 'background 0.15s ease, color 0.15s ease' };
+    const cur = this.state.open[ti];
+    const isOpen = (i) => Array.isArray(cur) ? cur.includes(i) : cur === i;
+    return {
+      showNotice: this.props.showNotice ?? true,
+      showAnnotations: this.props.showAnnotations ?? true,
+      activeLabel: active.label,
+      activeLede: active.lede,
+      tabs: data.map((t, i) => ({
+        label: t.label,
+        count: String(t.qs.length),
+        pick: () => this.setTab(i),
+        style: i === ti
+          ? { ...itemBase, background: '#EEF1FA', color: '#14258F', fontWeight: 600 }
+          : { ...itemBase, color: '#3C4757', fontWeight: 500 }
+      })),
+      faqs: active.qs.map((q, i) => ({
+        q: q.q,
+        open: isOpen(i),
+        sign: isOpen(i) ? '−' : '+',
+        toggle: () => this.toggle(i),
+        cardStyle: {
+          border: '1px solid ' + (isOpen(i) ? '#C9D0DA' : '#E5E8ED'),
+          borderRadius: '12px',
+          background: '#ffffff',
+          boxShadow: isOpen(i) ? '0 10px 26px rgba(20,37,63,0.07)' : 'none',
+          display: 'flex',
+          flexDirection: 'column',
+          transition: 'border-color 0.2s ease, box-shadow 0.2s ease'
+        },
+        blocks: q.blocks.map(b => ({
+          isH: b.t === 'h',
+          isP: b.t === 'p',
+          isUl: b.t === 'ul',
+          text: b.text || '',
+          items: b.items || []
+        }))
+      }))
+    };
+  }
+}
+
+</script>
+</body>
+</html>

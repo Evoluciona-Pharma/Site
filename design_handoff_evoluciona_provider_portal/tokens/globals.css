@@ -1,0 +1,101 @@
+/* Evoluciona Pharma — base layer.
+   Fonts are loaded with next/font in app/layout.tsx (see the snippet at the bottom)
+   so the CSS variables referenced by tailwind.config.ts resolve. */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body {
+    margin: 0;
+    background: #edeff3;              /* canvas */
+    font-family: var(--font-instrument-sans), -apple-system, sans-serif;
+    color: #14253f;                   /* navy */
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  /* Links default to brand blue everywhere — never browser blue. */
+  a {
+    color: #14258f;
+  }
+  a:hover {
+    color: #0e1c6e;
+  }
+
+  /* Display headings are Instrument Serif at weight 400. Never bold them. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-instrument-serif), Georgia, serif;
+    font-weight: 400;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  p {
+    margin: 0;
+    text-wrap: pretty;
+  }
+}
+
+@layer utilities {
+  /* Striped placeholder used everywhere art direction is outstanding.
+     Remove these along with their captions once real imagery lands. */
+  .ph-stripe {
+    background: repeating-linear-gradient(135deg, #edf0f4 0 12px, #e2e7ee 12px 24px);
+  }
+  .ph-stripe-dark {
+    background: repeating-linear-gradient(45deg, #2e3f5e 0 14px, #24334e 14px 28px);
+  }
+  .ph-caption {
+    font-family: var(--font-fira-code), monospace;
+    font-size: 11px;
+    color: #6b7380;
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 4px;
+    padding: 4px 8px;
+  }
+}
+
+/* Respect reduced-motion: the design is motion-heavy (carousel, scroll reveals,
+   counters, marquee). Gate all of it, and make sure revealed content stays visible. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+app/layout.tsx
+
+import { Instrument_Serif, Instrument_Sans, Anek_Latin, Fira_Code } from 'next/font/google';
+
+const serif = Instrument_Serif({
+  subsets: ['latin'], weight: ['400'], style: ['normal', 'italic'],
+  variable: '--font-instrument-serif', display: 'swap',
+});
+const sans = Instrument_Sans({
+  subsets: ['latin'], weight: ['400', '500', '600', '700'],
+  variable: '--font-instrument-sans', display: 'swap',
+});
+const logo = Anek_Latin({
+  subsets: ['latin'], weight: ['500', '600'],
+  variable: '--font-anek-latin', display: 'swap',
+});
+const mono = Fira_Code({
+  subsets: ['latin'], weight: ['400', '500'],
+  variable: '--font-fira-code', display: 'swap',
+});
+
+// <html className={`${serif.variable} ${sans.variable} ${logo.variable} ${mono.variable}`}>
+--------------------------------------------------------------------------- */

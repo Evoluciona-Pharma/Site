@@ -1,0 +1,117 @@
+/* Evoluciona Pharma — base layer.
+   Fonts are loaded with next/font in app/layout.tsx so the CSS variables
+   referenced by tailwind.config.ts resolve. */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body {
+    margin: 0;
+    background: #edeff3;              /* canvas */
+    font-family: var(--font-instrument-sans), -apple-system, sans-serif;
+    color: #14253f;                   /* navy */
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  /* Links default to brand blue everywhere — never browser blue. */
+  a {
+    color: #14258f;
+  }
+  a:hover {
+    color: #0e1c6e;
+  }
+
+  /* Display headings are Instrument Serif at weight 400. Never bold them. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-instrument-serif), Georgia, serif;
+    font-weight: 400;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  p {
+    margin: 0;
+    text-wrap: pretty;
+  }
+}
+
+@layer utilities {
+  /* Striped placeholder used everywhere art direction is outstanding.
+     Remove these along with their captions once real imagery lands. */
+  .ph-stripe {
+    background: repeating-linear-gradient(135deg, #edf0f4 0 12px, #e2e7ee 12px 24px);
+  }
+  .ph-stripe-dark {
+    background: repeating-linear-gradient(45deg, #2e3f5e 0 14px, #24334e 14px 28px);
+  }
+  .ph-caption {
+    font-family: var(--font-fira-code), monospace;
+    font-size: 11px;
+    color: #6b7380;
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 4px;
+    padding: 4px 8px;
+  }
+}
+
+/* Scroll reveal — elements marked data-reveal start hidden and enter with a
+   fade-up once the IntersectionObserver fires (or the 2s failsafe). */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(26px);
+}
+.reveal-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+/* Hero text re-animation on filter change: two identical keyframe tracks the
+   shop hero alternates between so the animation restarts every swap. */
+@keyframes heroSwapA {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroSwapB {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-swap-a { animation: heroSwapA 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.hero-swap-b { animation: heroSwapB 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Home hero progress bar — restarts each slide by alternating keyframe tracks. */
+@keyframes progressA {
+  from { width: 0; }
+  to { width: 140px; }
+}
+@keyframes progressB {
+  from { width: 0; }
+  to { width: 140px; }
+}
+.progress-a { animation: progressA 6s linear both; }
+.progress-b { animation: progressB 6s linear both; }
+
+/* Respect reduced-motion: the design is motion-heavy (carousel, scroll reveals,
+   counters, marquee). Gate all of it, and make sure revealed content stays visible. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal-init {
+    opacity: 1;
+    transform: none;
+  }
+}

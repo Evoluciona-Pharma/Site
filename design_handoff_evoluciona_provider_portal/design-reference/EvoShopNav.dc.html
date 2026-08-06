@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<header style="position:relative;display:flex;flex-direction:column;background:#ffffff;flex-shrink:0;box-shadow:0 6px 18px rgba(20,37,63,0.06)">
+  <div style="height:36px;background:#14253F;display:flex;align-items:center;justify-content:center;gap:10px;padding:0 40px">
+    <span style="font-family:'Instrument Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.1em;color:#D5DBE5">LICENSED PROVIDERS ONLY · PRODUCTS DISPENSED AGAINST PATIENT-SPECIFIC PRESCRIPTIONS</span>
+  </div>
+  <div style="height:76px;display:flex;align-items:center;justify-content:space-between;gap:32px;padding:0 40px;border-bottom:1px solid #E5E8ED">
+    <a href="index.dc.html" style="display:flex;align-items:center;gap:10px;flex-shrink:0;text-decoration:none">
+      <img src="assets/evoluciona-logo.png" alt="Evoluciona Pharma" style="height:30px;width:auto;display:block;flex-shrink:0">
+    </a>
+    <nav style="display:flex;align-items:center;gap:32px">
+      <a href="shop.dc.html" style="font-family:'Instrument Sans',sans-serif;font-size:15px;font-weight:500;color:#14253F;text-decoration:none" style-hover="color:#14258F">Shop All</a>
+      <div data-programs-root="1" style="position:relative;display:flex;align-items:center">
+        <button onClick="{{ toggleMenu }}" style="display:inline-flex;align-items:center;gap:6px;border:none;background:transparent;padding:0;font-family:'Instrument Sans',sans-serif;font-size:15px;font-weight:500;color:#14253F;cursor:pointer" style-hover="color:#14258F">Programs<span style="{{ chevStyle }}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block"><path d="M6 9 L12 15 L18 9"></path></svg></span></button>
+        <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;left:50%;top:52px;transform:translateX(-50%);width:288px;background:#ffffff;border:1px solid #E5E8ED;border-radius:16px;box-shadow:0 20px 48px rgba(20,37,63,0.16);padding:8px;z-index:60;display:flex;flex-direction:column;gap:2px;animation:evoFadeIn 0.16s ease both">
+            <sc-for list="{{ programs }}" as="p" hint-placeholder-count="6">
+              <a href="{{ p.href }}" onClick="{{ closeMenu }}" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:10px;font-family:'Instrument Sans',sans-serif;font-size:13.5px;font-weight:500;color:#3C4757;text-decoration:none" style-hover="background:#F5F7FA;color:#14258F">
+                <span>{{ p.label }}</span>
+                <span style="font-size:12px;color:#9BA5B7">{{ p.count }}</span>
+              </a>
+            </sc-for>
+            <a href="shop.dc.html" onClick="{{ closeMenu }}" style="display:flex;align-items:center;gap:8px;margin-top:6px;padding:11px 12px;border-top:1px solid #EEF1F5;font-family:'Instrument Sans',sans-serif;font-size:13px;font-weight:600;color:#14258F;text-decoration:none" style-hover="color:#0E1C6E">All formulations
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M5 12 L19 12 M13 6 L19 12 L13 18"></path></svg>
+            </a>
+          </div>
+        </sc-if>
+      </div>
+      <a href="#" style="font-family:'Instrument Sans',sans-serif;font-size:15px;font-weight:500;color:#14253F;text-decoration:none" style-hover="color:#14258F">About</a>
+      <a href="faq.dc.html" style="font-family:'Instrument Sans',sans-serif;font-size:15px;font-weight:500;color:#14253F;text-decoration:none" style-hover="color:#14258F">Provider FAQ</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:18px;flex-shrink:0">
+      <div data-search-root="1" style="position:relative;flex-shrink:0">
+        <form onSubmit="{{ onSubmit }}" role="search" style="margin:0;width:224px;height:40px;border:1px solid #D9DEE5;border-radius:100px;display:flex;align-items:center;gap:8px;padding:0 14px;background:#ffffff;transition:border-color 0.18s ease" style-hover="border-color:#9BA5B7">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9BA5B7" stroke-width="2" stroke-linecap="round" style="flex-shrink:0"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="M15.5 15.5 L20 20"></path></svg>
+          <input ref="{{ inputRef }}" type="text" autoComplete="off" spellCheck="{{ false }}" aria-label="Search formulations" placeholder="Search formulations" onInput="{{ onQuery }}" onFocus="{{ onFocus }}" onKeyDown="{{ onKey }}" style="flex:1;min-width:0;height:24px;border:none;outline:none;background:transparent;font-family:'Instrument Sans',sans-serif;font-size:13px;color:#14253F;padding:0">
+          <sc-if value="{{ hasQuery }}" hint-placeholder-val="{{ false }}">
+            <span onClick="{{ clearQuery }}" title="Clear search" style="width:18px;height:18px;border-radius:9px;background:#EEF1FA;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0" style-hover="background:#DCE3F6"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#14258F" stroke-width="3.6" stroke-linecap="round"><path d="M6 6 L18 18 M18 6 L6 18"></path></svg></span>
+          </sc-if>
+        </form>
+        <sc-if value="{{ searchOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;right:0;top:50px;width:604px;background:#ffffff;border:1px solid #E5E8ED;border-radius:20px;box-shadow:0 26px 60px rgba(20,37,63,0.18);padding:22px 24px 24px;z-index:70;display:flex;flex-direction:column;gap:14px;animation:evoFadeIn 0.16s ease both">
+            <span style="font-family:'Instrument Serif',serif;font-size:20px;color:#14253F">Popular search</span>
+            <div style="display:flex;flex-wrap:wrap;gap:9px">
+              <sc-for list="{{ popular }}" as="t" hint-placeholder-count="5">
+                <span onClick="{{ t.pick }}" style="{{ t.pillStyle }}" style-hover="border-color:#14258F;color:#14258F">{{ t.label }}</span>
+              </sc-for>
+            </div>
+            <span style="font-family:'Instrument Serif',serif;font-size:20px;color:#14253F;margin-top:4px">{{ resultsHeading }}</span>
+            <sc-if value="{{ hasResults }}" hint-placeholder-val="{{ true }}">
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+                <sc-for list="{{ results }}" as="r" hint-placeholder-count="3">
+                  <a href="{{ r.href }}" onClick="{{ closeSearch }}" onMouseEnter="{{ r.hover }}" style="{{ r.cardStyle }}">
+                    <span style="position:relative;display:block;height:132px;border-radius:12px;overflow:hidden;background:#F0F2F6">
+                      <sc-if value="{{ r.img }}" hint-placeholder-val="{{ false }}">
+                        <img src="{{ r.img }}" alt="{{ r.name }} sterile vial" style="width:100%;height:100%;object-fit:cover;display:block">
+                      </sc-if>
+                      <sc-if value="{{ r.isProgram }}" hint-placeholder-val="{{ false }}">
+                        <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#EEF1FA"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14258F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5 L20 6.5 M4 12 L20 12 M4 17.5 L14 17.5"></path></svg></span>
+                      </sc-if>
+                      <sc-if value="{{ r.badge }}" hint-placeholder-val="{{ false }}">
+                        <span style="position:absolute;top:9px;left:9px;font-family:'Instrument Sans',sans-serif;font-size:10px;font-weight:600;letter-spacing:0.04em;color:#ffffff;background:#14258F;border-radius:100px;padding:5px 10px">{{ r.badge }}</span>
+                      </sc-if>
+                    </span>
+                    <span style="display:flex;flex-direction:column;gap:3px;padding:11px 4px 3px;min-width:0">
+                      <span style="font-family:'Instrument Sans',sans-serif;font-size:11.5px;color:#8C93A0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.kindLabel }}</span>
+                      <span style="font-family:'Instrument Sans',sans-serif;font-size:14px;font-weight:600;color:#14253F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.name }}</span>
+                      <span style="font-family:'Instrument Sans',sans-serif;font-size:12.5px;color:#6B7380;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.meta }}</span>
+                    </span>
+                  </a>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:5px;padding:6px 2px 4px">
+                <span style="font-family:'Instrument Sans',sans-serif;font-size:13.5px;font-weight:600;color:#14253F">No formulations match “{{ query }}”</span>
+                <span style="font-family:'Instrument Sans',sans-serif;font-size:12.5px;line-height:19px;color:#8C93A0">Try a program, a peptide name, or a presentation like 5 mL.</span>
+              </div>
+            </sc-if>
+            <a href="{{ allHref }}" onClick="{{ closeSearch }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:4px;padding:13px 4px 0;border-top:1px solid #EEF1F5;font-family:'Instrument Sans',sans-serif;font-size:13px;font-weight:600;color:#14258F;text-decoration:none" style-hover="color:#0E1C6E">{{ allLabel }}
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M5 12 L19 12 M13 6 L19 12 L13 18"></path></svg>
+            </a>
+          </div>
+        </sc-if>
+      </div>
+      <button style="width:40px;height:40px;border:none;border-radius:20px;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#EEF1FA"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#14253F" stroke-width="1.8" stroke-linecap="round" style="flex-shrink:0"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.8 20 C5.6 16.4 8.4 14.4 12 14.4 C15.6 14.4 18.4 16.4 19.2 20"></path></svg></button>
+      <button onClick="{{ onBag }}" style="position:relative;width:40px;height:40px;border:none;border-radius:20px;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:#EEF1FA">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#14253F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M5 8 L19 8 L18 21 L6 21 Z"></path><path d="M8.5 10.5 L8.5 6.5 C8.5 4.6 10 3 12 3 C14 3 15.5 4.6 15.5 6.5 L15.5 10.5"></path></svg>
+        <span style="position:absolute;top:1px;right:0;min-width:17px;height:17px;border-radius:9px;background:#14258F;color:#ffffff;font-family:'Instrument Sans',sans-serif;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px">{{ count }}</span>
+      </button>
+    </div>
+  </div>
+</header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:112},&quot;count&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;2&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;query&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onBag&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+const PROGRAMS = [
+  ["Longevity & Cellular Health", "3"],
+  ["Recovery & Regenerative", "2"],
+  ["Hormone Optimization", "1"],
+  ["Nutrient & Metabolic", "1"],
+  ["Metabolic Health", "1"],
+  ["Sexual Wellness", "1"]
+];
+
+// Search index — mirrors the shop catalog. `terms` are synonyms providers may type.
+const POPULAR = ["NAD+", "Recovery", "Longevity", "Peptide", "5 mL"];
+
+const CATALOG = [
+  ["NAD+", "Longevity & Cellular Health", "5 mL and 10 mL · 100 mg/mL", "nicotinamide adenine dinucleotide coenzyme redox mitochondrial energy", "nad", "Featured"],
+  ["NAD+ / Glutathione", "Longevity & Cellular Health", "Combination · 10 mL", "glutathione antioxidant combination nad", "nad-glutathione", "New"],
+  ["MOTS-C", "Longevity & Cellular Health", "Presentation pending confirmation", "mots mitochondrial derived peptide", "mots-c"],
+  ["BPC-157", "Recovery & Regenerative", "5 mL", "bpc body protection compound tissue connective peptide", "bpc-157"],
+  ["TB-500", "Recovery & Regenerative", "5 mL", "tb500 thymosin beta 4 fragment recovery peptide", "tb-500"],
+  ["Sermorelin", "Hormone Optimization", "5 mL", "growth hormone releasing ghrh analog", "sermorelin"],
+  ["Lipo-C", "Nutrient & Metabolic", "10 mL", "lipotropic methionine inositol choline metabolic", "lipo-c"],
+  ["PT-141", "Sexual Wellness", "5 mL", "pt141 bremelanotide melanocortin libido", "pt-141"]
+];
+
+class Component extends DCLogic {
+  inputRef = React.createRef();
+  state = { menuOpen: false, query: "", searchOpen: false, hi: -1 };
+
+  componentDidMount() {
+    this._away = (e) => {
+      const inProgs = e.target.closest && e.target.closest('[data-programs-root]');
+      const inSearch = e.target.closest && e.target.closest('[data-search-root]');
+      if (this.state.menuOpen && !inProgs) this.setState({ menuOpen: false });
+      if (this.state.searchOpen && !inSearch) this.setState({ searchOpen: false, hi: -1 });
+    };
+    this._esc = (e) => {
+      if (e.key !== 'Escape') return;
+      if (this.state.menuOpen) this.setState({ menuOpen: false });
+      if (this.state.searchOpen) this.setState({ searchOpen: false, hi: -1 });
+    };
+    // The prop can change while the box is focused; retry the write once focus leaves.
+    this._blur = (e) => { if (e.target === this.inputRef.current) setTimeout(() => this.syncQueryProp(true), 0); };
+    document.addEventListener('mousedown', this._away);
+    document.addEventListener('keydown', this._esc);
+    document.addEventListener('focusout', this._blur, true);
+    this.syncQueryProp();
+  }
+  componentDidUpdate() { this.syncQueryProp(); }
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this._away);
+    document.removeEventListener('keydown', this._esc);
+    document.removeEventListener('focusout', this._blur, true);
+  }
+
+  // The page tells us what it is currently filtered by, so the box reflects the URL.
+  syncQueryProp(force) {
+    const q = this.props.query ?? "";
+    if (q === this._lastQ) return;
+    const el = this.inputRef.current;
+    if (!force && el && document.activeElement === el) return;   // retry on blur — never mark it synced early
+    this._lastQ = q;
+    if (el) el.value = q;
+    if (this.state.query !== q) this.setState({ query: q, searchOpen: false, hi: -1 });
+  }
+
+  matches(q) {
+    const tokens = q.toLowerCase().split(/\s+/).filter(Boolean);
+    if (!tokens.length) return [];
+    const hit = (hay) => tokens.every(t => hay.indexOf(t) !== -1);
+    const first = tokens[0];
+
+    const prods = CATALOG
+      .map(([name, cat, pres, terms, slug, badge]) => ({ name, cat, pres, slug, badge, hay: (name + ' ' + cat + ' ' + pres + ' ' + terms).toLowerCase() }))
+      .filter(p => hit(p.hay))
+      .map(p => ({
+        kind: 'FORMULATION', kindLabel: p.cat, name: p.name, meta: p.pres, badge: p.badge || '',
+        img: 'assets/vials/' + p.slug + '.jpg', isProgram: false,
+        href: 'product-nad.dc.html#p=' + encodeURIComponent(p.name),
+        rank: p.name.toLowerCase().indexOf(first) === 0 ? 0 : (p.name.toLowerCase().indexOf(first) !== -1 ? 1 : 2)
+      }))
+      .sort((a, b) => a.rank - b.rank)
+      .slice(0, 5);
+
+    const progs = PROGRAMS
+      .filter(([label]) => hit(label.toLowerCase()))
+      .map(([label, count]) => ({
+        kind: 'PROGRAM', kindLabel: 'Program', name: label, meta: count + (count === '1' ? ' formulation' : ' formulations'), badge: '',
+        img: '', isProgram: true,
+        href: 'shop.dc.html#cat=' + encodeURIComponent(label)
+      }))
+      .slice(0, 2);
+
+    return [...prods, ...progs].slice(0, 6);
+  }
+
+  featured() {
+    return CATALOG.slice(0, 3).map(([name, cat, pres, terms, slug, badge]) => ({
+      kind: 'FORMULATION', kindLabel: cat, name, meta: pres, badge: badge || '', isProgram: false,
+      img: 'assets/vials/' + slug + '.jpg',
+      href: 'product-nad.dc.html#p=' + encodeURIComponent(name)
+    }));
+  }
+
+  setQuery(v) {
+    if (this.inputRef.current) { this.inputRef.current.value = v; this.inputRef.current.focus(); }
+    this._lastQ = v;
+    this.setState({ query: v, searchOpen: true, hi: -1 });
+  }
+
+  // Drops q= from the current hash, keeping the route head and any other page state.
+  dropQueryFromHash() {
+    const raw = (location.hash || '').replace(/^#\/?/, '');
+    const i = raw.indexOf('|');
+    if (i === -1) return;
+    const head = raw.slice(0, i);
+    if (!/^[a-z0-9-]+$/i.test(head)) return;
+    const frag = raw.slice(i + 1).split('&').filter(part => part && !/^q=/.test(part)).join('&');
+    const next = frag ? head + '|' + frag : head;
+    if (raw !== next) location.hash = next;
+  }
+
+  // Hash format is "<route>|<page-state>" — never write a bare fragment.
+  navigate(href) {
+    const m = String(href).match(/(?:^|\/)([a-z0-9-]+)\.dc\.html(?:#(.*))?$/i);
+    if (!m) return;
+    const next = m[1].toLowerCase() + (m[2] ? '|' + m[2].replace(/^#/, '') : '');
+    if (location.hash.replace(/^#\/?/, '') !== next) location.hash = next;
+    else window.scrollTo(0, 0);
+  }
+
+  submit(index) {
+    const q = (this.state.query || '').trim();
+    const results = this.matches(q);
+    const pick = index != null && index >= 0 ? results[index] : null;
+    const href = pick ? pick.href : (q ? 'shop.dc.html#q=' + encodeURIComponent(q) : 'shop.dc.html');
+    this.setState({ searchOpen: false, hi: -1 });
+    if (this.inputRef.current) this.inputRef.current.blur();
+    this.navigate(href);
+  }
+
+  renderVals() {
+    const open = this.state.menuOpen;
+    const q = this.state.query || '';
+    const trimmed = q.trim();
+    const found = trimmed ? this.matches(trimmed) : [];
+    const results = trimmed ? found : this.featured();
+    const hi = this.state.hi;
+    return {
+      count: this.props.count ?? "0",
+      onBag: this.props.onBag,
+      menuOpen: open,
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen, searchOpen: false })),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      chevStyle: {
+        display: 'inline-flex', color: 'currentColor',
+        transition: 'transform 0.2s ease',
+        transform: open ? 'rotate(180deg)' : 'rotate(0deg)'
+      },
+      programs: PROGRAMS.map(([label, count]) => ({
+        label, count,
+        href: 'shop.dc.html#cat=' + encodeURIComponent(label)
+      })),
+      inputRef: this.inputRef,
+      query: q,
+      hasQuery: trimmed.length > 0,
+      searchOpen: this.state.searchOpen,
+      hasResults: results.length > 0,
+      noResults: trimmed.length > 0 && found.length === 0,
+      resultsHeading: trimmed ? (found.length ? 'Results' : 'No matches') : 'Featured formulations',
+      allLabel: trimmed ? 'Search the full catalog' : 'Browse all 8 formulations',
+      allHref: trimmed ? 'shop.dc.html#q=' + encodeURIComponent(trimmed) : 'shop.dc.html',
+      popular: POPULAR.map(label => ({
+        label,
+        pick: () => this.setQuery(label),
+        pillStyle: {
+          height: '34px', display: 'inline-flex', alignItems: 'center', padding: '0 16px',
+          border: '1px solid #E5E8ED', borderRadius: '100px', background: '#FAFBFC',
+          fontFamily: "'Instrument Sans',sans-serif", fontSize: '13px', fontWeight: 500,
+          color: trimmed.toLowerCase() === label.toLowerCase() ? '#14258F' : '#3C4757',
+          cursor: 'pointer', whiteSpace: 'nowrap', transition: 'border-color 0.18s ease, color 0.18s ease'
+        }
+      })),
+      results: results.map((r, i) => ({
+        ...r,
+        hover: () => { if (this.state.hi !== i) this.setState({ hi: i }); },
+        cardStyle: {
+          display: 'flex', flexDirection: 'column', textDecoration: 'none',
+          background: hi === i ? '#F5F7FA' : '#FAFBFC',
+          border: '1px solid ' + (hi === i ? '#C7D0E8' : '#EEF1F5'),
+          borderRadius: '16px', padding: '10px 10px 12px', minWidth: 0,
+          transition: 'background 0.18s ease, border-color 0.18s ease'
+        }
+      })),
+      onQuery: (e) => this.setState({ query: e.target.value, searchOpen: true, hi: -1 }),
+      onFocus: () => this.setState({ searchOpen: true, menuOpen: false }),
+      clearQuery: () => {
+        if (this.inputRef.current) { this.inputRef.current.value = ''; this.inputRef.current.focus(); }
+        this._lastQ = '';
+        this.setState({ query: '', searchOpen: true, hi: -1 });
+        this.dropQueryFromHash();
+      },
+      closeSearch: () => this.setState({ searchOpen: false, hi: -1 }),
+      onSubmit: (e) => { e.preventDefault(); this.submit(this.state.hi); },
+      onKey: (e) => {
+        const n = results.length;
+        if (e.key === 'ArrowDown' && n) { e.preventDefault(); this.setState(s => ({ searchOpen: true, hi: s.hi + 1 >= n ? 0 : s.hi + 1 })); }
+        else if (e.key === 'ArrowUp' && n) { e.preventDefault(); this.setState(s => ({ searchOpen: true, hi: s.hi - 1 < 0 ? n - 1 : s.hi - 1 })); }
+        else if (e.key === 'Escape') this.setState({ searchOpen: false, hi: -1 });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

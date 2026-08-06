@@ -1,0 +1,476 @@
+{
+  "_note": "Real content for the Evoluciona Pharma provider portal, lifted verbatim from the design references. Compliance and product copy is legally reviewed — do not paraphrase. 'pending' values are blocked on pharmacy confirmation; never substitute an estimate.",
+  "programs": [
+    { "slug": "longevity-cellular-health", "label": "Longevity & Cellular Health", "count": 3, "heroHue": 285, "heroTitle": "Longevity & Cellular Health", "heroSub": "NAD+ and mitochondrial-pathway formulations compounded for cellular-health programs.", "cardImage": "assets/vials/nad.jpg" },
+    { "slug": "recovery-regenerative", "label": "Recovery & Regenerative", "count": 2, "heroHue": 192, "heroTitle": "Recovery & Regenerative", "heroSub": "Peptide formulations studied in tissue and connective-structure contexts.", "cardImage": "assets/vials/bpc-157.jpg" },
+    { "slug": "hormone-optimization", "label": "Hormone Optimization", "count": 1, "heroHue": 245, "heroTitle": "Hormone Optimization", "heroSub": "Growth hormone-releasing hormone analog preparations for provider-led programs.", "cardImage": "assets/vials/sermorelin.jpg" },
+    { "slug": "nutrient-metabolic", "label": "Nutrient & Metabolic", "count": 1, "heroHue": 152, "heroTitle": "Nutrient & Metabolic", "heroSub": "Lipotropic nutrient combinations compounded for metabolic programs.", "cardImage": "assets/vials/lipo-c.jpg" },
+    { "slug": "metabolic-health", "label": "Metabolic Health", "count": 1, "heroHue": 215, "heroTitle": "Metabolic Health", "heroSub": "Nutrient formulations compounded for metabolic-health programs.", "cardImage": "assets/vials/lipo-c.jpg" },
+    { "slug": "sexual-wellness", "label": "Sexual Wellness", "count": 1, "heroHue": 335, "heroTitle": "Sexual Wellness", "heroSub": "Melanocortin receptor agonist preparations for provider-led programs.", "cardImage": "assets/vials/pt-141.jpg" }
+  ],
+  "shopHeroAll": {
+    "heroHue": 262,
+    "title": "All formulations",
+    "sub": "Eight compounded formulations across six clinical programs, prepared as sterile preparations against patient-specific prescriptions."
+  },
+  "presentationFacets": [
+    { "label": "5 mL", "count": 5 },
+    { "label": "10 mL", "count": 3 },
+    { "label": "Pending confirmation", "count": 1 }
+  ],
+  "popularSearches": ["NAD+", "Recovery", "Longevity", "Peptide", "5 mL"],
+  "sortOptions": [
+    { "id": "featured", "label": "Featured" },
+    { "id": "az", "label": "A–Z" },
+    { "id": "za", "label": "Z–A" }
+  ],
+  "products": [
+    {
+      "slug": "nad",
+      "name": "NAD+",
+      "program": "Longevity & Cellular Health",
+      "programAlt": null,
+      "badge": "Featured",
+      "presentations": ["5 mL", "10 mL"],
+      "defaultPresentation": "5 mL",
+      "concentration": "100 mg/mL",
+      "concentrationStatus": "confirmed",
+      "presentationStatus": "confirmed",
+      "spec": "Sterile vial · 5 mL and 10 mL · 100 mg/mL",
+      "tagline": "Coenzyme / cellular metabolism support compound · Sterile vial · 100 mg/mL",
+      "blurb": "NAD+ is a sterile compounded medication. NAD+ is a coenzyme involved in redox reactions, cellular metabolism, mitochondrial electron transport, and cellular signaling pathways.",
+      "description": "NAD+ (nicotinamide adenine dinucleotide) is a coenzyme involved in redox reactions, cellular metabolism, mitochondrial electron transport, and cellular signaling pathways. Format: sterile vial · Presentation: 5 mL, 10 mL · Concentration: 100 mg/mL.",
+      "howSupplied": "Sterile vial in 5 mL and 10 mL presentations at 100 mg/mL. Each order is compounded pursuant to a patient-specific prescription and shipped directly to your practice.",
+      "pairsWith": "NAD+ / Glutathione",
+      "searchTerms": "nicotinamide adenine dinucleotide coenzyme redox mitochondrial energy",
+      "image": "assets/vials/nad.jpg"
+    },
+    {
+      "slug": "nad-glutathione",
+      "name": "NAD+ / Glutathione",
+      "program": "Longevity & Cellular Health",
+      "programAlt": null,
+      "badge": "New",
+      "presentations": ["10 mL"],
+      "defaultPresentation": "10 mL",
+      "concentration": null,
+      "concentrationStatus": "on-label",
+      "presentationStatus": "confirmed",
+      "spec": "Sterile vial · combination formulation · 10 mL",
+      "tagline": "Combination sterile compounded formulation · Sterile vial · 10 mL",
+      "blurb": "Combination sterile compounded formulation pairing NAD+ with glutathione, prepared as a sterile preparation in vial presentation.",
+      "description": "Combination formulation pairing NAD+ with glutathione. Format: sterile vial · Presentation: 10 mL. Concentration is documented on the pharmacy label for each preparation.",
+      "howSupplied": "Sterile vial in a 10 mL presentation, compounded pursuant to a patient-specific prescription and shipped directly to your practice.",
+      "pairsWith": "NAD+",
+      "searchTerms": "glutathione antioxidant combination nad",
+      "image": "assets/vials/nad-glutathione.jpg"
+    },
+    {
+      "slug": "mots-c",
+      "name": "MOTS-C",
+      "program": "Longevity & Cellular Health",
+      "programAlt": null,
+      "badge": null,
+      "presentations": [],
+      "defaultPresentation": null,
+      "concentration": null,
+      "concentrationStatus": "pending",
+      "presentationStatus": "pending",
+      "spec": "Sterile vial · presentation pending confirmation",
+      "tagline": "Mitochondrial-derived peptide · Sterile vial · presentation pending confirmation",
+      "blurb": "Mitochondrial-derived peptide compounded as a sterile preparation. Presentation conflicts between source documents — pharmacy confirmation required before it is published.",
+      "description": "Mitochondrial-derived peptide studied in cellular-metabolism contexts. Format: sterile vial · Presentation: pending pharmacy confirmation. No estimated values are shown.",
+      "howSupplied": "Sterile vial. Presentation is pending pharmacy confirmation; your representative will confirm the available presentation with your request.",
+      "pairsWith": "NAD+",
+      "searchTerms": "mots mitochondrial derived peptide",
+      "image": "assets/vials/mots-c.jpg",
+      "pendingNotice": "Presentation pending pharmacy confirmation — source documents conflict."
+    },
+    {
+      "slug": "bpc-157",
+      "name": "BPC-157",
+      "program": "Recovery & Regenerative",
+      "programAlt": null,
+      "badge": null,
+      "presentations": ["5 mL"],
+      "defaultPresentation": "5 mL",
+      "concentration": null,
+      "concentrationStatus": "pending",
+      "presentationStatus": "confirmed",
+      "spec": "Sterile vial · 5 mL",
+      "tagline": "Synthetic peptide sequence · Sterile vial · 5 mL",
+      "blurb": "BPC-157 is a synthetic peptide sequence studied in tissue and connective structure contexts, compounded as a sterile preparation.",
+      "description": "Synthetic peptide sequence studied in tissue and connective structure contexts. Format: sterile vial · Presentation: 5 mL.",
+      "howSupplied": "Sterile vial in a 5 mL presentation, compounded pursuant to a patient-specific prescription and shipped directly to your practice.",
+      "pairsWith": "TB-500",
+      "searchTerms": "bpc body protection compound tissue connective peptide",
+      "image": "assets/vials/bpc-157.jpg"
+    },
+    {
+      "slug": "tb-500",
+      "name": "TB-500",
+      "program": "Recovery & Regenerative",
+      "programAlt": null,
+      "badge": null,
+      "presentations": ["5 mL"],
+      "defaultPresentation": "5 mL",
+      "concentration": null,
+      "concentrationStatus": "pending",
+      "presentationStatus": "confirmed",
+      "spec": "Sterile vial · 5 mL",
+      "tagline": "Synthetic peptide fragment · Sterile vial · 5 mL",
+      "blurb": "TB-500 is a synthetic peptide fragment related to thymosin beta-4, compounded as a sterile preparation.",
+      "description": "Synthetic peptide fragment related to thymosin beta-4. Format: sterile vial · Presentation: 5 mL.",
+      "howSupplied": "Sterile vial in a 5 mL presentation, compounded pursuant to a patient-specific prescription and shipped directly to your practice.",
+      "pairsWith": "BPC-157",
+      "searchTerms": "tb500 thymosin beta 4 fragment recovery peptide",
+      "image": "assets/vials/tb-500.jpg"
+    },
+    {
+      "slug": "sermorelin",
+      "name": "Sermorelin",
+      "program": "Hormone Optimization",
+      "programAlt": null,
+      "badge": null,
+      "presentations": ["5 mL"],
+      "defaultPresentation": "5 mL",
+      "concentration": null,
+      "concentrationStatus": "pending",
+      "presentationStatus": "confirmed",
+      "spec": "Sterile vial · 5 mL",
+      "tagline": "Growth hormone-releasing hormone analog · Sterile vial · 5 mL",
+      "blurb": "Sermorelin is a growth hormone-releasing hormone analog compounded as a sterile preparation in vial presentation.",
+      "description": "Growth hormone-releasing hormone analog. Format: sterile vial · Presentation: 5 mL.",
+      "howSupplied": "Sterile vial in a 5 mL presentation, compounded pursuant to a patient-specific prescription and shipped directly to your practice.",
+      "pairsWith": "NAD+",
+      "searchTerms": "growth hormone releasing ghrh analog",
+      "image": "assets/vials/sermorelin.jpg"
+    },
+    {
+      "slug": "lipo-c",
+      "name": "Lipo-C",
+      "program": "Nutrient & Metabolic",
+      "programAlt": "Metabolic Health",
+      "badge": null,
+      "presentations": ["10 mL"],
+      "defaultPresentation": "10 mL",
+      "concentration": null,
+      "concentrationStatus": "data-fix-pending",
+      "presentationStatus": "confirmed",
+      "spec": "Sterile vial · 10 mL",
+      "tagline": "Lipotropic nutrient combination · Sterile vial · 10 mL",
+      "blurb": "Lipo-C is a lipotropic nutrient combination compounded as a sterile preparation. The concentration value in the source data awaits pharmacy correction.",
+      "description": "Lipotropic nutrient combination. Format: sterile vial · Presentation: 10 mL · Concentration: pending pharmacy correction.",
+      "howSupplied": "Sterile vial in a 10 mL presentation, compounded pursuant to a patient-specific prescription and shipped directly to your practice.",
+      "pairsWith": "NAD+",
+      "searchTerms": "lipotropic methionine inositol choline metabolic",
+      "image": "assets/vials/lipo-c.jpg"
+    },
+    {
+      "slug": "pt-141",
+      "name": "PT-141",
+      "program": "Sexual Wellness",
+      "programAlt": null,
+      "badge": null,
+      "presentations": ["5 mL"],
+      "defaultPresentation": "5 mL",
+      "concentration": null,
+      "concentrationStatus": "pending",
+      "presentationStatus": "confirmed",
+      "spec": "Sterile vial · 5 mL",
+      "tagline": "Melanocortin receptor agonist peptide · Sterile vial · 5 mL",
+      "blurb": "PT-141 is a melanocortin receptor agonist peptide compounded as a sterile preparation in vial presentation.",
+      "description": "Melanocortin receptor agonist peptide. Format: sterile vial · Presentation: 5 mL.",
+      "howSupplied": "Sterile vial in a 5 mL presentation, compounded pursuant to a patient-specific prescription and shipped directly to your practice.",
+      "pairsWith": "Sermorelin",
+      "searchTerms": "pt141 bremelanotide melanocortin libido",
+      "image": "assets/vials/pt-141.jpg"
+    }
+  ],
+  "productThumbViews": ["vial front", "label detail", "scale reference", "carton & insert"],
+  "productAccordion": {
+    "providerRequirements": "An active professional license verified with Evoluciona, a patient-specific prescription for each preparation, and a practice shipping address on file.",
+    "productFaq": "Prescribing, preparation timelines, storage, and handling — answered in the provider FAQ."
+  },
+  "compliance": {
+    "topStrip": "LICENSED PROVIDERS ONLY · PRODUCTS DISPENSED AGAINST PATIENT-SPECIFIC PRESCRIPTIONS",
+    "shopSidebar": "Verified providers only. Products are dispensed against a patient-specific prescription. No pricing is shown online.",
+    "productPanel": "Available to verified licensed providers through a patient-specific prescription. No pricing online.",
+    "productDisclaimer": "Product information is intended for licensed provider education and program support only. Evoluciona Pharma prepares compounded medications pursuant to patient-specific prescriptions from licensed healthcare providers. Product information is not intended to diagnose, treat, cure, or prevent any disease. Clinical decisions remain solely the responsibility of the licensed prescribing provider.",
+    "drawerNotice": "No pricing is shown online — a representative shares program details after your request.",
+    "requestNotice": "No pricing online. A representative will follow up with program details for your list.",
+    "faqNotice": "This portal is for licensed providers. Patients should contact their prescribing provider. Ordering requires verification and a patient-specific prescription.",
+    "footerBlurb": "Compounded medications prepared pursuant to patient-specific prescriptions from licensed healthcare providers.",
+    "footerLegal": "Product information is intended for licensed provider education and program support only. Not intended to diagnose, treat, cure, or prevent any disease. Clinical decisions remain solely the responsibility of the licensed prescribing provider.",
+    "attestation": "I confirm I am a licensed healthcare provider and that any order will be placed pursuant to a patient-specific prescription.",
+    "copyright": "© 2026 Evoluciona Pharma"
+  },
+  "faqTopics": [
+    {
+      "slug": "secure-ordering",
+      "label": "Secure Ordering",
+      "lede": "How a request moves from submission to release, and how patient data is handled along the way.",
+      "questions": [
+        {
+          "q": "How long does it take to process a request?",
+          "blocks": [
+            { "type": "h", "text": "1. Standard provider requests" },
+            { "type": "ul", "items": [
+              "Verification is automatic once an active license is on file — instant for accounts in good standing.",
+              "Clinical review of the patient-specific prescription usually takes 1–2 business days.",
+              "Compounding and release checks add a further 1–3 business days depending on the preparation."
+            ] },
+            { "type": "h", "text": "2. Made-to-order preparations" },
+            { "type": "ul", "items": [
+              "Combination formulations and preparations requiring extra quality checks are released more slowly.",
+              "These typically take 5–10 days before they are ready to ship."
+            ] },
+            { "type": "h", "text": "3. Out-of-state requests" },
+            { "type": "ul", "items": [
+              "Shipments crossing state lines follow the receiving board’s requirements before release.",
+              "Total time to delivery can run 7–21 days depending on the state and the carrier service selected."
+            ] },
+            { "type": "h", "text": "In summary" },
+            { "type": "ul", "items": [
+              "Standard requests: 2–5 days",
+              "Made-to-order preparations: 5–10 days",
+              "Out-of-state requests: 7–21 days or longer"
+            ] }
+          ]
+        },
+        {
+          "q": "Is prescription and patient data transmitted securely?",
+          "blocks": [
+            { "type": "p", "text": "Every request is submitted over an encrypted connection and stored against your practice record. Patient identifiers are visible only to the prescriber on file and the dispensing pharmacist." }
+          ]
+        },
+        {
+          "q": "Who is allowed to submit a request?",
+          "blocks": [
+            { "type": "p", "text": "Only verified, licensed providers. Patients cannot order directly and should contact their prescribing provider, who submits the patient-specific prescription on their behalf." }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "track-order",
+      "label": "Track Order",
+      "lede": "Where to find the status of a request, and what to do when tracking goes quiet.",
+      "questions": [
+        {
+          "q": "How can I check the status of an order?",
+          "blocks": [
+            { "type": "h", "text": "1. Check your email" },
+            { "type": "ul", "items": [
+              "A confirmation email is sent as soon as the request is received.",
+              "A second email follows with the tracking number once the order ships.",
+              "Use the tracking link in that email to check status without signing in."
+            ] },
+            { "type": "h", "text": "2. Sign in to the portal" },
+            { "type": "ul", "items": [
+              "Open “My Orders” in your practice dashboard.",
+              "Each line shows its current stage — In review, Compounding, Shipped, Delivered — with the estimated release date."
+            ] },
+            { "type": "h", "text": "3. Use the tracking number" },
+            { "type": "ul", "items": [
+              "Once shipped, track the parcel on the carrier’s site (FedEx, UPS).",
+              "Cold-chain parcels carry a separate temperature-controlled service level and show their own scans."
+            ] },
+            { "type": "h", "text": "4. Contact provider support" },
+            { "type": "ul", "items": [
+              "If the portal and email do not answer it, contact support with your order number and account email."
+            ] }
+          ]
+        },
+        {
+          "q": "What should I do if tracking hasn’t updated?",
+          "blocks": [
+            { "type": "p", "text": "Carrier scans can take 24–48 hours to appear, especially over weekends. If nothing changes for more than 3 days, contact provider support and we will trace the parcel." }
+          ]
+        },
+        {
+          "q": "Are cold-chain shipments handled differently?",
+          "blocks": [
+            { "type": "p", "text": "Temperature-sensitive preparations ship in validated packaging and are released only on days that allow delivery inside the qualified window." }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "orders-shipping",
+      "label": "Orders & Shipping",
+      "lede": "Timelines, coverage, and what can still be changed after a request is submitted.",
+      "questions": [
+        {
+          "q": "How long does shipping usually take?",
+          "blocks": [
+            { "type": "p", "text": "Standard shipping is 3–7 business days; express arrives within 1–3 business days. Times vary by state and by the carrier service required for cold-chain parcels." }
+          ]
+        },
+        {
+          "q": "Can I modify or cancel an order after submitting it?",
+          "blocks": [
+            { "type": "h", "text": "1. Before the request is processed" },
+            { "type": "ul", "items": [
+              "While a request is still in review, most details can be changed or the request withdrawn.",
+              "Do this within a few hours of submitting.",
+              "Changes usually available: shipping address, payment method, adding or removing line items."
+            ] },
+            { "type": "h", "text": "2. After compounding has started" },
+            { "type": "ul", "items": [
+              "Once the preparation is in production or packed, changes are no longer possible.",
+              "A cancellation can still be requested, but it is handled as a return once delivered."
+            ] },
+            { "type": "h", "text": "3. Patient-specific preparations" },
+            { "type": "ul", "items": [
+              "Made-to-order sterile preparations cannot be modified or cancelled once compounding begins."
+            ] },
+            { "type": "h", "text": "4. How to cancel or modify" },
+            { "type": "ul", "items": [
+              "Check your confirmation email for the request link.",
+              "Open the request in the portal to see whether Modify or Withdraw is still offered.",
+              "Contact provider support with the order number for anything the portal will not let you change."
+            ] }
+          ]
+        },
+        {
+          "q": "Do you ship to every state?",
+          "blocks": [
+            { "type": "p", "text": "We ship wherever the pharmacy holds an active non-resident license. Eligible states and available service levels are shown at submission." }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "payment-credit",
+      "label": "Payment & Account Credit",
+      "lede": "Accepted methods, practice-level invoicing, and how account credit is issued and spent.",
+      "questions": [
+        {
+          "q": "How does account credit work?",
+          "blocks": [
+            { "type": "h", "text": "1. What account credit is" },
+            { "type": "ul", "items": [
+              "A prepaid balance held against your practice account and applied to future requests.",
+              "It is usually issued after an approved return or a corrected invoice.",
+              "It is not cash and can only be used on this portal."
+            ] },
+            { "type": "h", "text": "2. How to use it" },
+            { "type": "ul", "items": [
+              "Select “Account credit” at submission.",
+              "The request total is deducted from the available balance.",
+              "If the request exceeds the balance, pay the remainder by card or ACH."
+            ] },
+            { "type": "h", "text": "3. How it is issued" },
+            { "type": "ul", "items": [
+              "Approved returns: credit is issued in place of a refund to the original method.",
+              "Corrected invoices: pricing or quantity adjustments are returned as credit.",
+              "Cancelled requests: credit is issued when the original charge has already settled."
+            ] }
+          ]
+        },
+        {
+          "q": "What payment methods do you accept?",
+          "blocks": [
+            { "type": "p", "text": "Major credit cards, ACH transfer, and practice-level invoicing on approved accounts. All payments are encrypted." }
+          ]
+        },
+        {
+          "q": "Can the practice be invoiced instead of paying per order?",
+          "blocks": [
+            { "type": "p", "text": "Yes — verified practices can request net terms. Contact provider support to have invoicing enabled against your account." }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "returns-refunds",
+      "label": "Returns & Refunds",
+      "lede": "What can be returned, how to report a problem, and when a refund lands.",
+      "questions": [
+        {
+          "q": "What is your returns and refunds policy?",
+          "blocks": [
+            { "type": "p", "text": "Sterile compounded preparations cannot be returned to stock once they have left the pharmacy. Preparations that arrive damaged, incorrect, or outside their temperature window are replaced or refunded in full." },
+            { "type": "p", "text": "Report an issue within 7 days of delivery with the order number and lot. Once approved, refunds are processed within 5–7 business days to the original payment method or as account credit." }
+          ]
+        },
+        {
+          "q": "What if a vial arrives damaged or incorrect?",
+          "blocks": [
+            { "type": "p", "text": "Keep the packaging, photograph the parcel and the label, then open a report from the order in the portal. Replacements ship on the next qualified shipping day." }
+          ]
+        },
+        {
+          "q": "How long do refunds take?",
+          "blocks": [
+            { "type": "p", "text": "5–7 business days after the return is approved. Card refunds can take one additional statement cycle to appear." }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "account-info",
+      "label": "Account Info",
+      "lede": "Verification requirements, account details, and adding prescribers or staff.",
+      "questions": [
+        {
+          "q": "Do I need an account to submit a request?",
+          "blocks": [
+            { "type": "p", "text": "Yes. Ordering requires a verified provider account — there is no guest submission. Verification confirms your license, practice address, and shipping states." }
+          ]
+        },
+        {
+          "q": "What documentation does verification require?",
+          "blocks": [
+            { "type": "p", "text": "An active state license number, DEA registration where applicable, the practice address, and a licensed contact for formulation questions." }
+          ]
+        },
+        {
+          "q": "How do I update my account details?",
+          "blocks": [
+            { "type": "p", "text": "Update contact details, password, and saved shipping addresses from your account dashboard. License and practice changes are re-verified before they take effect." }
+          ]
+        },
+        {
+          "q": "How do I add prescribers or staff to a practice account?",
+          "blocks": [
+            { "type": "p", "text": "Invite them from Account → Team. Staff can build requests; only verified prescribers can sign and submit them." }
+          ]
+        }
+      ]
+    }
+  ],
+  "homeStats": [
+    { "value": "8", "countUp": true, "label": "Compounded formulations" },
+    { "value": "6", "countUp": true, "label": "Clinical programs" },
+    { "value": "100%", "countUp": false, "label": "Patient-specific prescriptions" },
+    { "value": "1:1", "countUp": false, "label": "Representative support" }
+  ],
+  "homeHeroSlides": [
+    { "headline": "Practice-grade care starts", "headlineEm": "with the formulation.", "cta": "Shop formulations", "ctaHref": "/shop", "caption": "Licensed providers only · patient-specific prescriptions", "placeholder": "lifestyle shot — hand holding vial · pending art direction" },
+    { "headline": "Compounded to order,", "headlineEm": "prescription by prescription.", "cta": "Verify your practice", "ctaHref": "/request/contact", "caption": "One form · reviewed by the pharmacy team", "placeholder": "cleanroom / compounding bench — pending art direction" },
+    { "headline": "Six clinical programs,", "headlineEm": "one pharmacy.", "cta": "Browse programs", "ctaHref": "/shop", "caption": "Longevity · Recovery · Hormone · Metabolic · Sexual wellness", "placeholder": "program range — vial group shot · pending art direction" }
+  ],
+  "orderingSteps": [
+    { "step": "Step 01", "title": "Verify your license", "body": "One-time verification of your license or NPI. Browsing stays open — ordering unlocks once you're cleared." },
+    { "step": "Step 02", "title": "Build a request list", "body": "Shop the catalog like a store. Your list feeds the request form — no pricing shown online." },
+    { "step": "Step 03", "title": "Consult a representative", "body": "A representative follows up with program details and answers formulation questions." },
+    { "step": "Step 04", "title": "Prescribed, patient-specific", "body": "Each medication is compounded against a single prescription and shipped to your practice." }
+  ],
+  "portalBenefits": [
+    { "title": "Sterile compounding", "body": "Formulations are prepared as sterile preparations in vial presentation." },
+    { "title": "Verified providers", "body": "Catalog access and requests are limited to licensed healthcare providers." },
+    { "title": "Patient-specific dispensing", "body": "Every order is dispensed against a patient-specific prescription." },
+    { "title": "Representative follow-up", "body": "Requests route to a representative — no pricing is shown online." }
+  ],
+  "confirmationSteps": [
+    "A representative contacts you about your list",
+    "License verification is completed",
+    "Program details and next steps are shared"
+  ],
+  "sampleRequestList": [
+    { "name": "NAD+", "program": "Longevity & Cellular Health", "presentation": "5 mL" },
+    { "name": "Sermorelin", "program": "Hormone Optimization", "presentation": "5 mL" }
+  ]
+}

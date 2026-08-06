@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    @keyframes evoSlideIn { from { transform:translateX(100%); } to { transform:translateX(0); } }
+    @keyframes evoFadeIn { from { opacity:0; } to { opacity:1; } }
+  </style>
+</helmet>
+<sc-if value="{{ open }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ onClose }}" style="position:fixed;inset:0;background:rgba(20,37,63,0.45);animation:evoFadeIn 0.25s ease both;cursor:pointer;z-index:39"></div>
+  <div style="position:fixed;top:0;right:0;bottom:0;width:420px;background:#ffffff;display:flex;flex-direction:column;box-shadow:-24px 0 60px rgba(20,37,63,0.25);animation:evoSlideIn 0.35s ease both;z-index:40;font-family:'Instrument Sans',-apple-system,sans-serif">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:22px 24px;border-bottom:1px solid #EEF0F4">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-family:'Instrument Serif',serif;font-size:26px;color:#14253F">Request list</span>
+        <span style="min-width:22px;height:22px;border-radius:11px;background:#EEF1FA;color:#14258F;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;padding:0 6px">{{ count }}</span>
+      </div>
+      <button onClick="{{ onClose }}" style="width:34px;height:34px;border:none;border-radius:17px;background:#F1F3F6;color:#14253F;font-size:16px;cursor:pointer" style-hover="background:#DCE1E8">×</button>
+    </div>
+    <div style="flex:1;overflow:auto;padding:4px 24px 0;display:flex;flex-direction:column">
+      <sc-for list="{{ list }}" as="it" hint-placeholder-count="2">
+        <div style="display:flex;gap:14px;align-items:center;padding:18px 0;border-bottom:1px solid #EEF0F4">
+          <img src="{{ it.img }}" alt="{{ it.name }} sterile vial" style="width:64px;height:64px;border-radius:10px;object-fit:cover;background:#ffffff;border:1px solid #E5E8ED;flex-shrink:0">
+          <div style="flex:1;display:flex;flex-direction:column;gap:3px">
+            <span style="font-family:'Instrument Serif',serif;font-size:19px;line-height:1.1;color:#14253F">{{ it.name }}</span>
+            <span style="font-size:12.5px;color:#8C93A0">{{ it.cat }} · {{ it.dose }}</span>
+          </div>
+          <button onClick="{{ it.remove }}" style="border:none;background:transparent;color:#8C93A0;font-family:'Instrument Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;text-decoration:underline" style-hover="color:#A81E2F">Remove</button>
+        </div>
+      </sc-for>
+      <div style="margin-top:16px;background:#FFFAEF;border:1px solid #EADCB5;border-radius:10px;padding:12px 14px">
+        <span style="font-size:12.5px;line-height:19px;color:#8A6410;text-wrap:pretty">No pricing is shown online — a representative shares program details after your request.</span>
+      </div>
+    </div>
+    <div style="padding:20px 24px 22px;border-top:1px solid #EEF0F4;display:flex;flex-direction:column;gap:10px">
+      <a href="request-contact.dc.html" style="width:100%;height:50px;border-radius:100px;background:#14258F;color:#ffffff;font-family:'Instrument Sans',sans-serif;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;text-decoration:none" style-hover="background:#0E1C6E">Request Product Information</a>
+      <button onClick="{{ onClose }}" style="border:none;background:transparent;color:#14253F;font-family:'Instrument Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;text-decoration:underline">Continue browsing</button>
+    </div>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:520,&quot;height&quot;:720},&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;count&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;},&quot;list&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{name:string;cat:string;dose:string;remove:()=&gt;void}[]&quot;},&quot;onClose&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const noop = () => {};
+    const sample = [
+      { name: "NAD+", dose: "5 mL", cat: "Longevity & Cellular Health", remove: noop },
+      { name: "Sermorelin", dose: "5 mL", cat: "Hormone Optimization", remove: noop }
+    ];
+    const SLUGS = { "NAD+": "nad", "NAD+ / Glutathione": "nad-glutathione", "MOTS-C": "mots-c", "BPC-157": "bpc-157", "TB-500": "tb-500", "Sermorelin": "sermorelin", "Lipo-C": "lipo-c", "PT-141": "pt-141" };
+    const list = (this.props.list ?? sample).map(it => ({ ...it, img: 'assets/vials/' + (SLUGS[it.name] || 'nad') + '.jpg' }));
+    return {
+      open: this.props.open ?? (this.props.list ? false : true),
+      count: this.props.count ?? String(list.length),
+      list,
+      onClose: this.props.onClose ?? noop
+    };
+  }
+}
+</script>
+</body>
+</html>
