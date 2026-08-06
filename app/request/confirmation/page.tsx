@@ -13,15 +13,15 @@ export default function ConfirmationPage() {
 
   return (
     <div className="flex flex-1 flex-col bg-white">
-      <div className="flex justify-center pb-[104px] pt-[84px]">
-        <Reveal className="flex w-[680px] flex-col items-center gap-[18px]">
+      <div className="flex justify-center px-4 pb-[104px] pt-[84px] sm:px-6">
+        <Reveal className="flex w-full max-w-[680px] flex-col items-center gap-[18px]">
           <div className="flex h-[72px] w-[72px] items-center justify-center rounded-[36px] bg-teal-tint">
             <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#1B8B8A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="9" />
               <path d="M8 12.5 L11 15.5 L16 9.5" />
             </svg>
           </div>
-          <h2 className="text-5xl leading-none text-navy">Request received</h2>
+          <h2 className="text-center text-4xl leading-none text-navy lg:text-5xl">Request received</h2>
           <p className="text-center text-body-lg text-ink-500">
             An Evoluciona Pharma representative will follow up with the next steps.
             <br />

@@ -83,6 +83,7 @@ export default function ShopPage() {
   const presLabels = presSlugs.map((s) => PRES_LABELS[s]).filter(Boolean);
 
   const [sortOpen, setSortOpen] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   useEffect(() => {
     const down = (e: MouseEvent) => {
       if (!(e.target as HTMLElement).closest('[data-sort-root]')) setSortOpen(false);
@@ -174,7 +175,7 @@ export default function ShopPage() {
   return (
     <div className="flex flex-col bg-white">
       {/* Hero band — striped placeholder under a hue-driven gradient tint */}
-      <div className="relative h-[430px] shrink-0 overflow-hidden">
+      <div className="relative h-[360px] shrink-0 overflow-hidden lg:h-[430px]">
         <div className="ph-stripe absolute inset-0" />
         <div
           className="absolute inset-0"
@@ -186,7 +187,7 @@ export default function ShopPage() {
         <span className="absolute bottom-4 right-5 z-[2] rounded-[4px] bg-[rgba(255,255,255,0.9)] px-2 py-[3px] font-mono text-2xs text-footer-label">
           hero · {hero.slug} · awaiting art direction
         </span>
-        <div className="absolute inset-0 z-[1] flex flex-col justify-center px-14">
+        <div className="absolute inset-0 z-[1] flex flex-col justify-center px-4 sm:px-8 lg:px-14">
           <div key={tickRef.current} className={`flex max-w-[680px] flex-col items-start gap-4 ${heroAnim}`}>
             <span className="text-[13px] text-[rgba(255,255,255,0.72)]">
               <Link href="/" className="text-[rgba(255,255,255,0.72)] no-underline hover:text-white">
@@ -195,7 +196,7 @@ export default function ShopPage() {
               / <span className="font-medium text-white">Shop All</span>
               {crumbTail}
             </span>
-            <h1 className="text-[64px] leading-[0.98] text-white">{hero.title}</h1>
+            <h1 className="text-[40px] leading-[0.98] text-white lg:text-[64px]">{hero.title}</h1>
             <p className="max-w-[530px] text-body text-[rgba(255,255,255,0.85)]">{hero.sub}</p>
             <span className="inline-flex h-8 items-center whitespace-nowrap rounded-full border border-[rgba(255,255,255,0.45)] px-[15px] text-xs font-semibold text-white">
               {heroCountLabel}
@@ -204,17 +205,30 @@ export default function ShopPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-[264px_1fr] items-start gap-11 px-14 pb-[72px] pt-11">
-        {/* Filter sidebar */}
-        <aside className="sticky top-6 flex flex-col gap-6">
+      <div className="grid grid-cols-1 items-start gap-8 px-4 pb-[72px] pt-8 sm:px-8 lg:grid-cols-[264px_1fr] lg:gap-11 lg:px-14 lg:pt-11">
+        {/* Filter sidebar — collapsible below lg, always expanded on desktop */}
+        <aside className="flex flex-col gap-6 lg:sticky lg:top-6">
           <div className="flex items-baseline justify-between gap-3">
-            <span className="font-display text-2xl text-navy">Filter</span>
+            <span
+              onClick={() => setFiltersOpen((v) => !v)}
+              className="flex cursor-pointer items-center gap-2 font-display text-2xl text-navy lg:cursor-default"
+            >
+              Filter
+              <svg
+                width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#14253F" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"
+                className="lg:hidden"
+                style={{ transform: filtersOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}
+              >
+                <path d="M6 9 L12 15 L18 9" />
+              </svg>
+            </span>
             {hasFilters && (
               <span onClick={clearAll} className="cursor-pointer text-xs font-semibold text-brand underline">
                 Clear all
               </span>
             )}
           </div>
+          <div className={`${filtersOpen ? 'flex flex-col gap-6' : 'hidden'} lg:contents`}>
           <div className="flex flex-col gap-2 border-t border-line pt-[18px]">
             <span className="pb-1 text-xs font-semibold tracking-[0.1em] text-muted-2">PROGRAM</span>
             {programs.map((g) => (
@@ -245,11 +259,12 @@ export default function ShopPage() {
               prescription. No pricing is shown online.
             </span>
           </div>
+          </div>
         </aside>
 
         <div className="flex flex-col gap-[22px]">
           {/* Toolbar — count, active chips, sort */}
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex flex-wrap items-center gap-3">
               <span className="text-sm font-semibold text-navy">
                 {n} {n === 1 ? 'product' : 'products'}
@@ -305,7 +320,7 @@ export default function ShopPage() {
 
           {/* Product grid */}
           {n > 0 && (
-            <Reveal className="grid grid-cols-3 gap-[26px_24px]">
+            <Reveal className="grid grid-cols-1 gap-[26px_24px] sm:grid-cols-2 lg:grid-cols-3">
               {shopProducts.map((p) => (
                 // Stretched link: the name anchor's ::after covers the card so the
                 // whole thing is clickable, without nesting the add button inside an
@@ -378,10 +393,10 @@ export default function ShopPage() {
       </div>
 
       {/* About the catalog */}
-      <Reveal className="grid grid-cols-[1fr_1.2fr] items-start gap-14 bg-surface-alt px-14 py-16">
+      <Reveal className="grid grid-cols-1 items-start gap-8 bg-surface-alt px-4 py-14 sm:px-8 lg:grid-cols-[1fr_1.2fr] lg:gap-14 lg:px-14 lg:py-16">
         <div className="flex flex-col gap-3.5">
           <span className="text-xs font-semibold tracking-[0.12em] text-muted-2">ABOUT THE CATALOG</span>
-          <h2 className="text-[40px] leading-[1.05] text-navy">Documented exactly as the pharmacy confirms it.</h2>
+          <h2 className="text-[28px] leading-[1.05] text-navy lg:text-[40px]">Documented exactly as the pharmacy confirms it.</h2>
         </div>
         <div className="flex flex-col gap-4 pt-1.5">
           <p className="text-body leading-[25px] text-ink-600">
@@ -396,9 +411,9 @@ export default function ShopPage() {
       </Reveal>
 
       {/* How the provider portal works */}
-      <Reveal delay={80} className="flex flex-col gap-11 px-14 pb-[76px] pt-16">
-        <h2 className="text-center text-[40px] leading-[1.05] text-navy">How the provider portal works</h2>
-        <div className="grid grid-cols-4 gap-7">
+      <Reveal delay={80} className="flex flex-col gap-11 px-4 pb-[76px] pt-16 sm:px-8 lg:px-14">
+        <h2 className="text-center text-[28px] leading-[1.05] text-navy lg:text-[40px]">How the provider portal works</h2>
+        <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-4">
           {portalBenefits.map((b, i) => (
             <div key={b.title} className="flex flex-col items-center gap-3 text-center">
               <span className="flex h-14 w-14 items-center justify-center rounded-[28px] bg-brand-tint">

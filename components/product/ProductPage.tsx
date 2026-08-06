@@ -63,7 +63,7 @@ export default function ProductPage({ product }: { product: Product }) {
 
   return (
     <div className="flex flex-col bg-white">
-      <div className="px-14 pt-[22px]">
+      <div className="px-4 pt-[22px] sm:px-8 lg:px-14">
         <span className="text-[13px] text-muted-2">
           <Link href="/" className="text-muted-2 no-underline hover:text-brand">
             Home
@@ -76,10 +76,10 @@ export default function ProductPage({ product }: { product: Product }) {
         </span>
       </div>
 
-      <div className="grid grid-cols-[660px_1fr] items-start gap-[52px] px-14 pb-[60px] pt-6">
+      <div className="grid grid-cols-1 items-start gap-9 px-4 pb-[60px] pt-6 sm:px-8 lg:grid-cols-[660px_1fr] lg:gap-[52px] lg:px-14">
         {/* Gallery */}
         <div className="flex flex-col gap-3">
-          <Reveal className="group relative h-[520px] overflow-hidden rounded-[18px] border border-line bg-white">
+          <Reveal className="group relative h-[320px] overflow-hidden rounded-[18px] border border-line bg-white sm:h-[420px] lg:h-[520px]">
             {imgIndex === 0 ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
@@ -123,7 +123,7 @@ export default function ProductPage({ product }: { product: Product }) {
 
         {/* Details */}
         <div className="flex flex-col gap-4">
-          <Reveal as="h2" delay={80} className="text-[58px] leading-[0.98] text-navy">
+          <Reveal as="h2" delay={80} className="text-[38px] leading-[0.98] text-navy lg:text-[58px]">
             {product.name}
           </Reveal>
           <div className="flex flex-wrap gap-2">
@@ -251,7 +251,7 @@ export default function ProductPage({ product }: { product: Product }) {
             </div>
           )}
 
-          <div className="flex gap-5 pt-0.5">
+          <div className="flex flex-col gap-4 pt-0.5 sm:flex-row sm:gap-5">
             <span className="flex-1 text-meta-sm leading-[18px] text-muted">
               <strong className="text-navy">Sterile compounding</strong>
               <br />
@@ -272,14 +272,14 @@ export default function ProductPage({ product }: { product: Product }) {
       </div>
 
       {/* Disclaimer — compliance copy, verbatim */}
-      <div className="mx-14 rounded-[10px] border border-line-panel bg-surface-alt px-5 py-4">
+      <div className="mx-4 rounded-[10px] border border-line-panel bg-surface-alt px-5 py-4 sm:mx-8 lg:mx-14">
         <p className="text-[13px] leading-[21px] text-ink-500">{compliance.productDisclaimer}</p>
       </div>
 
       {/* You may also review */}
-      <div className="flex flex-col gap-[22px] px-14 pb-[84px] pt-11">
-        <h3 className="text-[34px] leading-none text-navy">You may also review</h3>
-        <Reveal delay={140} className="grid grid-cols-4 gap-[22px]">
+      <div className="flex flex-col gap-[22px] px-4 pb-[84px] pt-11 sm:px-8 lg:px-14">
+        <h3 className="text-[26px] leading-none text-navy lg:text-[34px]">You may also review</h3>
+        <Reveal delay={140} className="grid grid-cols-1 gap-[22px] sm:grid-cols-2 lg:grid-cols-4">
           {related.map((r) => (
             <Link
               key={r.slug}
@@ -302,7 +302,7 @@ export default function ProductPage({ product }: { product: Product }) {
       </div>
 
       {/* Bar pinned to the bottom of the 1440px frame (README §6.6) */}
-      <div className="absolute inset-x-0 bottom-0 z-10 flex items-center gap-4 border-t border-line bg-white px-14 py-3 shadow-stickyBar">
+      <div className="absolute inset-x-0 bottom-0 z-10 flex items-center gap-3 border-t border-line bg-white px-4 py-3 shadow-stickyBar sm:px-8 lg:gap-4 lg:px-14">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={asset(product.image)}
@@ -310,7 +310,7 @@ export default function ProductPage({ product }: { product: Product }) {
           className="h-[46px] w-[46px] shrink-0 rounded-[10px] border border-line bg-white object-cover"
         />
         <span className="font-display text-[21px] text-navy">{product.name}</span>
-        <span className="text-[13px] text-muted-2">{stickySpec}</span>
+        <span className="hidden text-[13px] text-muted-2 lg:inline">{stickySpec}</span>
         <div className="flex-1" />
         <button
           onClick={addMain}

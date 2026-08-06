@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Anek_Latin, Fira_Code, Instrument_Sans, Instrument_Serif } from 'next/font/google';
 import AppShell from '@/components/AppShell';
 import './globals.css';
@@ -33,6 +33,11 @@ export const metadata: Metadata = {
   title: 'Evoluciona Pharma — Provider Portal',
   description:
     'Compounded formulations for licensed healthcare providers. Products dispensed against patient-specific prescriptions.',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

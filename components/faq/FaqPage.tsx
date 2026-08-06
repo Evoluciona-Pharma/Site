@@ -23,14 +23,14 @@ export default function FaqPage({ topic }: { topic: FaqTopic }) {
         <span className="absolute bottom-4 right-5 z-[2] rounded-[4px] bg-[rgba(255,255,255,0.9)] px-2 py-[3px] font-mono text-2xs text-footer-label">
           hero · faq · awaiting art direction
         </span>
-        <div className="absolute inset-0 z-[1] flex animate-[fadeUp_0.7s_ease_both] flex-col justify-center gap-4 px-14">
+        <div className="absolute inset-0 z-[1] flex animate-[fadeUp_0.7s_ease_both] flex-col justify-center gap-4 px-4 sm:px-8 lg:px-14">
           <span className="text-[13px] text-[rgba(255,255,255,0.72)]">
             <Link href="/" className="text-[rgba(255,255,255,0.72)] no-underline hover:text-white">
               Home
             </Link>{' '}
             / <span className="font-medium text-white">Frequently Asked Questions</span>
           </span>
-          <h1 className="text-[64px] leading-[0.98] text-white">Frequently Asked Questions</h1>
+          <h1 className="text-[38px] leading-[0.98] text-white lg:text-[64px]">Frequently Asked Questions</h1>
           <p className="max-w-[530px] text-body text-[rgba(255,255,255,0.85)]">
             Got questions? We&apos;ve got answers — ordering, shipping, billing and account handling for
             verified providers.
@@ -39,7 +39,7 @@ export default function FaqPage({ topic }: { topic: FaqTopic }) {
       </div>
 
       {/* Licensed-providers notice */}
-      <div className="px-14 pt-7">
+      <div className="px-4 pt-7 sm:px-8 lg:px-14">
         <div className="flex gap-3 rounded-xl border border-brand-tintBorder bg-brand-tint px-[18px] py-4">
           <span className="text-sm leading-[22px] text-brand-deep">
             <strong>This portal is for licensed providers.</strong> Patients should contact their prescribing
@@ -48,9 +48,9 @@ export default function FaqPage({ topic }: { topic: FaqTopic }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-[264px_1fr] items-start gap-11 px-14 pb-[76px] pt-9">
+      <div className="grid grid-cols-1 items-start gap-11 px-4 pb-[76px] pt-9 sm:px-8 lg:grid-cols-[264px_1fr] lg:px-14">
         {/* Topics sidebar */}
-        <aside className="sticky top-[132px] flex flex-col gap-5">
+        <aside className="flex flex-col gap-5 lg:sticky lg:top-[132px]">
           <span className="font-display text-2xl text-navy">Topics</span>
           <div className="flex flex-col gap-1 border-t border-line pt-3.5">
             {faqTopics.map((t) => (
@@ -82,7 +82,7 @@ export default function FaqPage({ topic }: { topic: FaqTopic }) {
 
         <div className="flex min-w-0 flex-col gap-[22px]">
           <div className="flex flex-col gap-2">
-            <h2 className="text-[38px] leading-[1.06] text-navy">{topic.label}</h2>
+            <h2 className="text-[28px] leading-[1.06] text-navy lg:text-[38px]">{topic.label}</h2>
             <p className="max-w-[660px] text-body text-muted">{topic.lede}</p>
           </div>
 
@@ -147,7 +147,7 @@ export default function FaqPage({ topic }: { topic: FaqTopic }) {
           </span>
 
           {/* Still need a hand? */}
-          <div className="mt-1.5 flex items-center gap-5 rounded-2xl border border-line-panel bg-surface-alt2 p-6">
+          <div className="mt-1.5 flex flex-col items-start gap-5 rounded-2xl border border-line-panel bg-surface-alt2 p-6 sm:flex-row sm:items-center">
             <div className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-[26px] bg-brand-tint">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#14258F" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
                 <path

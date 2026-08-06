@@ -11,12 +11,12 @@ const tealTick = (size: number) => (
 /** Four numbered pips joined by 56×1 connectors — steps 1–2 (README §6.8). */
 export function StepperFull({ current }: { current: number }) {
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-2 sm:gap-3">
       {STEP_LABELS.map((label, i) => {
         const n = i + 1;
         return (
           <span key={label} className="contents">
-            {i > 0 && <span className="h-px w-14 bg-line-strongest" />}
+            {i > 0 && <span className="h-px w-3 bg-line-strongest sm:w-14" />}
             <span className="inline-flex items-center gap-2">
               {n < current ? (
                 <span className="inline-flex h-[26px] w-[26px] items-center justify-center rounded-[13px] bg-teal-tint">
@@ -36,8 +36,8 @@ export function StepperFull({ current }: { current: number }) {
                   n === current
                     ? 'text-[13px] font-semibold text-brand'
                     : n < current
-                      ? 'text-[13px] text-ink-700'
-                      : 'text-[13px] text-muted-3'
+                      ? 'hidden text-[13px] text-ink-700 sm:inline'
+                      : 'hidden text-[13px] text-muted-3 sm:inline'
                 }
               >
                 {label}

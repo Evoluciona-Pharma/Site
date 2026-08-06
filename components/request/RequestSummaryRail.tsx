@@ -19,7 +19,7 @@ export default function RequestSummaryRail({ full }: { full: boolean }) {
               where items are actually removed, and the half-filled form stays put. */}
           <button
             onClick={openDrawer}
-            className="cursor-pointer border-none bg-transparent p-0 font-sans text-xs text-brand hover:text-brand-hover"
+            className="-m-3 cursor-pointer border-none bg-transparent p-3 font-sans text-xs text-brand hover:text-brand-hover"
           >
             Edit
           </button>

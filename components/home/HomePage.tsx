@@ -26,17 +26,17 @@ export default function HomePage() {
       {/* Content sheet — lifts over the sticky hero (README §6.4) */}
       <div className="relative z-[2] -mt-8 flex flex-col overflow-hidden rounded-t-[28px] bg-white shadow-overlap">
         {/* Featured products */}
-        <Reveal className="flex flex-col gap-7 px-14 pb-[60px] pt-11">
+        <Reveal className="flex flex-col gap-7 px-4 pb-[60px] pt-11 sm:px-8 lg:px-14">
           <div className="flex items-end justify-between gap-6">
             <div className="flex flex-col gap-1.5">
-              <h3 className="text-[40px] leading-none text-navy">Featured Products</h3>
+              <h3 className="text-[28px] leading-none text-navy lg:text-[40px]">Featured Products</h3>
               <span className="text-sm text-muted">Sterile compounded vials, photographed as supplied.</span>
             </div>
             <Link href="/shop" className="text-sm font-semibold no-underline">
               Shop all →
             </Link>
           </div>
-          <Reveal delay={140} className="grid grid-cols-4 gap-[22px]">
+          <Reveal delay={140} className="grid grid-cols-1 gap-[22px] sm:grid-cols-2 lg:grid-cols-4">
             {featured.map((p) => (
               <div
                 key={p.slug}
@@ -76,14 +76,14 @@ export default function HomePage() {
         </Reveal>
 
         {/* Find your formulation */}
-        <Reveal className="flex flex-col gap-7 px-14 pb-[72px] pt-2">
+        <Reveal className="flex flex-col gap-7 px-4 pb-[72px] pt-2 sm:px-8 lg:px-14">
           <div className="flex items-end justify-between gap-6">
-            <h3 className="text-[40px] leading-none text-navy">Find your formulation</h3>
+            <h3 className="text-[28px] leading-none text-navy lg:text-[40px]">Find your formulation</h3>
             <Link href="/shop" className="text-sm font-semibold no-underline">
               View all programs →
             </Link>
           </div>
-          <Reveal delay={140} className="grid grid-cols-3 gap-5">
+          <Reveal delay={140} className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {programs.map((g) => (
               <Link
                 key={g.slug}
@@ -111,15 +111,15 @@ export default function HomePage() {
         <StatBand />
 
         {/* How ordering works */}
-        <Reveal className="flex flex-col gap-[60px] px-14 pb-[104px] pt-[88px]">
+        <Reveal className="flex flex-col gap-[60px] px-4 pb-[104px] pt-[88px] sm:px-8 lg:px-14">
           <div className="flex flex-col items-center gap-3.5">
             <span className="text-xs font-semibold uppercase tracking-[0.15em] text-muted">
               How ordering works
             </span>
-            <h3 className="text-center text-[54px] leading-[1.02] text-navy">From verification to your practice.</h3>
+            <h3 className="text-center text-4xl leading-[1.02] text-navy lg:text-[54px]">From verification to your practice.</h3>
           </div>
 
-          <div className="grid grid-cols-[1fr_1.02fr] items-start gap-[72px]">
+          <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-[1fr_1.02fr] lg:gap-[72px]">
             <Reveal delay={120} className="relative flex flex-col gap-[46px] pl-9 pt-1">
               <div
                 className="absolute bottom-24 left-[5px] top-3 w-px"
@@ -131,14 +131,14 @@ export default function HomePage() {
                   <span className="self-start whitespace-nowrap rounded-full bg-brand-tint px-3 py-[5px] text-xs font-semibold text-brand">
                     {s.step}
                   </span>
-                  <h4 className="text-[30px] leading-[1.1] text-navy">{s.title}</h4>
+                  <h4 className="text-[24px] leading-[1.1] text-navy lg:text-[30px]">{s.title}</h4>
                   <p className="max-w-[410px] text-step text-muted">{s.body}</p>
                 </div>
               ))}
             </Reveal>
 
             <Reveal delay={200} className="relative pb-[26px] pt-[30px]">
-              <div className="relative mr-14 h-[588px] overflow-hidden rounded-[14px]">
+              <div className="relative mr-10 h-[420px] overflow-hidden rounded-[14px] lg:mr-14 lg:h-[588px]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={asset('assets/home-clinic-portrait.jpg')}
@@ -146,7 +146,7 @@ export default function HomePage() {
                   className="absolute inset-0 h-full w-full object-cover"
                 />
               </div>
-              <div className="absolute bottom-0 right-0 flex h-[336px] w-[296px] flex-col rounded-[14px] border border-line bg-surface-alt p-[22px] shadow-floating">
+              <div className="absolute bottom-0 right-0 flex h-[280px] w-[248px] flex-col rounded-[14px] border border-line bg-surface-alt p-[22px] shadow-floating lg:h-[336px] lg:w-[296px]">
                 {/* multiply drops the clip's white ground into the card, so the
                     vial reads as sitting on the panel rather than in a box. */}
                 <video
@@ -182,9 +182,9 @@ export default function HomePage() {
         </Reveal>
 
         {/* Testimonial — placeholder pending compliance review (README §10) */}
-        <Reveal className="flex flex-col items-center gap-[18px] bg-surface-alt px-14 py-[72px]">
+        <Reveal className="flex flex-col items-center gap-[18px] bg-surface-alt px-4 py-[72px] sm:px-8 lg:px-14">
           <span className="font-display text-[70px] leading-[0.5] text-line-strongest">&ldquo;</span>
-          <p className="max-w-[860px] text-center font-display text-[31px] italic leading-[1.35] text-navy">
+          <p className="max-w-[860px] text-center font-display text-[24px] italic leading-[1.35] text-navy lg:text-[31px]">
             Reserved for a verified provider quote about the request experience and program support.
           </p>
           <span className="text-sm text-muted-2">— Provider name · Practice, State</span>
@@ -194,8 +194,8 @@ export default function HomePage() {
         </Reveal>
 
         {/* CTA band */}
-        <Reveal className="flex flex-col items-center gap-4 bg-brand-tint px-14 py-[72px]">
-          <h3 className="text-center text-[42px] leading-[1.05] text-navy">
+        <Reveal className="flex flex-col items-center gap-4 bg-brand-tint px-4 py-[72px] sm:px-8 lg:px-14">
+          <h3 className="text-center text-[30px] leading-[1.05] text-navy lg:text-[42px]">
             Bring compounded formulations to your practice
           </h3>
           <span className="max-w-[560px] text-center text-[15px] leading-6 text-ink-500">

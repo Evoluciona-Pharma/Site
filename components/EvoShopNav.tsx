@@ -68,6 +68,8 @@ export default function EvoShopNav() {
   urlQueryRef.current = urlQuery;
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileQuery, setMobileQuery] = useState('');
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState(urlQuery);
   const [hi, setHi] = useState(-1);
@@ -76,6 +78,9 @@ export default function EvoShopNav() {
   const lastSynced = useRef(urlQuery);
 
   useEffect(() => setMounted(true), []);
+
+  // Navigating closes the mobile sheet.
+  useEffect(() => setMobileOpen(false), [pathname, searchParams]);
 
   // Defer the URL→input write while the input is focused; retry on blur.
   useEffect(() => {
@@ -99,6 +104,7 @@ export default function EvoShopNav() {
     const esc = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return;
       setMenuOpen(false);
+      setMobileOpen(false);
       setSearchOpen(false);
       setHi(-1);
     };
@@ -173,18 +179,18 @@ export default function EvoShopNav() {
 
   return (
     <header className="sticky top-0 z-30 flex shrink-0 flex-col bg-white shadow-nav">
-      <div className="flex h-9 items-center justify-center gap-2.5 bg-navy px-10">
-        <span className="font-sans text-meta-xs font-medium tracking-[0.1em] text-onDark">
+      <div className="flex h-9 items-center justify-center gap-2.5 bg-navy px-4 lg:px-10">
+        <span className="truncate font-sans text-meta-xs font-medium tracking-[0.1em] text-onDark">
           {compliance.topStrip}
         </span>
       </div>
-      <div className="flex h-[76px] items-center justify-between gap-8 border-b border-line px-10">
+      <div className="flex h-[76px] items-center justify-between gap-4 border-b border-line px-4 sm:px-6 lg:gap-8 lg:px-10">
         <Link href="/" className="flex shrink-0 items-center gap-2.5 no-underline">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={asset('assets/brand/evoluciona-logo.png')} alt="Evoluciona Pharma" className="block h-[30px] w-auto shrink-0" />
         </Link>
 
-        <nav className="flex items-center gap-8">
+        <nav className="hidden items-center gap-8 lg:flex">
           <Link href="/shop" className={navLink}>Shop All</Link>
 
           <div data-programs-root className="relative flex items-center">
@@ -234,8 +240,8 @@ export default function EvoShopNav() {
           <Link href="/faq" className={navLink}>Provider FAQ</Link>
         </nav>
 
-        <div className="flex shrink-0 items-center gap-[18px]">
-          <div data-search-root className="relative shrink-0">
+        <div className="flex shrink-0 items-center gap-2 lg:gap-[18px]">
+          <div data-search-root className="relative hidden shrink-0 lg:block">
             <form
               role="search"
               onSubmit={(e) => {
@@ -371,7 +377,7 @@ export default function EvoShopNav() {
 
           <button
             aria-label="Account"
-            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-[20px] border-none bg-transparent hover:bg-brand-tint"
+            className="hidden h-10 w-10 cursor-pointer items-center justify-center rounded-[20px] border-none bg-transparent hover:bg-brand-tint lg:flex"
           >
             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#14253F" strokeWidth="1.8" strokeLinecap="round" className="shrink-0">
               <circle cx="12" cy="8" r="3.6" />
@@ -382,7 +388,7 @@ export default function EvoShopNav() {
           <button
             aria-label="Open request list"
             onClick={openDrawer}
-            className="relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-[20px] border-none bg-transparent hover:bg-brand-tint"
+            className="relative flex h-11 w-11 cursor-pointer items-center justify-center rounded-[22px] border-none bg-transparent hover:bg-brand-tint lg:h-10 lg:w-10 lg:rounded-[20px]"
           >
             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#14253F" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
               <path d="M5 8 L19 8 L18 21 L6 21 Z" />
@@ -392,8 +398,74 @@ export default function EvoShopNav() {
               {mounted ? count : 0}
             </span>
           </button>
+
+          <button
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileOpen}
+            onClick={() => setMobileOpen((v) => !v)}
+            className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-[22px] border-none bg-transparent hover:bg-brand-tint lg:hidden"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14253F" strokeWidth="2" strokeLinecap="round" className="shrink-0">
+              {mobileOpen ? <path d="M5 5 L19 19 M19 5 L5 19" /> : <path d="M3.5 6.5 L20.5 6.5 M3.5 12 L20.5 12 M3.5 17.5 L20.5 17.5" />}
+            </svg>
+          </button>
         </div>
       </div>
+
+      {mobileOpen && (
+        <div className="max-h-[calc(100dvh-112px)] overflow-y-auto border-b border-line bg-white px-4 pb-6 pt-4 lg:hidden">
+          <form
+            role="search"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const q = mobileQuery.trim();
+              setMobileOpen(false);
+              router.push(q ? `/shop?q=${encodeURIComponent(q)}` : '/shop');
+            }}
+            className="m-0 flex h-11 items-center gap-2 rounded-full border border-line-strong bg-white px-3.5"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9BA5B7" strokeWidth="2" strokeLinecap="round" className="shrink-0">
+              <circle cx="10.5" cy="10.5" r="6.5" />
+              <path d="M15.5 15.5 L20 20" />
+            </svg>
+            <input
+              type="text"
+              autoComplete="off"
+              spellCheck={false}
+              aria-label="Search formulations"
+              placeholder="Search formulations"
+              value={mobileQuery}
+              onChange={(e) => setMobileQuery(e.target.value)}
+              className="h-6 min-w-0 flex-1 border-none bg-transparent p-0 font-sans text-[15px] text-navy outline-none placeholder:text-muted-3"
+            />
+          </form>
+
+          <nav className="mt-3 flex flex-col">
+            <Link href="/shop" className="flex min-h-11 items-center border-b border-line-faint py-2.5 font-sans text-[15px] font-medium text-navy no-underline">
+              Shop All
+            </Link>
+            <span className="pb-1 pt-3.5 font-sans text-meta-xs font-semibold uppercase tracking-[0.1em] text-muted-2">
+              Programs
+            </span>
+            {programs.map((p) => (
+              <Link
+                key={p.slug}
+                href={`/shop?program=${p.slug}`}
+                className="flex min-h-11 items-center justify-between gap-3 border-b border-line-faint py-2.5 font-sans text-[15px] font-medium text-ink-700 no-underline"
+              >
+                <span>{p.label}</span>
+                <span className="text-xs text-muted-3">{p.count}</span>
+              </Link>
+            ))}
+            <a href="#" onClick={(e) => e.preventDefault()} className="flex min-h-11 items-center border-b border-line-faint py-2.5 font-sans text-[15px] font-medium text-navy no-underline">
+              About
+            </a>
+            <Link href="/faq" className="flex min-h-11 items-center py-2.5 font-sans text-[15px] font-medium text-navy no-underline">
+              Provider FAQ
+            </Link>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }

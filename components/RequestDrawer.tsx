@@ -107,7 +107,7 @@ export function RequestListDrawer({
         onClick={onClose}
         className="fixed inset-0 z-[39] animate-[fadeIn_0.25s_ease_both] cursor-pointer bg-[rgba(20,37,63,0.45)]"
       />
-      <div className="fixed bottom-0 right-0 top-0 z-40 flex w-[470px] animate-slideIn flex-col bg-white font-sans shadow-drawer">
+      <div className="fixed bottom-0 right-0 top-0 z-40 flex w-full max-w-[470px] animate-slideIn flex-col bg-white font-sans shadow-drawer">
         {/* Header */}
         <div className="flex items-start justify-between border-b border-[#EAECF0] px-[26px] pb-5 pt-[22px]">
           <div className="flex items-start gap-[5px]">
@@ -117,7 +117,7 @@ export function RequestListDrawer({
           <button
             onClick={onClose}
             aria-label="Close request list"
-            className="h-[30px] w-[30px] cursor-pointer border-none bg-transparent text-navy transition-opacity hover:opacity-[.55]"
+            className="-m-1.5 flex h-11 w-11 cursor-pointer items-center justify-center border-none bg-transparent text-navy transition-opacity hover:opacity-[.55] lg:m-0 lg:h-[30px] lg:w-[30px]"
           >
             ✕
           </button>
@@ -285,7 +285,7 @@ export function RequestListDrawer({
         )}
 
         {/* Footer */}
-        <div className="flex flex-col gap-2.5 border-t border-[#EAECF0] px-[26px] pb-[22px] pt-[18px]">
+        <div className="flex flex-col gap-2.5 border-t border-[#EAECF0] px-[26px] pb-[max(22px,env(safe-area-inset-bottom))] pt-[18px]">
           <Link
             href="/request/contact"
             onClick={onClose}

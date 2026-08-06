@@ -117,17 +117,17 @@ export default function HomeAltPage({
   return (
     <div className="flex flex-col bg-white">
       {/* 2 · Hero */}
-      <section id="hero" className="flex flex-col items-center bg-[#E7EBF3] px-14 pb-16 pt-16 text-center">
+      <section id="hero" className="flex flex-col items-center bg-[#E7EBF3] px-4 pb-16 pt-16 text-center sm:px-8 lg:px-14">
         <span className="font-mono text-meta-xs uppercase tracking-[0.22em] text-brand">
           Flagship formulation
         </span>
-        <h1 className="mt-5 text-[154px] leading-[0.9] tracking-[-0.02em] text-navy">{hero.name}</h1>
+        <h1 className="mt-5 text-[72px] leading-[0.9] tracking-[-0.02em] text-navy sm:text-[110px] lg:text-[154px]">{hero.name}</h1>
         <span className="mt-3 text-[17px] text-ink-600">{hero.program}</span>
 
         {/* The rise animation makes this a stacking context, so the field colour has
             to be repeated here or multiply has no backdrop and a white box shows.
             The clip carries its own ground shadow, so there is no separate one. */}
-        <div className="hero-rise relative mt-8 h-[470px] w-[820px] overflow-hidden bg-[#E7EBF3]">
+        <div className="hero-rise relative mt-8 h-[280px] w-full max-w-[820px] overflow-hidden bg-[#E7EBF3] sm:h-[380px] lg:h-[470px]">
           <video
             ref={heroVideo}
             className="absolute inset-0 h-full w-full object-cover mix-blend-multiply"
@@ -163,11 +163,11 @@ export default function HomeAltPage({
       </section>
 
       {/* 3 · Spec strip */}
-      <Reveal id="assurances" as="section" className="grid grid-cols-4 bg-white px-14 py-14">
+      <Reveal id="assurances" as="section" className="grid grid-cols-1 gap-7 bg-white px-4 py-10 sm:grid-cols-2 sm:px-8 lg:grid-cols-4 lg:gap-0 lg:px-14 lg:py-14">
         {SPEC_STRIP.map((s, i) => (
           <div
             key={s.label}
-            className={i > 0 ? 'border-l border-line pl-8' : 'pr-8'}
+            className={i > 0 ? 'lg:border-l lg:border-line lg:pl-8' : 'lg:pr-8'}
           >
             <span className="block font-display text-[26px] leading-tight text-navy">{s.label}</span>
             <span className="mt-2 block text-[13.5px] leading-[21px] text-muted">{s.sub}</span>
@@ -177,8 +177,8 @@ export default function HomeAltPage({
 
       {/* 4 · Catalog rail — navy stays as the one darker band, for depth */}
       <Reveal id="catalog" as="section" className="bg-navy py-16">
-        <div className="flex items-end justify-between gap-8 px-14 pb-9">
-          <h2 className="text-[52px] leading-[1.05] text-white">
+        <div className="flex items-end justify-between gap-8 px-4 pb-9 sm:px-8 lg:px-14">
+          <h2 className="text-[32px] leading-[1.05] text-white lg:text-[52px]">
             Eight formulations.
             <br />
             <em className="text-[#9DAAC4]">Six clinical programs.</em>
@@ -201,11 +201,11 @@ export default function HomeAltPage({
           </div>
         </div>
 
-        <div ref={rail} className="no-scrollbar flex gap-5 overflow-x-auto px-14 pb-2">
+        <div ref={rail} className="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2 sm:px-8 lg:snap-none lg:px-14">
           {products.map((p) => (
             <div
               key={p.slug}
-              className="group relative flex w-[300px] flex-[0_0_auto] flex-col overflow-hidden rounded-2xl border border-[#24354F] transition-all duration-[250ms] hover:-translate-y-1 hover:border-[#4C6291]"
+              className="group relative flex w-[300px] flex-[0_0_auto] snap-start flex-col overflow-hidden rounded-2xl border border-[#24354F] transition-all duration-[250ms] hover:-translate-y-1 hover:border-[#4C6291]"
             >
               <div className="h-[246px] overflow-hidden bg-white">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -241,7 +241,7 @@ export default function HomeAltPage({
           ))}
         </div>
 
-        <div className="px-14 pt-9">
+        <div className="px-4 pt-9 sm:px-8 lg:px-14">
           <Link href="/shop" className="text-sm font-semibold text-white no-underline hover:text-white">
             Shop all formulations →
           </Link>
@@ -249,8 +249,8 @@ export default function HomeAltPage({
       </Reveal>
 
       {/* 5 · Program grid */}
-      <Reveal as="section" id="programs" className="bg-surface-alt px-14 py-16">
-        <div className="grid grid-cols-3 gap-5">
+      <Reveal as="section" id="programs" className="bg-surface-alt px-4 py-16 sm:px-8 lg:px-14">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {programs.map((g) => (
             <Link
               key={g.slug}
@@ -276,7 +276,7 @@ export default function HomeAltPage({
       </Reveal>
 
       {/* 6 · Full-bleed feature */}
-      <Reveal id="compounding" as="section" className="relative h-[680px] overflow-hidden">
+      <Reveal id="compounding" as="section" className="relative h-[560px] overflow-hidden lg:h-[680px]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={asset('assets/hero-clinic.jpg')}
@@ -284,11 +284,11 @@ export default function HomeAltPage({
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0" style={{ background: FEATURE_SCRIM }} />
-        <div className="absolute left-14 top-20 flex w-[660px] flex-col items-start gap-5 [text-shadow:0_2px_24px_rgba(10,20,38,0.32)]">
-          <h2 className="text-[62px] leading-[1.02] text-white">
+        <div className="absolute left-4 right-4 top-14 flex flex-col items-start gap-5 [text-shadow:0_2px_24px_rgba(10,20,38,0.32)] sm:left-8 sm:right-8 lg:left-14 lg:right-auto lg:top-20 lg:w-[660px]">
+          <h2 className="text-[36px] leading-[1.02] text-white lg:text-[62px]">
             Compounded to order, <em>prescription by prescription.</em>
           </h2>
-          <p className="w-[520px] text-body-lg text-white">
+          <p className="w-full max-w-[520px] text-body-lg text-white">
             Each preparation is made against a single patient-specific prescription — never batched
             for stock, never dispensed without a verified prescriber on file. Presentations and
             concentrations are documented exactly as the pharmacy confirms them.
@@ -300,13 +300,13 @@ export default function HomeAltPage({
       </Reveal>
 
       {/* 7 · How ordering works — photography carries the section */}
-      <Reveal id="how-it-works" as="section" className="flex flex-col gap-11 bg-brand px-14 pb-24 pt-[88px]">
-        <div className="flex items-end justify-between gap-12">
+      <Reveal id="how-it-works" as="section" className="flex flex-col gap-11 bg-brand px-4 pb-24 pt-[88px] sm:px-8 lg:px-14">
+        <div className="flex flex-col items-start gap-6 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
           <div className="flex max-w-[620px] flex-col gap-4">
             <span className="font-mono text-meta-xs uppercase tracking-[0.22em] text-[#A9B6E8]">
               How ordering works
             </span>
-            <h2 className="text-[60px] leading-none text-white">
+            <h2 className="text-[38px] leading-none text-white lg:text-[60px]">
               Four steps from
               <br />
               <em className="text-[#A9B6E8]">verification to delivery.</em>
@@ -324,7 +324,7 @@ export default function HomeAltPage({
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 gap-x-11 gap-y-[52px]">
+        <div className="grid grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-11 md:gap-y-[52px]">
           {STEPS.map((s) => (
             <div key={s.number} className="flex flex-col gap-5">
               <div className="relative h-[340px] overflow-hidden rounded-[18px] bg-[#1B2F4E]">
@@ -339,7 +339,7 @@ export default function HomeAltPage({
               </div>
 
               <div className="border-t border-[rgba(255,255,255,0.24)]">
-                <h3 className="mt-4 text-[34px] leading-tight text-white">{s.title}</h3>
+                <h3 className="mt-4 text-[26px] leading-tight text-white lg:text-[34px]">{s.title}</h3>
                 <p className="mt-2 text-[15.5px] leading-[25px] text-[#C5CEF0]">{s.summary}</p>
                 <ul className="mt-4 flex list-none flex-col gap-[9px] p-0">
                   {s.bullets.map((b) => (
@@ -358,9 +358,9 @@ export default function HomeAltPage({
       {/* 8 · Editorial */}
       <Reveal id="why-evoluciona"
         as="section"
-        className="grid grid-cols-[520px_1fr] items-start gap-16 bg-white px-14 py-20"
+        className="grid grid-cols-1 items-start gap-10 bg-white px-4 py-14 sm:px-8 lg:grid-cols-[520px_1fr] lg:gap-16 lg:px-14 lg:py-20"
       >
-        <div className="flex h-[520px] items-center justify-center rounded-[20px] bg-[#F1F3F8] p-10">
+        <div className="flex h-[340px] items-center justify-center rounded-[20px] bg-[#F1F3F8] p-10 sm:h-[420px] lg:h-[520px]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={asset(editorial.image)}
@@ -372,7 +372,7 @@ export default function HomeAltPage({
           <span className="font-mono text-meta-xs uppercase tracking-[0.22em] text-brand">
             Why providers order here
           </span>
-          <h2 className="text-[52px] leading-[1.05] text-navy">A pharmacy that answers the phone.</h2>
+          <h2 className="text-[34px] leading-[1.05] text-navy lg:text-[52px]">A pharmacy that answers the phone.</h2>
           <p className="text-[16.5px] leading-7 text-ink-600">
             Every request is read by the pharmacy team before anything is prepared. A representative
             confirms the formulation, the presentation, and the prescriber on file — so questions are
@@ -383,7 +383,7 @@ export default function HomeAltPage({
             and a patient-specific prescription, so the list you build here starts a conversation
             rather than a transaction. No pricing appears online at any point.
           </p>
-          <div className="mt-4 flex gap-12">
+          <div className="mt-4 flex flex-wrap gap-8 lg:gap-12">
             <div className="flex flex-col gap-1">
               <CountUp value={products.length} className="font-display text-[46px] leading-none text-navy" />
               <span className="text-[13px] text-muted">Formulations</span>
@@ -401,8 +401,8 @@ export default function HomeAltPage({
       </Reveal>
 
       {/* 9 · Closing CTA */}
-      <Reveal id="get-started" as="section" className="flex flex-col items-center gap-8 bg-navy px-14 py-24 text-center">
-        <h2 className="max-w-[900px] text-[64px] leading-[1.02] text-white">
+      <Reveal id="get-started" as="section" className="flex flex-col items-center gap-8 bg-navy px-4 py-24 text-center sm:px-8 lg:px-14">
+        <h2 className="max-w-[900px] text-[38px] leading-[1.02] text-white lg:text-[64px]">
           Bring compounded formulations to your practice.
         </h2>
         <Link
@@ -415,7 +415,7 @@ export default function HomeAltPage({
 
       {/* 10 · Compliance wall */}
       {showDisclaimer && (
-        <section id="compliance" className="flex flex-col gap-4 border-t border-line bg-white px-14 py-14">
+        <section id="compliance" className="flex flex-col gap-4 border-t border-line bg-white px-4 py-14 sm:px-8 lg:px-14">
           <span className="font-mono text-meta-xs uppercase tracking-[0.18em] text-muted-2">
             Important information for providers
           </span>

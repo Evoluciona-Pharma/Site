@@ -37,8 +37,8 @@ export default function AdditionalStep() {
 
   return (
     <div className="flex flex-1 flex-col bg-surface-form">
-      <div className="flex justify-center pb-[76px] pt-11">
-        <div className="flex w-card flex-col gap-[22px] overflow-hidden rounded-[14px] border border-line-card bg-white px-10 pb-11 pt-9">
+      <div className="flex justify-center px-4 pb-[76px] pt-11 sm:px-6">
+        <div className="flex w-full max-w-card flex-col gap-[22px] overflow-hidden rounded-[14px] border border-line-card bg-white px-5 pb-11 pt-9 sm:px-10">
           <StepperCompact current={4} label="Additional information" />
 
           {error && <ErrorBanner count={1} detail="The provider attestation is required" />}

@@ -40,16 +40,16 @@ export default function PracticeStep() {
 
   return (
     <div className="flex flex-1 flex-col bg-surface-form">
-      <div className="flex justify-center pb-[76px] pt-11">
-        <div className="flex w-form flex-col gap-[26px]">
-          <h2 className="text-[40px] leading-none text-navy">Request Product Information</h2>
+      <div className="flex justify-center px-4 pb-[76px] pt-11 sm:px-6 xl:px-0">
+        <div className="flex w-full max-w-form flex-col gap-[26px]">
+          <h2 className="text-[30px] leading-none text-navy lg:text-[40px]">Request Product Information</h2>
           <StepperFull current={2} />
-          <div className="grid grid-cols-[1fr_380px] items-start gap-7">
+          <div className="grid grid-cols-1 items-start gap-7 lg:grid-cols-[1fr_380px]">
             <div className="flex flex-col gap-4">
               {errorList.length > 0 && <ErrorBanner count={errorList.length} detail={errorList[0]} />}
-              <Reveal delay={100} className="flex flex-col gap-[22px] rounded-2xl border border-line bg-white p-8">
+              <Reveal delay={100} className="flex flex-col gap-[22px] rounded-2xl border border-line bg-white p-5 sm:p-8">
                 <span className="font-display text-[26px] text-navy">Practice information</span>
-                <div className="grid grid-cols-2 gap-[18px]">
+                <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2">
                   <TextField
                     label="Practice or company name"
                     value={data.practiceName}
@@ -60,7 +60,7 @@ export default function PracticeStep() {
                   <TextField label="Website" value={data.website} onChange={set('website')} />
                 </div>
                 <TextField label="Address" value={data.address} onChange={set('address')} error={errors.address} />
-                <div className="grid grid-cols-[2fr_1.4fr_1fr] gap-[18px]">
+                <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-[2fr_1.4fr_1fr]">
                   <TextField label="City" value={data.city} onChange={set('city')} error={errors.city} />
                   <SelectField
                     label="State"

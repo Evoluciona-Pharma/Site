@@ -72,7 +72,7 @@ export default function HeroCarousel() {
   };
 
   return (
-    <div className="sticky top-navH h-[720px] overflow-hidden bg-[#8894AC] [animation:fadeUp_0.8s_ease_0.05s_both]">
+    <div className="sticky top-navH h-[560px] overflow-hidden bg-[#8894AC] [animation:fadeUp_0.8s_ease_0.05s_both] lg:h-[720px]">
       {homeHeroSlides.map((s, i) => {
         const art = SLIDE_ART[i];
         return (
@@ -121,15 +121,15 @@ export default function HeroCarousel() {
                 <div className="absolute inset-0" style={{ background: MEDIA_SCRIM }} />
               </>
             )}
-            <div className="absolute left-0 right-0 top-[200px] flex flex-col items-start gap-6 pl-14">
-              <div className="flex w-[820px] flex-col gap-3.5 [text-shadow:0_2px_24px_rgba(10,20,38,0.3)]">
+            <div className="absolute left-0 right-0 top-[130px] flex flex-col items-start gap-6 px-4 sm:px-8 lg:top-[200px] lg:pl-14 lg:pr-0">
+              <div className="flex w-full max-w-[820px] flex-col gap-3.5 [text-shadow:0_2px_24px_rgba(10,20,38,0.3)]">
                 {/* Departs from the Instrument Serif 400 heading rule: the brief
                     asked for weight here, and Serif ships only at 400. */}
-                <h2 className="font-sans text-[82px] font-bold leading-[0.98] tracking-[-0.025em] text-white">
+                <h2 className="font-sans text-[44px] font-bold leading-[0.98] tracking-[-0.025em] text-white sm:text-[56px] lg:text-[82px]">
                   {s.headline} <em>{s.headlineEm}</em>
                 </h2>
               </div>
-              <div className="flex w-[820px] items-center gap-4">
+              <div className="flex w-full max-w-[820px] flex-wrap items-center gap-4">
                 <Link
                   href={s.ctaHref}
                   className="inline-flex h-[54px] items-center gap-3.5 rounded-full bg-white py-[5px] pl-[26px] pr-[5px] font-sans text-body font-semibold text-navy no-underline hover:bg-brand-tint hover:text-navy"
@@ -157,7 +157,7 @@ export default function HeroCarousel() {
         </div>
         <span
           onClick={() => go(slide - 1)}
-          className="inline-flex h-[34px] w-[34px] cursor-pointer items-center justify-center rounded-[17px] border border-[rgba(255,255,255,0.5)] transition-all duration-200 hover:border-white hover:bg-[rgba(255,255,255,0.22)]"
+          className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-[22px] border border-[rgba(255,255,255,0.5)] transition-all duration-200 hover:border-white hover:bg-[rgba(255,255,255,0.22)] lg:h-[34px] lg:w-[34px] lg:rounded-[17px]"
         >
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M15 6 L9 12 L15 18" />
@@ -165,7 +165,7 @@ export default function HeroCarousel() {
         </span>
         <span
           onClick={() => go(slide + 1)}
-          className="inline-flex h-[34px] w-[34px] cursor-pointer items-center justify-center rounded-[17px] border border-[rgba(255,255,255,0.5)] transition-all duration-200 hover:border-white hover:bg-[rgba(255,255,255,0.22)]"
+          className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-[22px] border border-[rgba(255,255,255,0.5)] transition-all duration-200 hover:border-white hover:bg-[rgba(255,255,255,0.22)] lg:h-[34px] lg:w-[34px] lg:rounded-[17px]"
         >
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M9 6 L15 12 L9 18" />

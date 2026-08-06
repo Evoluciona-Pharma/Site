@@ -39,14 +39,14 @@ export default function StatBand() {
 
   return (
     <Reveal>
-      <div ref={ref} className="flex items-center justify-between gap-8 bg-navy px-14 py-11">
+      <div ref={ref} className="grid grid-cols-2 gap-x-6 gap-y-8 bg-navy px-6 py-9 lg:flex lg:items-center lg:justify-between lg:gap-8 lg:px-14 lg:py-11">
         {homeStats.map((stat, i) => (
           <span key={stat.label} className="contents">
-            {i > 0 && <div className="h-[52px] w-px bg-footer-line" />}
+            {i > 0 && <div className="hidden h-[52px] w-px bg-footer-line lg:block" />}
             <div className="flex flex-col gap-1">
               <span
                 data-count={stat.countUp ? stat.value : undefined}
-                className="font-display text-[46px] leading-none text-white"
+                className="font-display text-[36px] leading-none text-white lg:text-[46px]"
               >
                 {stat.value}
               </span>

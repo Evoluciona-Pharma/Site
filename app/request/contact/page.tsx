@@ -41,21 +41,21 @@ export default function ContactStep() {
 
   return (
     <div className="flex flex-1 flex-col bg-surface-form">
-      <div className="flex justify-center pb-[76px] pt-11">
-        <div className="flex w-form flex-col gap-[26px]">
+      <div className="flex justify-center px-4 pb-[76px] pt-11 sm:px-6 xl:px-0">
+        <div className="flex w-full max-w-form flex-col gap-[26px]">
           <div className="flex flex-col gap-1.5">
-            <h2 className="text-[40px] leading-none text-navy">Request Product Information</h2>
+            <h2 className="text-[30px] leading-none text-navy lg:text-[40px]">Request Product Information</h2>
             <span className="text-sm text-muted">
               A representative will follow up with program details. No pricing is shown online.
             </span>
           </div>
           <StepperFull current={1} />
-          <div className="grid grid-cols-[1fr_380px] items-start gap-7">
+          <div className="grid grid-cols-1 items-start gap-7 lg:grid-cols-[1fr_380px]">
             <div className="flex flex-col gap-4">
               {errorList.length > 0 && <ErrorBanner count={errorList.length} detail={errorList[0]} />}
-              <Reveal delay={100} className="flex flex-col gap-[22px] rounded-2xl border border-line bg-white p-8">
+              <Reveal delay={100} className="flex flex-col gap-[22px] rounded-2xl border border-line bg-white p-5 sm:p-8">
                 <span className="font-display text-[26px] text-navy">Primary contact</span>
-                <div className="grid grid-cols-2 gap-[18px]">
+                <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2">
                   <TextField label="Name" value={data.name} onChange={set('name')} error={errors.name} />
                   <TextField label="Role" value={data.role} onChange={set('role')} />
                   <TextField label="Email" type="email" value={data.email} onChange={set('email')} error={errors.email} />
