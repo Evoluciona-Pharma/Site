@@ -114,8 +114,8 @@
   from { width: 0; }
   to { width: 140px; }
 }
-.progress-a { animation: progressA 6s linear both; }
-.progress-b { animation: progressB 6s linear both; }
+.progress-a { animation: progressA 4s linear both; }
+.progress-b { animation: progressB 4s linear both; }
 
 /* Respect reduced-motion: the design is motion-heavy (carousel, scroll reveals,
    counters, marquee). Gate all of it, and make sure revealed content stays visible. */

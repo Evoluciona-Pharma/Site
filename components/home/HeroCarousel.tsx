@@ -55,7 +55,7 @@ export default function HeroCarousel() {
 
   const startTimer = useCallback(() => {
     if (timer.current) clearInterval(timer.current);
-    timer.current = setInterval(() => setSlide((s) => (s + 1) % N), 6000);
+    timer.current = setInterval(() => setSlide((s) => (s + 1) % N), 4000);
   }, []);
 
   useEffect(() => {
@@ -65,7 +65,7 @@ export default function HeroCarousel() {
     };
   }, [startTimer]);
 
-  // Arrows reset the 6000ms auto-advance timer (README §6.4).
+  // Arrows reset the 4000ms auto-advance timer (README §6.4).
   const go = (n: number) => {
     setSlide((n + N) % N);
     startTimer();

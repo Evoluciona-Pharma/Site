@@ -73,7 +73,7 @@ design_handoff_evoluciona_provider_portal/   # design spec, references, screensh
   5 formulations + 2 programs. The input mirrors the page's `?q=` and defers URL→input sync
   while focused.
 - **Motion.** Scroll reveals (fade-up 26px/700ms, staggered) via `Reveal`, with the required 2s
-  failsafe; hero carousel (6s auto-advance, 900ms cross-fade); stat count-up (1100ms cubic
+  failsafe; hero carousel (4s auto-advance, 900ms cross-fade); stat count-up (1100ms cubic
   ease-out at 40% visibility); everything gated behind `prefers-reduced-motion`.
 - **Desktop only.** Every screen is a fixed 1440px frame by design — no responsive breakpoints
   exist on purpose (regulated pharmacy UI; awaiting client direction).
