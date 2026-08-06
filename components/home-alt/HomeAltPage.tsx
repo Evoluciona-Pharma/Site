@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { asset } from '@/lib/asset';
 import { productBySlug, products, programs } from '@/lib/catalog';
 import Reveal from '@/components/Reveal';
@@ -93,6 +93,14 @@ export default function HomeAltPage({
 }) {
   const { add } = useRequestList();
   const rail = useRef<HTMLDivElement>(null);
+  const heroVideo = useRef<HTMLVideoElement>(null);
+
+  // Autoplaying motion nobody asked for — hold on the poster frame instead.
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      heroVideo.current?.pause();
+    }
+  }, []);
 
   // NAD+ is the flagship the page is built around.
   const hero = productBySlug('nad')!;
@@ -117,39 +125,35 @@ export default function HomeAltPage({
         <span className="mt-3 text-[17px] text-ink-600">{hero.program}</span>
 
         {/* The rise animation makes this a stacking context, so the field colour has
-            to be repeated here or multiply has no backdrop and a white box shows. */}
-        <div className="hero-rise relative mt-8 flex h-[470px] w-full items-end justify-center bg-[#E7EBF3]">
-          <div
-            className="absolute bottom-1.5 left-1/2 h-[180px] w-[640px] -translate-x-1/2"
-            style={{
-              background:
-                'radial-gradient(ellipse at center, rgba(20,37,63,0.16) 0%, rgba(20,37,63,0) 70%)',
-            }}
-          />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={asset(hero.image)}
-            alt={`${hero.name} sterile vial`}
-            className="relative z-[1] h-[470px] object-contain mix-blend-multiply"
-          />
+            to be repeated here or multiply has no backdrop and a white box shows.
+            The clip carries its own ground shadow, so there is no separate one. */}
+        <div className="hero-rise relative mt-8 h-[470px] w-[820px] overflow-hidden bg-[#E7EBF3]">
+          <video
+            ref={heroVideo}
+            className="absolute inset-0 h-full w-full object-cover mix-blend-multiply"
+            poster={asset('assets/nad-round-poster.jpg')}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-label={`${hero.name} sterile vial, rotating`}
+          >
+            <source src={asset('assets/nad-round.mp4')} type="video/mp4" />
+          </video>
         </div>
 
         <span className="mt-8 text-[15px] text-ink-600">
           Sterile compounded vial · 5 mL and 10 mL · 100 mg/mL
         </span>
 
+        {/* One CTA: "View formulation" pointed at the same page, so it went. */}
         <div className="mt-6 flex items-center gap-3">
-          <button
-            onClick={() => addProduct(hero.slug)}
-            className="inline-flex h-14 cursor-pointer items-center rounded-full border-none bg-brand px-8 font-sans text-[15px] font-semibold text-white hover:bg-brand-hover"
-          >
-            Add to Request List
-          </button>
           <Link
             href={`/products/${hero.slug}`}
-            className="inline-flex h-14 items-center rounded-full border border-line-strongest bg-transparent px-8 font-sans text-[15px] font-semibold text-navy no-underline hover:border-brand hover:text-brand"
+            className="inline-flex h-14 items-center rounded-full bg-brand px-8 font-sans text-[15px] font-semibold text-white no-underline hover:bg-brand-hover hover:text-white"
           >
-            View formulation →
+            Product Details
           </Link>
         </div>
 
