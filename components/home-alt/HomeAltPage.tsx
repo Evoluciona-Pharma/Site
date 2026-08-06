@@ -117,7 +117,7 @@ export default function HomeAltPage({
   return (
     <div className="flex flex-col bg-white">
       {/* 2 · Hero */}
-      <section className="flex flex-col items-center bg-[#E7EBF3] px-14 pb-16 pt-16 text-center">
+      <section id="hero" className="flex flex-col items-center bg-[#E7EBF3] px-14 pb-16 pt-16 text-center">
         <span className="font-mono text-meta-xs uppercase tracking-[0.22em] text-brand">
           Flagship formulation
         </span>
@@ -163,7 +163,7 @@ export default function HomeAltPage({
       </section>
 
       {/* 3 · Spec strip */}
-      <Reveal as="section" className="grid grid-cols-4 bg-white px-14 py-14">
+      <Reveal id="assurances" as="section" className="grid grid-cols-4 bg-white px-14 py-14">
         {SPEC_STRIP.map((s, i) => (
           <div
             key={s.label}
@@ -176,7 +176,7 @@ export default function HomeAltPage({
       </Reveal>
 
       {/* 4 · Catalog rail — navy stays as the one darker band, for depth */}
-      <Reveal as="section" className="bg-navy py-16">
+      <Reveal id="catalog" as="section" className="bg-navy py-16">
         <div className="flex items-end justify-between gap-8 px-14 pb-9">
           <h2 className="text-[52px] leading-[1.05] text-white">
             Eight formulations.
@@ -276,7 +276,7 @@ export default function HomeAltPage({
       </Reveal>
 
       {/* 6 · Full-bleed feature */}
-      <Reveal as="section" className="relative h-[680px] overflow-hidden">
+      <Reveal id="compounding" as="section" className="relative h-[680px] overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={asset('assets/hero-clinic.jpg')}
@@ -300,7 +300,7 @@ export default function HomeAltPage({
       </Reveal>
 
       {/* 7 · How ordering works — photography carries the section */}
-      <Reveal as="section" className="flex flex-col gap-11 bg-brand px-14 pb-24 pt-[88px]">
+      <Reveal id="how-it-works" as="section" className="flex flex-col gap-11 bg-brand px-14 pb-24 pt-[88px]">
         <div className="flex items-end justify-between gap-12">
           <div className="flex max-w-[620px] flex-col gap-4">
             <span className="font-mono text-meta-xs uppercase tracking-[0.22em] text-[#A9B6E8]">
@@ -356,7 +356,7 @@ export default function HomeAltPage({
       </Reveal>
 
       {/* 8 · Editorial */}
-      <Reveal
+      <Reveal id="why-evoluciona"
         as="section"
         className="grid grid-cols-[520px_1fr] items-start gap-16 bg-white px-14 py-20"
       >
@@ -401,7 +401,7 @@ export default function HomeAltPage({
       </Reveal>
 
       {/* 9 · Closing CTA */}
-      <Reveal as="section" className="flex flex-col items-center gap-8 bg-navy px-14 py-24 text-center">
+      <Reveal id="get-started" as="section" className="flex flex-col items-center gap-8 bg-navy px-14 py-24 text-center">
         <h2 className="max-w-[900px] text-[64px] leading-[1.02] text-white">
           Bring compounded formulations to your practice.
         </h2>
@@ -415,7 +415,7 @@ export default function HomeAltPage({
 
       {/* 10 · Compliance wall */}
       {showDisclaimer && (
-        <section className="flex flex-col gap-4 border-t border-line bg-white px-14 py-14">
+        <section id="compliance" className="flex flex-col gap-4 border-t border-line bg-white px-14 py-14">
           <span className="font-mono text-meta-xs uppercase tracking-[0.18em] text-muted-2">
             Important information for providers
           </span>
