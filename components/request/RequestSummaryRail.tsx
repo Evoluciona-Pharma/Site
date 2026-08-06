@@ -8,16 +8,21 @@ import { useRequestList } from '@/components/RequestListContext';
 /** "Your request" panel on the right rail of steps 1–2. Step 1 adds the Edit
     link, the no-pricing note, and the license-lock line. */
 export default function RequestSummaryRail({ full }: { full: boolean }) {
-  const { items } = useRequestList();
+  const { items, openDrawer } = useRequestList();
 
   const panel = (
     <div className="flex flex-col gap-1 rounded-2xl border border-line bg-white p-6">
       {full ? (
         <div className="flex items-center justify-between pb-2.5">
           <span className="font-display text-[23px] text-navy">Your request</span>
-          <Link href="/shop" className="text-xs no-underline">
+          {/* Opens the drawer rather than leaving for the catalog: the drawer is
+              where items are actually removed, and the half-filled form stays put. */}
+          <button
+            onClick={openDrawer}
+            className="cursor-pointer border-none bg-transparent p-0 font-sans text-xs text-brand hover:text-brand-hover"
+          >
             Edit
-          </Link>
+          </button>
         </div>
       ) : (
         <span className="pb-2.5 font-display text-[23px] text-navy">Your request</span>
