@@ -2,23 +2,25 @@
 
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { asset } from '@/lib/asset';
 import { homeHeroSlides } from '@/lib/catalog';
 
-/** Per-slide placeholder art direction — striped stand-ins until imagery lands (README §10). */
-const SLIDE_ART = [
+/** Per-slide art direction. Slides 1–2 have delivered media; slide 3 is still a
+    striped stand-in with its caption (README §10). */
+type SlideArt =
+  | { kind: 'video'; src: string; poster: string }
+  | { kind: 'image'; src: string; alt: string }
+  | { kind: 'placeholder'; bg: string; panelWidth: number; panelBg: string; detail: string };
+
+const SLIDE_ART: SlideArt[] = [
+  { kind: 'video', src: 'assets/hero-video.mp4', poster: 'assets/hero-video-poster.jpg' },
   {
-    bg: 'repeating-linear-gradient(135deg,#96A2B8 0 14px,#8894AC 14px 28px)',
-    panelWidth: 396,
-    panelBg: 'repeating-linear-gradient(45deg,#2E3F5E 0 14px,#24334E 14px 28px)',
-    detail: 'detail shot',
+    kind: 'image',
+    src: 'assets/hero-clinic.jpg',
+    alt: 'Provider reviewing a treatment plan with a patient in a clinic',
   },
   {
-    bg: 'repeating-linear-gradient(115deg,#9BA6B6 0 14px,#8A96A9 14px 28px)',
-    panelWidth: 452,
-    panelBg: 'repeating-linear-gradient(45deg,#2A3A57 0 14px,#1F2D45 14px 28px)',
-    detail: 'label detail',
-  },
-  {
+    kind: 'placeholder',
     bg: 'repeating-linear-gradient(155deg,#93A0B4 0 14px,#82909F 14px 28px)',
     panelWidth: 340,
     panelBg: 'repeating-linear-gradient(45deg,#32425E 0 14px,#26344C 14px 28px)',
@@ -26,11 +28,30 @@ const SLIDE_ART = [
   },
 ];
 
+/** Replaces the striped dark panel that used to sit behind the right-aligned
+    headline — real footage needs a floor for the white type. */
+const MEDIA_SCRIM =
+  'linear-gradient(90deg, rgba(20,37,63,0.20) 0%, rgba(20,37,63,0.52) 42%, rgba(20,37,63,0.72) 100%)';
+
 const N = homeHeroSlides.length;
 
 export default function HeroCarousel() {
   const [slide, setSlide] = useState(0);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const video = useRef<HTMLVideoElement>(null);
+
+  // Only decode while its slide is showing, and never autoplay under
+  // prefers-reduced-motion — the poster frame stands in.
+  useEffect(() => {
+    const el = video.current;
+    if (!el) return;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (slide === 0 && !reduced) {
+      void el.play().catch(() => {});
+    } else {
+      el.pause();
+    }
+  }, [slide]);
 
   const startTimer = useCallback(() => {
     if (timer.current) clearInterval(timer.current);
@@ -64,10 +85,42 @@ export default function HeroCarousel() {
               pointerEvents: slide === i ? 'auto' : 'none',
             }}
           >
-            <div className="absolute inset-0" style={{ background: art.bg }} />
-            <div className="absolute bottom-0 right-0 top-0" style={{ width: art.panelWidth, background: art.panelBg }} />
-            <span className="ph-caption absolute bottom-12 left-6">{s.placeholder}</span>
-            <span className="ph-caption absolute right-6 top-[110px]">{art.detail}</span>
+            {art.kind === 'placeholder' ? (
+              <>
+                <div className="absolute inset-0" style={{ background: art.bg }} />
+                <div
+                  className="absolute bottom-0 right-0 top-0"
+                  style={{ width: art.panelWidth, background: art.panelBg }}
+                />
+                <span className="ph-caption absolute bottom-12 left-6">{s.placeholder}</span>
+                <span className="ph-caption absolute right-6 top-[110px]">{art.detail}</span>
+              </>
+            ) : (
+              <>
+                {art.kind === 'video' ? (
+                  <video
+                    ref={video}
+                    className="absolute inset-0 h-full w-full object-cover"
+                    poster={asset(art.poster)}
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    aria-hidden="true"
+                  >
+                    <source src={asset(art.src)} type="video/mp4" />
+                  </video>
+                ) : (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={asset(art.src)}
+                    alt={art.alt}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                )}
+                <div className="absolute inset-0" style={{ background: MEDIA_SCRIM }} />
+              </>
+            )}
             <div className="absolute left-0 right-0 top-[200px] flex flex-col items-end gap-6 pr-16">
               <div className="flex w-[820px] flex-col gap-3.5 [text-shadow:0_2px_24px_rgba(10,20,38,0.3)]">
                 <h2 className="text-[82px] leading-[1.02] text-white">
