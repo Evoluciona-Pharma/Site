@@ -248,7 +248,52 @@ export default function HomeAltPage({
         </div>
       </Reveal>
 
-      {/* 5 · Full-bleed feature */}
+      {/* 5 · Editorial */}
+      <Reveal
+        as="section"
+        className="grid grid-cols-[520px_1fr] items-start gap-16 bg-white px-14 py-20"
+      >
+        <div className="flex h-[520px] items-center justify-center rounded-[20px] bg-[#F1F3F8] p-10">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={asset(editorial.image)}
+            alt={`${editorial.name} sterile vial`}
+            className="h-full w-full object-contain mix-blend-multiply"
+          />
+        </div>
+        <div className="flex flex-col gap-5 pt-2">
+          <span className="font-mono text-meta-xs uppercase tracking-[0.22em] text-brand">
+            Why providers order here
+          </span>
+          <h2 className="text-[52px] leading-[1.05] text-navy">A pharmacy that answers the phone.</h2>
+          <p className="text-[16.5px] leading-7 text-ink-600">
+            Every request is read by the pharmacy team before anything is prepared. A representative
+            confirms the formulation, the presentation, and the prescriber on file — so questions are
+            answered by the people who compound the preparation, not a queue.
+          </p>
+          <p className="text-[16.5px] leading-7 text-ink-600">
+            That is also why there is no checkout button. Ordering is gated on license verification
+            and a patient-specific prescription, so the list you build here starts a conversation
+            rather than a transaction. No pricing appears online at any point.
+          </p>
+          <div className="mt-4 flex gap-12">
+            <div className="flex flex-col gap-1">
+              <CountUp value={products.length} className="font-display text-[46px] leading-none text-navy" />
+              <span className="text-[13px] text-muted">Formulations</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              <CountUp value={programs.length} className="font-display text-[46px] leading-none text-navy" />
+              <span className="text-[13px] text-muted">Clinical programs</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="font-display text-[46px] leading-none text-navy">1:1</span>
+              <span className="text-[13px] text-muted">Representative support</span>
+            </div>
+          </div>
+        </div>
+      </Reveal>
+
+      {/* 6 · Full-bleed feature */}
       <Reveal as="section" className="relative h-[680px] overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -272,7 +317,7 @@ export default function HomeAltPage({
         </div>
       </Reveal>
 
-      {/* 6 · How ordering works — photography carries the section */}
+      {/* 7 · How ordering works — photography carries the section */}
       <Reveal as="section" className="flex flex-col gap-11 bg-brand px-14 pb-24 pt-[88px]">
         <div className="flex items-end justify-between gap-12">
           <div className="flex max-w-[620px] flex-col gap-4">
@@ -325,51 +370,6 @@ export default function HomeAltPage({
               </div>
             </div>
           ))}
-        </div>
-      </Reveal>
-
-      {/* 7 · Editorial */}
-      <Reveal
-        as="section"
-        className="grid grid-cols-[520px_1fr] items-start gap-16 bg-white px-14 py-20"
-      >
-        <div className="flex h-[520px] items-center justify-center rounded-[20px] bg-[#F1F3F8] p-10">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={asset(editorial.image)}
-            alt={`${editorial.name} sterile vial`}
-            className="h-full w-full object-contain mix-blend-multiply"
-          />
-        </div>
-        <div className="flex flex-col gap-5 pt-2">
-          <span className="font-mono text-meta-xs uppercase tracking-[0.22em] text-brand">
-            Why providers order here
-          </span>
-          <h2 className="text-[52px] leading-[1.05] text-navy">A pharmacy that answers the phone.</h2>
-          <p className="text-[16.5px] leading-7 text-ink-600">
-            Every request is read by the pharmacy team before anything is prepared. A representative
-            confirms the formulation, the presentation, and the prescriber on file — so questions are
-            answered by the people who compound the preparation, not a queue.
-          </p>
-          <p className="text-[16.5px] leading-7 text-ink-600">
-            That is also why there is no checkout button. Ordering is gated on license verification
-            and a patient-specific prescription, so the list you build here starts a conversation
-            rather than a transaction. No pricing appears online at any point.
-          </p>
-          <div className="mt-4 flex gap-12">
-            <div className="flex flex-col gap-1">
-              <CountUp value={products.length} className="font-display text-[46px] leading-none text-navy" />
-              <span className="text-[13px] text-muted">Formulations</span>
-            </div>
-            <div className="flex flex-col gap-1">
-              <CountUp value={programs.length} className="font-display text-[46px] leading-none text-navy" />
-              <span className="text-[13px] text-muted">Clinical programs</span>
-            </div>
-            <div className="flex flex-col gap-1">
-              <span className="font-display text-[46px] leading-none text-navy">1:1</span>
-              <span className="text-[13px] text-muted">Representative support</span>
-            </div>
-          </div>
         </div>
       </Reveal>
 
