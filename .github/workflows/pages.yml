@@ -37,7 +37,11 @@ jobs:
       # Without this, Pages' Jekyll step drops the _next/ directory.
       - run: touch out/.nojekyll
 
+      # enablement lets the first run turn Pages on itself, rather than
+      # failing until someone flips it in repo settings.
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out
