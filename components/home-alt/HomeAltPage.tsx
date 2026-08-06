@@ -9,8 +9,9 @@ import { useRequestList } from '@/components/RequestListContext';
 import CountUp from './CountUp';
 import StickyRequestBar from './StickyRequestBar';
 
-/** Art direction outstanding — striped stand-in with a caption saying what belongs there. */
-const STRIPES = 'repeating-linear-gradient(115deg,#9BA6B6 0 14px,#8A96A9 14px 28px)';
+/** The feature copy sits left over the photography, so the scrim is weighted there. */
+const FEATURE_SCRIM =
+  'linear-gradient(90deg, rgba(20,37,63,0.76) 0%, rgba(20,37,63,0.56) 46%, rgba(20,37,63,0.24) 100%)';
 
 /** Photography is matched to step meaning, not filename order. */
 const STEPS = [
@@ -245,14 +246,14 @@ export default function HomeAltPage({
 
       {/* 5 · Full-bleed feature */}
       <Reveal as="section" className="relative h-[680px] overflow-hidden">
-        <div className="absolute inset-0" style={{ background: STRIPES }} />
-        <span className="ph-caption absolute bottom-6 right-6">
-          cleanroom / compounding bench — pending art direction
-        </span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={asset('assets/hero-clinic.jpg')}
+          alt="Provider reviewing a treatment plan with a patient in a clinic"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0" style={{ background: FEATURE_SCRIM }} />
         <div className="absolute left-14 top-20 flex w-[660px] flex-col items-start gap-5 [text-shadow:0_2px_24px_rgba(10,20,38,0.32)]">
-          <span className="font-mono text-meta-xs uppercase tracking-[0.22em] text-white">
-            Inside the pharmacy
-          </span>
           <h2 className="text-[62px] leading-[1.02] text-white">
             Compounded to order, <em>prescription by prescription.</em>
           </h2>
