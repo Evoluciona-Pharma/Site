@@ -53,6 +53,14 @@
   .ph-stripe-dark {
     background: repeating-linear-gradient(45deg, #2e3f5e 0 14px, #24334e 14px 28px);
   }
+  /* Horizontal rails scroll by arrow button, so the native bar is redundant. */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
   .ph-caption {
     font-family: var(--font-fira-code), monospace;
     font-size: 11px;
