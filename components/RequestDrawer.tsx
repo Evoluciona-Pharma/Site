@@ -33,6 +33,25 @@ function hrefFor(name: string): string {
   return `/products/${productByName(name)?.slug ?? ''}`;
 }
 
+const TrashIcon = (
+  <svg
+    width="15"
+    height="15"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M4 7 L20 7" />
+    <path d="M9.5 7 V5.5 A1.5 1.5 0 0 1 11 4 h2 a1.5 1.5 0 0 1 1.5 1.5 V7" />
+    <path d="M6.6 7 L7.4 19.1 A2 2 0 0 0 9.4 21 h5.2 a2 2 0 0 0 2-1.9 L17.4 7" />
+    <path d="M10.4 11 V17 M13.6 11 V17" />
+  </svg>
+);
+
 export function RequestListDrawer({
   open,
   count,
@@ -65,6 +84,12 @@ export function RequestListDrawer({
       ...q,
       [name]: Math.min(QTY_MAX, Math.max(QTY_MIN, (q[name] ?? 1) + delta)),
     }));
+
+  /** Drop the stored quantity too, so re-adding the item starts back at 1. */
+  const removeItem = (it: DrawerItem) => {
+    setQty(({ [it.name]: _dropped, ...rest }) => rest);
+    it.remove();
+  };
 
   const inList = new Set(list.map((i) => i.name));
   const suggestions = products.filter((p) => !inList.has(p.name)).slice(0, 5);
@@ -151,12 +176,22 @@ export function RequestListDrawer({
 
                   <div className="mt-4 flex items-center justify-between gap-3">
                     <div className="flex h-9 items-center rounded-lg border border-[#E1E4EA]">
+                      {/* At 1 the next step down would be 0, so the control becomes
+                          the delete affordance rather than a dead button. */}
                       <button
-                        onClick={() => step(it.name, -1)}
-                        aria-label={`Decrease ${it.name} quantity`}
-                        className="h-[34px] w-9 cursor-pointer border-none bg-transparent text-navy hover:bg-[#F5F6F8]"
+                        onClick={() =>
+                          (qty[it.name] ?? 1) <= QTY_MIN ? removeItem(it) : step(it.name, -1)
+                        }
+                        aria-label={
+                          (qty[it.name] ?? 1) <= QTY_MIN
+                            ? `Remove ${it.name} from request list`
+                            : `Decrease ${it.name} quantity`
+                        }
+                        className={`flex h-[34px] w-9 cursor-pointer items-center justify-center border-none bg-transparent hover:bg-[#F5F6F8] ${
+                          (qty[it.name] ?? 1) <= QTY_MIN ? 'text-muted hover:text-danger' : 'text-navy'
+                        }`}
                       >
-                        −
+                        {(qty[it.name] ?? 1) <= QTY_MIN ? TrashIcon : '−'}
                       </button>
                       <span className="min-w-[26px] text-center text-sm text-navy">
                         {qty[it.name] ?? 1}
@@ -170,7 +205,7 @@ export function RequestListDrawer({
                       </button>
                     </div>
                     <button
-                      onClick={it.remove}
+                      onClick={() => removeItem(it)}
                       className="cursor-pointer border-none bg-transparent text-[13px] text-muted underline [text-underline-offset:3px] hover:text-danger"
                     >
                       Remove
