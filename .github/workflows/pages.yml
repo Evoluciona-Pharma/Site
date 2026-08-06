@@ -10,10 +10,15 @@ permissions:
   pages: write
   id-token: write
 
-# Let a running deploy finish rather than cancelling it mid-publish.
+# Supersede an in-flight run instead of letting it finish. Every commit is
+# cumulative, so the newest run publishes everything the older one would have.
+# Letting them queue is what jammed Pages: a run that gives up while its
+# deployment is still open leaves that deployment held on the backend, and every
+# later one is rejected with "due to in progress deployment". Cancelling the run
+# lets deploy-pages' cleanup release the deployment it opened.
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -53,18 +58,13 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url || steps.deployment_retry.outputs.page_url }}
     steps:
-      # deploy-pages polls until the deployment reports live and aborts at its
-      # 10-minute default. Pushing again while a deploy is still settling has
-      # pushed it past that, failing a run whose build was fine — so allow longer
-      # and retry once rather than leaving main un-deployed.
+      # 600000ms is the hard maximum the action accepts — anything higher is
+      # silently clamped, so raising it achieves nothing. One retry covers a
+      # transient error; a held deployment needs the concurrency rule above.
       - id: deployment
         uses: actions/deploy-pages@v4
         continue-on-error: true
-        with:
-          timeout: 900000
 
       - id: deployment_retry
         if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v4
-        with:
-          timeout: 900000
