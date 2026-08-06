@@ -12,9 +12,6 @@ import StickyRequestBar from './StickyRequestBar';
 /** Art direction outstanding — striped stand-in with a caption saying what belongs there. */
 const STRIPES = 'repeating-linear-gradient(115deg,#9BA6B6 0 14px,#8A96A9 14px 28px)';
 
-/** Hairline between adjacent brand-blue bands, so they don't merge into one slab. */
-const BAND_RULE = 'border-t border-[rgba(255,255,255,0.16)]';
-
 /** Photography is matched to step meaning, not filename order. */
 const STEPS = [
   {
@@ -109,20 +106,20 @@ export default function HomeAltPage({
     rail.current?.scrollBy({ left: dir * 640, behavior: 'smooth' });
 
   return (
-    <div className="flex flex-col bg-brand">
+    <div className="flex flex-col bg-white">
       {/* 2 · Hero */}
-      <section className="flex flex-col items-center bg-brand px-14 pb-16 pt-16 text-center">
-        <span className="font-mono text-meta-xs uppercase tracking-[0.22em] text-[#A9B6E8]">
+      <section className="flex flex-col items-center bg-[#E7EBF3] px-14 pb-16 pt-16 text-center">
+        <span className="font-mono text-meta-xs uppercase tracking-[0.22em] text-brand">
           Flagship formulation
         </span>
-        <h1 className="mt-5 text-[154px] leading-[0.9] tracking-[-0.02em] text-white">{hero.name}</h1>
-        <span className="mt-3 text-[17px] text-[#C5CEF0]">{hero.program}</span>
+        <h1 className="mt-5 text-[154px] leading-[0.9] tracking-[-0.02em] text-navy">{hero.name}</h1>
+        <span className="mt-3 text-[17px] text-ink-600">{hero.program}</span>
 
-        {/* The product keeps a pale stage: multiply against brand blue would sink the
-            vial and erase its white label. Blending stays on a light field. */}
-        <div className="hero-rise relative mt-9 flex h-[470px] w-[820px] items-end justify-center rounded-[28px] bg-[#E7EBF3]">
+        {/* The rise animation makes this a stacking context, so the field colour has
+            to be repeated here or multiply has no backdrop and a white box shows. */}
+        <div className="hero-rise relative mt-8 flex h-[470px] w-full items-end justify-center bg-[#E7EBF3]">
           <div
-            className="absolute bottom-8 left-1/2 h-[180px] w-[640px] -translate-x-1/2"
+            className="absolute bottom-1.5 left-1/2 h-[180px] w-[640px] -translate-x-1/2"
             style={{
               background:
                 'radial-gradient(ellipse at center, rgba(20,37,63,0.16) 0%, rgba(20,37,63,0) 70%)',
@@ -132,43 +129,43 @@ export default function HomeAltPage({
           <img
             src={asset(hero.image)}
             alt={`${hero.name} sterile vial`}
-            className="relative z-[1] h-[430px] object-contain mix-blend-multiply"
+            className="relative z-[1] h-[470px] object-contain mix-blend-multiply"
           />
         </div>
 
-        <span className="mt-8 text-[15px] text-[#C5CEF0]">
+        <span className="mt-8 text-[15px] text-ink-600">
           Sterile compounded vial · 5 mL and 10 mL · 100 mg/mL
         </span>
 
         <div className="mt-6 flex items-center gap-3">
           <button
             onClick={() => addProduct(hero.slug)}
-            className="inline-flex h-14 cursor-pointer items-center rounded-full border-none bg-white px-8 font-sans text-[15px] font-semibold text-brand hover:bg-[#EEF1FA]"
+            className="inline-flex h-14 cursor-pointer items-center rounded-full border-none bg-brand px-8 font-sans text-[15px] font-semibold text-white hover:bg-brand-hover"
           >
             Add to Request List
           </button>
           <Link
             href={`/products/${hero.slug}`}
-            className="inline-flex h-14 items-center rounded-full border border-[rgba(255,255,255,0.45)] bg-transparent px-8 font-sans text-[15px] font-semibold text-white no-underline hover:border-white hover:text-white"
+            className="inline-flex h-14 items-center rounded-full border border-line-strongest bg-transparent px-8 font-sans text-[15px] font-semibold text-navy no-underline hover:border-brand hover:text-brand"
           >
             View formulation →
           </Link>
         </div>
 
-        <span className="mt-5 text-[13px] text-[#A9B6E8]">
+        <span className="mt-5 text-[13px] text-[#7A8494]">
           No pricing online · licensed providers only · dispensed against a patient-specific prescription
         </span>
       </section>
 
       {/* 3 · Spec strip */}
-      <Reveal as="section" className={`grid grid-cols-4 bg-brand px-14 py-14 ${BAND_RULE}`}>
+      <Reveal as="section" className="grid grid-cols-4 bg-white px-14 py-14">
         {SPEC_STRIP.map((s, i) => (
           <div
             key={s.label}
-            className={i > 0 ? 'border-l border-[rgba(255,255,255,0.24)] pl-8' : 'pr-8'}
+            className={i > 0 ? 'border-l border-line pl-8' : 'pr-8'}
           >
-            <span className="block font-display text-[26px] leading-tight text-white">{s.label}</span>
-            <span className="mt-2 block text-[13.5px] leading-[21px] text-[#C5CEF0]">{s.sub}</span>
+            <span className="block font-display text-[26px] leading-tight text-navy">{s.label}</span>
+            <span className="mt-2 block text-[13.5px] leading-[21px] text-muted">{s.sub}</span>
           </div>
         ))}
       </Reveal>
@@ -329,7 +326,7 @@ export default function HomeAltPage({
       {/* 7 · Editorial */}
       <Reveal
         as="section"
-        className={`grid grid-cols-[520px_1fr] items-start gap-16 bg-brand px-14 py-20 ${BAND_RULE}`}
+        className="grid grid-cols-[520px_1fr] items-start gap-16 bg-white px-14 py-20"
       >
         <div className="flex h-[520px] items-center justify-center rounded-[20px] bg-[#F1F3F8] p-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -340,57 +337,57 @@ export default function HomeAltPage({
           />
         </div>
         <div className="flex flex-col gap-5 pt-2">
-          <span className="font-mono text-meta-xs uppercase tracking-[0.22em] text-[#A9B6E8]">
+          <span className="font-mono text-meta-xs uppercase tracking-[0.22em] text-brand">
             Why providers order here
           </span>
-          <h2 className="text-[52px] leading-[1.05] text-white">A pharmacy that answers the phone.</h2>
-          <p className="text-[16.5px] leading-7 text-[#C5CEF0]">
+          <h2 className="text-[52px] leading-[1.05] text-navy">A pharmacy that answers the phone.</h2>
+          <p className="text-[16.5px] leading-7 text-ink-600">
             Every request is read by the pharmacy team before anything is prepared. A representative
             confirms the formulation, the presentation, and the prescriber on file — so questions are
             answered by the people who compound the preparation, not a queue.
           </p>
-          <p className="text-[16.5px] leading-7 text-[#C5CEF0]">
+          <p className="text-[16.5px] leading-7 text-ink-600">
             That is also why there is no checkout button. Ordering is gated on license verification
             and a patient-specific prescription, so the list you build here starts a conversation
             rather than a transaction. No pricing appears online at any point.
           </p>
           <div className="mt-4 flex gap-12">
             <div className="flex flex-col gap-1">
-              <CountUp value={products.length} className="font-display text-[46px] leading-none text-white" />
-              <span className="text-[13px] text-[#A9B6E8]">Formulations</span>
+              <CountUp value={products.length} className="font-display text-[46px] leading-none text-navy" />
+              <span className="text-[13px] text-muted">Formulations</span>
             </div>
             <div className="flex flex-col gap-1">
-              <CountUp value={programs.length} className="font-display text-[46px] leading-none text-white" />
-              <span className="text-[13px] text-[#A9B6E8]">Clinical programs</span>
+              <CountUp value={programs.length} className="font-display text-[46px] leading-none text-navy" />
+              <span className="text-[13px] text-muted">Clinical programs</span>
             </div>
             <div className="flex flex-col gap-1">
-              <span className="font-display text-[46px] leading-none text-white">1:1</span>
-              <span className="text-[13px] text-[#A9B6E8]">Representative support</span>
+              <span className="font-display text-[46px] leading-none text-navy">1:1</span>
+              <span className="text-[13px] text-muted">Representative support</span>
             </div>
           </div>
         </div>
       </Reveal>
 
       {/* 8 · Program grid */}
-      <Reveal as="section" className={`bg-brand px-14 py-16 ${BAND_RULE}`}>
+      <Reveal as="section" className="bg-surface-alt px-14 py-16">
         <div className="grid grid-cols-3 gap-5">
           {programs.map((g) => (
             <Link
               key={g.slug}
               href={`/shop?program=${g.slug}`}
-              className="flex items-center gap-4 rounded-2xl border border-[rgba(255,255,255,0.22)] bg-[rgba(255,255,255,0.06)] p-4 no-underline transition-all duration-[250ms] hover:-translate-y-[3px] hover:border-white hover:bg-[rgba(255,255,255,0.1)]"
+              className="flex items-center gap-4 rounded-2xl border border-line bg-white p-4 no-underline transition-all duration-[250ms] hover:-translate-y-[3px] hover:border-line-strongest hover:shadow-programHover"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={asset(g.cardImage)}
                 alt={`${g.label} formulations`}
-                className="h-[72px] w-[72px] shrink-0 rounded-xl bg-white object-cover"
+                className="h-[72px] w-[72px] shrink-0 rounded-xl border border-line bg-white object-cover"
               />
               <div className="flex flex-1 flex-col gap-1">
-                <span className="font-display text-[21px] leading-[1.1] text-white">{g.label}</span>
-                <span className="text-[13px] text-[#A9B6E8]">{g.count} formulations</span>
+                <span className="font-display text-[21px] leading-[1.1] text-navy">{g.label}</span>
+                <span className="text-[13px] text-muted-2">{g.count} formulations</span>
               </div>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#14258F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
                 <path d="M5 12 L19 12 M13 6 L19 12 L13 18" />
               </svg>
             </Link>
@@ -413,18 +410,18 @@ export default function HomeAltPage({
 
       {/* 10 · Compliance wall */}
       {showDisclaimer && (
-        <section className="flex flex-col gap-4 border-t border-[rgba(255,255,255,0.18)] bg-brand px-14 py-14">
-          <span className="font-mono text-meta-xs uppercase tracking-[0.18em] text-[#A9B6E8]">
+        <section className="flex flex-col gap-4 border-t border-line bg-white px-14 py-14">
+          <span className="font-mono text-meta-xs uppercase tracking-[0.18em] text-muted-2">
             Important information for providers
           </span>
-          <p className="max-w-[980px] text-[12.5px] leading-5 text-[#C5CEF0]">
+          <p className="max-w-[980px] text-[12.5px] leading-5 text-muted-2">
             This portal is intended for licensed healthcare providers only. Compounded preparations
             are not FDA-approved, are prepared by a compounding pharmacy, and are dispensed solely
             against a valid patient-specific prescription written by a licensed prescriber. Nothing
             on this page is an offer to sell, a promise of availability, or medical advice; clinical
             decisions remain the responsibility of the prescribing provider.
           </p>
-          <p className="max-w-[980px] text-[12.5px] leading-5 text-[#C5CEF0]">
+          <p className="max-w-[980px] text-[12.5px] leading-5 text-muted-2">
             Presentations, concentrations, and availability are confirmed by the pharmacy at the time
             a request is reviewed. Values shown as pending confirmation are unconfirmed and must not
             be relied upon for clinical or ordering decisions. Submitting a request does not create
