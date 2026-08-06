@@ -307,8 +307,11 @@ export default function ShopPage() {
           {n > 0 && (
             <Reveal className="grid grid-cols-3 gap-[26px_24px]">
               {shopProducts.map((p) => (
-                <div key={p.slug} className="flex flex-col gap-3.5">
-                  <div className="group relative h-[300px] overflow-hidden rounded-[20px] border border-line bg-white">
+                // Stretched link: the name anchor's ::after covers the card so the
+                // whole thing is clickable, without nesting the add button inside an
+                // <a> (invalid) or swallowing the product name in a card-long label.
+                <div key={p.slug} className="group relative flex flex-col gap-3.5">
+                  <div className="relative h-[300px] overflow-hidden rounded-[20px] border border-line bg-white">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={asset(p.image)}
@@ -320,30 +323,35 @@ export default function ShopPage() {
                         {p.badge}
                       </span>
                     )}
-                    <Link
-                      href={`/products/${p.slug}`}
-                      className="absolute bottom-3.5 left-1/2 inline-flex h-[34px] -translate-x-1/2 items-center justify-center whitespace-nowrap rounded-full bg-[rgba(255,255,255,0.95)] px-[18px] font-sans text-xs font-semibold text-navy no-underline shadow-[0_4px_14px_rgba(20,37,63,0.16)] transition-all duration-200 hover:bg-navy hover:text-white"
-                    >
+                    <span className="absolute bottom-3.5 left-1/2 inline-flex h-[34px] -translate-x-1/2 items-center justify-center whitespace-nowrap rounded-full bg-[rgba(255,255,255,0.95)] px-[18px] font-sans text-xs font-semibold text-navy shadow-[0_4px_14px_rgba(20,37,63,0.16)] transition-all duration-200 group-hover:bg-navy group-hover:text-white">
                       View details
-                    </Link>
+                    </span>
                   </div>
                   <div className="flex flex-col gap-[7px] px-0.5">
                     <span
-                      onClick={() => write({ program: [programs.find((g) => g.label === p.program)!.slug], presentation: presSlugs, q: query })}
-                      className="cursor-pointer self-start text-meta-xs font-semibold tracking-[0.09em] text-muted-2 hover:text-brand"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        write({ program: [programs.find((g) => g.label === p.program)!.slug], presentation: presSlugs, q: query });
+                      }}
+                      className="relative z-10 cursor-pointer self-start text-meta-xs font-semibold tracking-[0.09em] text-muted-2 hover:text-brand"
                     >
                       {p.program.toUpperCase()}
                     </span>
                     <Link
                       href={`/products/${p.slug}`}
-                      className="font-display text-[27px] leading-[1.05] text-navy no-underline hover:text-brand"
+                      className="font-display text-[27px] leading-[1.05] text-navy no-underline after:absolute after:inset-0 after:content-[''] group-hover:text-brand"
                     >
                       {p.name}
                     </Link>
                     <span className="text-[13px] leading-[19px] text-muted">{p.spec}</span>
                     <button
-                      onClick={() => addProduct(p)}
-                      className="mt-2 h-11 w-full cursor-pointer rounded-full border-none bg-brand font-sans text-[13px] font-semibold text-white transition-colors duration-200 hover:bg-brand-hover"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        addProduct(p);
+                      }}
+                      className="relative z-10 mt-2 h-11 w-full cursor-pointer rounded-full border-none bg-brand font-sans text-[13px] font-semibold text-white transition-colors duration-200 hover:bg-brand-hover"
                     >
                       Add to Request List
                     </button>

@@ -29,6 +29,10 @@ function thumbFor(name: string): string {
   return asset(product ? product.image : 'assets/vials/nad.jpg');
 }
 
+function hrefFor(name: string): string {
+  return `/products/${productByName(name)?.slug ?? ''}`;
+}
+
 export function RequestListDrawer({
   open,
   count,
@@ -114,19 +118,29 @@ export function RequestListDrawer({
           ) : (
             list.map((it) => (
               <div key={it.name} className="flex gap-4 border-b border-[#F0F1F4] py-[18px]">
-                <span className="h-[92px] w-[92px] shrink-0 overflow-hidden rounded-lg bg-[#F2F3F5]">
+                <Link
+                  href={hrefFor(it.name)}
+                  onClick={onClose}
+                  className="h-[92px] w-[92px] shrink-0 overflow-hidden rounded-lg bg-[#F2F3F5]"
+                >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={thumbFor(it.name)}
                     alt={`${it.name} sterile vial`}
                     className="h-full w-full object-cover mix-blend-multiply"
                   />
-                </span>
+                </Link>
 
                 <div className="flex min-w-0 flex-1 flex-col">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex min-w-0 flex-col gap-1">
-                      <span className="text-[15px] font-semibold text-navy">{it.name}</span>
+                      <Link
+                        href={hrefFor(it.name)}
+                        onClick={onClose}
+                        className="text-[15px] font-semibold text-navy no-underline hover:text-brand"
+                      >
+                        {it.name}
+                      </Link>
                       <span className="text-[13px] text-muted-2">{presentationLabel(it.dose)}</span>
                     </div>
                     {/* Where a store would price the line — deliberately price-free. */}
@@ -200,20 +214,28 @@ export function RequestListDrawer({
                   key={p.slug}
                   className="flex w-[290px] flex-[0_0_auto] items-center gap-3 rounded-[10px] bg-white p-2.5"
                 >
-                  <span className="h-[62px] w-[62px] shrink-0 overflow-hidden rounded-[7px] bg-[#F2F3F5]">
+                  <Link
+                    href={`/products/${p.slug}`}
+                    onClick={onClose}
+                    className="h-[62px] w-[62px] shrink-0 overflow-hidden rounded-[7px] bg-[#F2F3F5]"
+                  >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={asset(p.image)}
                       alt={`${p.name} sterile vial`}
                       className="h-full w-full object-cover mix-blend-multiply"
                     />
-                  </span>
-                  <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+                  </Link>
+                  <Link
+                    href={`/products/${p.slug}`}
+                    onClick={onClose}
+                    className="flex min-w-0 flex-1 flex-col gap-0.5 no-underline"
+                  >
                     <span className="truncate text-sm font-semibold text-navy">{p.name}</span>
                     <span className="truncate text-[12.5px] text-muted">
                       {presentationLabel(p.defaultPresentation)}
                     </span>
-                  </div>
+                  </Link>
                   <button
                     onClick={() => onAdd(p.name)}
                     aria-label={`Add ${p.name} to request list`}

@@ -33,9 +33,9 @@ export default function HomePage() {
             {featured.map((p) => (
               <div
                 key={p.slug}
-                className="flex flex-col overflow-hidden rounded-2xl border border-line bg-white transition-all duration-[250ms] hover:-translate-y-1 hover:border-line-strongest hover:shadow-cardHover"
+                className="group relative flex flex-col overflow-hidden rounded-2xl border border-line bg-white transition-all duration-[250ms] hover:-translate-y-1 hover:border-line-strongest hover:shadow-cardHover"
               >
-                <div className="group relative h-[220px] overflow-hidden">
+                <div className="relative h-[220px] overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={asset(p.image)}
@@ -51,14 +51,18 @@ export default function HomePage() {
                 <div className="flex flex-1 flex-col gap-2 px-[18px] pb-[18px] pt-4">
                   <Link
                     href={`/products/${p.slug}`}
-                    className="font-display text-[25px] leading-[1.05] text-navy no-underline hover:text-brand"
+                    className="font-display text-[25px] leading-[1.05] text-navy no-underline after:absolute after:inset-0 after:content-[''] group-hover:text-brand"
                   >
                     {p.name}
                   </Link>
                   <span className="flex-1 text-[13px] leading-[19px] text-muted">{p.spec}</span>
                   <button
-                    onClick={() => add({ name: p.name, program: p.program, presentation: p.defaultPresentation })}
-                    className="mt-1.5 h-11 w-full cursor-pointer rounded-full border-none bg-brand font-sans text-[13px] font-semibold text-white hover:bg-brand-hover"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      add({ name: p.name, program: p.program, presentation: p.defaultPresentation });
+                    }}
+                    className="relative z-10 mt-1.5 h-11 w-full cursor-pointer rounded-full border-none bg-brand font-sans text-[13px] font-semibold text-white hover:bg-brand-hover"
                   >
                     Add to Request List
                   </button>
