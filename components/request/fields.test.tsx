@@ -4,9 +4,8 @@ import { axe } from 'jest-axe';
 import { describe, expect, it, vi } from 'vitest';
 import { CheckboxField, ErrorBanner, SelectField, TextField, US_STATES } from './fields';
 
-/** Guards ACCESSIBILITY_AUDIT.md B2 and M2: before this, every wizard field was
-    labelled by a bare <span>, so a screen reader announced "edit text, blank" on
-    the only conversion flow in the product. */
+/** Every wizard field used to be labelled by a bare <span>, so a screen reader
+    announced "edit text, blank" on the only conversion flow in the product. */
 describe('TextField', () => {
   it('associates its visible label with the input', () => {
     render(<TextField label="Email" value="" onChange={() => {}} />);

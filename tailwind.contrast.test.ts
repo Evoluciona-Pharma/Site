@@ -1,10 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import config from './tailwind.config';
 
-/** Guards ACCESSIBILITY_AUDIT.md S2. The colour tokens are the whole surface
-    area for text contrast — a single hex edit here can drop the entire site
-    below AA, and axe only catches it if someone happens to run a browser
-    audit afterwards. */
+/** The colour tokens are the whole surface area for text contrast — a single
+    hex edit here can drop the entire site below AA, and axe only catches it if
+    someone happens to run a browser audit afterwards. */
 
 const colors = (config.theme?.extend?.colors ?? {}) as Record<string, string | Record<string, string>>;
 

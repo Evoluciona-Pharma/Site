@@ -26,8 +26,8 @@ function fieldBorder(error?: string) {
 
 /** The label is a real `<label htmlFor>` rather than a `<span>`, so the field has
     a programmatic name; `<label>` and `<span>` are both inline under preflight,
-    so the layout is unchanged. Errors are wired with aria-invalid +
-    aria-describedby (ACCESSIBILITY_AUDIT.md B2, M2). */
+    so the layout is unchanged. Errors are wired with aria-invalid and
+    aria-describedby, so the message is tied to the field it belongs to. */
 export function TextField({
   label,
   value,

@@ -25,9 +25,10 @@ export default {
           650: '#4A5563',
           500: '#5C6879',
         },
-        // Contrast pass (ACCESSIBILITY_AUDIT.md S2). The originals were
-        // #6B7380 / #8C93A0 / #9BA5B7, scoring 4.46 / 2.88 / 2.31 against
-        // surface.alt — all below the 4.5:1 AA floor for body text.
+        // Contrast pass. The originals were #6B7380 / #8C93A0 / #9BA5B7,
+        // scoring 4.46 / 2.88 / 2.31 against surface.alt — all below the
+        // 4.5:1 AA floor for body text. Ratios are asserted in
+        // tailwind.contrast.test.ts.
         //
         // NOTE FOR DESIGN: `muted` and `muted-2` now hold the same value. A
         // three-step grey scale cannot survive AA on light surfaces by

@@ -2,7 +2,7 @@
 
 import { useId } from 'react';
 
-/** Shared accordion semantics (ACCESSIBILITY_FIX_PLAN.md §0.2).
+/** Shared accordion semantics.
  *
  * Two accordions need an identical contract — the FAQ question list
  * (`faq/FaqPage.tsx`) and the product detail sections (`product/ProductPage.tsx`).

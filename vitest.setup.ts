@@ -3,8 +3,8 @@ import { cleanup } from '@testing-library/react';
 import { toHaveNoViolations } from 'jest-axe';
 import { afterEach, expect } from 'vitest';
 
-// `expect(await axe(container)).toHaveNoViolations()` in any component test
-// (ACCESSIBILITY_FIX_PLAN.md §0.3). Matcher types live in types/vitest.d.ts.
+// Enables `expect(await axe(container)).toHaveNoViolations()` in any component
+// test. Matcher types live in types/vitest.d.ts.
 expect.extend(toHaveNoViolations);
 
 // Testing Library only auto-cleans when vitest runs with `globals: true`, which

@@ -1,4 +1,4 @@
-/** Shared class strings for accessible controls (ACCESSIBILITY_FIX_PLAN.md §0.1).
+/** Shared class strings for accessible controls.
  *
  * The design was built with click handlers on `div`/`span`, which puts every
  * affected control outside the tab order. The fix is a real `<button>` or

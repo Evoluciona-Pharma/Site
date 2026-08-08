@@ -15,9 +15,8 @@ function renderDrawer(onClose = () => {}) {
   );
 }
 
-/** Guards ACCESSIBILITY_AUDIT.md S1: the drawer was a bare <div>, focus never
-    entered it, 33 background elements stayed tabbable, and the page scrolled
-    behind it. */
+/** The drawer used to be a bare <div>: focus never entered it, every control
+    behind it stayed tabbable, and the page scrolled underneath. */
 describe('RequestListDrawer', () => {
   it('exposes itself as a modal dialog named by its heading', () => {
     renderDrawer();
@@ -72,8 +71,9 @@ describe('RequestListDrawer', () => {
   });
 });
 
-/** Guards the other half of S1: pressing the primary CTA produced no
-    perceptible feedback for a screen-reader user. */
+/** Pressing the primary CTA used to produce no perceptible feedback at all for
+    a screen-reader user — the drawer slides in and the nav badge ticks up,
+    neither of which is announced. */
 describe('request list announcements', () => {
   function Harness() {
     const { add, remove } = useRequestList();

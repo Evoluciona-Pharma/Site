@@ -157,7 +157,8 @@ export default function HomeAltPage({
           </Link>
         </div>
 
-        {/* Was #7A8494 — 3.16:1 against the #E7EBF3 hero panel (S2). */}
+        {/* Was #7A8494 — 3.16:1 against the #E7EBF3 hero panel, under the
+            4.5:1 AA floor. One of the few colours not driven by a token. */}
         <span className="mt-5 text-[13px] text-[#626B7A]">
           No pricing online · licensed providers only · dispensed against a patient-specific prescription
         </span>
