@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Reveal from '@/components/Reveal';
 import { ErrorBanner, SelectField, TextField, US_STATES } from '@/components/request/fields';
 import RequestSummaryRail from '@/components/request/RequestSummaryRail';
@@ -15,6 +15,14 @@ export default function ContactStep() {
   const router = useRouter();
   const { data, update } = useWizard();
   const [errors, setErrors] = useState<Record<string, string>>({});
+  // Counter rather than a flag: re-submitting with the same errors still moves
+  // focus, so the alert is re-announced on every attempt.
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const bannerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (failedAttempts > 0) bannerRef.current?.focus();
+  }, [failedAttempts]);
 
   const set = (key: keyof WizardData) => (v: string) => {
     update({ [key]: v });
@@ -34,7 +42,11 @@ export default function ContactStep() {
   const onContinue = () => {
     const e = validate();
     setErrors(e);
-    if (Object.keys(e).length === 0) router.push('/request/practice');
+    if (Object.keys(e).length === 0) {
+      router.push('/request/practice');
+      return;
+    }
+    setFailedAttempts((n) => n + 1);
   };
 
   const errorList = Object.values(errors);
@@ -52,16 +64,51 @@ export default function ContactStep() {
           <StepperFull current={1} />
           <div className="grid grid-cols-1 items-start gap-7 lg:grid-cols-[1fr_380px]">
             <div className="flex flex-col gap-4">
-              {errorList.length > 0 && <ErrorBanner count={errorList.length} detail={errorList[0]} />}
+              {errorList.length > 0 && (
+                <ErrorBanner ref={bannerRef} count={errorList.length} detail={errorList[0]} />
+              )}
               <Reveal delay={100} className="flex flex-col gap-[22px] rounded-2xl border border-line bg-white p-5 sm:p-8">
                 <span className="font-display text-[26px] text-navy">Primary contact</span>
                 <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2">
-                  <TextField label="Name" value={data.name} onChange={set('name')} error={errors.name} />
-                  <TextField label="Role" value={data.role} onChange={set('role')} />
-                  <TextField label="Email" type="email" value={data.email} onChange={set('email')} error={errors.email} />
-                  <TextField label="Phone" type="tel" value={data.phone} onChange={set('phone')} placeholder="(000) 000-0000" />
+                  <TextField
+                    label="Name"
+                    name="name"
+                    autoComplete="name"
+                    required
+                    value={data.name}
+                    onChange={set('name')}
+                    error={errors.name}
+                  />
+                  <TextField
+                    label="Role"
+                    name="role"
+                    autoComplete="organization-title"
+                    value={data.role}
+                    onChange={set('role')}
+                  />
+                  <TextField
+                    label="Email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    value={data.email}
+                    onChange={set('email')}
+                    error={errors.email}
+                  />
+                  <TextField
+                    label="Phone"
+                    name="phone"
+                    type="tel"
+                    autoComplete="tel"
+                    value={data.phone}
+                    onChange={set('phone')}
+                    placeholder="(000) 000-0000"
+                  />
                   <TextField
                     label="License / NPI number"
+                    name="license"
+                    required
                     value={data.license}
                     onChange={set('license')}
                     error={errors.license}
@@ -69,6 +116,8 @@ export default function ContactStep() {
                   />
                   <SelectField
                     label="Licensed state"
+                    name="licensedState"
+                    required
                     value={data.licensedState}
                     onChange={set('licensedState')}
                     options={US_STATES}

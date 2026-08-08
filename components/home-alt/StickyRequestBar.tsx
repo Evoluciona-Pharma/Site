@@ -23,12 +23,15 @@ export default function StickyRequestBar({
 
   return (
     <div
-      aria-hidden={!shown}
+      // `inert` removes the subtree from the tab order *and* the accessibility
+      // tree. `aria-hidden` did only the latter, leaving the CTA focusable while
+      // telling assistive tech it did not exist. It also covers pointer events,
+      // so the inline `pointerEvents` toggle is no longer needed.
+      inert={!shown}
       className="fixed inset-x-0 bottom-0 z-20 flex h-[72px] items-center gap-3 border-t border-line bg-[rgba(255,255,255,0.94)] px-4 backdrop-blur-[14px] sm:px-8 lg:gap-4 lg:px-14"
       style={{
         transform: shown ? 'translateY(0)' : 'translateY(110%)',
         transition: 'transform 350ms cubic-bezier(0.16, 1, 0.3, 1)',
-        pointerEvents: shown ? 'auto' : 'none',
       }}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}

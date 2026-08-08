@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Reveal from '@/components/Reveal';
 import { ErrorBanner, SelectField, TextField, US_STATES } from '@/components/request/fields';
 import RequestSummaryRail from '@/components/request/RequestSummaryRail';
@@ -13,6 +13,12 @@ export default function PracticeStep() {
   const router = useRouter();
   const { data, update } = useWizard();
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const bannerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (failedAttempts > 0) bannerRef.current?.focus();
+  }, [failedAttempts]);
 
   const set = (key: keyof WizardData) => (v: string) => {
     update({ [key]: v });
@@ -33,7 +39,11 @@ export default function PracticeStep() {
   const onContinue = () => {
     const e = validate();
     setErrors(e);
-    if (Object.keys(e).length === 0) router.push('/request/profile');
+    if (Object.keys(e).length === 0) {
+      router.push('/request/profile');
+      return;
+    }
+    setFailedAttempts((n) => n + 1);
   };
 
   const errorList = Object.values(errors);
@@ -46,30 +56,69 @@ export default function PracticeStep() {
           <StepperFull current={2} />
           <div className="grid grid-cols-1 items-start gap-7 lg:grid-cols-[1fr_380px]">
             <div className="flex flex-col gap-4">
-              {errorList.length > 0 && <ErrorBanner count={errorList.length} detail={errorList[0]} />}
+              {errorList.length > 0 && (
+                <ErrorBanner ref={bannerRef} count={errorList.length} detail={errorList[0]} />
+              )}
               <Reveal delay={100} className="flex flex-col gap-[22px] rounded-2xl border border-line bg-white p-5 sm:p-8">
                 <span className="font-display text-[26px] text-navy">Practice information</span>
                 <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2">
                   <TextField
                     label="Practice or company name"
+                    name="practiceName"
+                    autoComplete="organization"
+                    required
                     value={data.practiceName}
                     onChange={set('practiceName')}
                     error={errors.practiceName}
                     placeholder="Required"
                   />
-                  <TextField label="Website" value={data.website} onChange={set('website')} />
+                  <TextField
+                    label="Website"
+                    name="website"
+                    type="url"
+                    autoComplete="url"
+                    value={data.website}
+                    onChange={set('website')}
+                  />
                 </div>
-                <TextField label="Address" value={data.address} onChange={set('address')} error={errors.address} />
+                <TextField
+                  label="Address"
+                  name="address"
+                  autoComplete="street-address"
+                  required
+                  value={data.address}
+                  onChange={set('address')}
+                  error={errors.address}
+                />
                 <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-[2fr_1.4fr_1fr]">
-                  <TextField label="City" value={data.city} onChange={set('city')} error={errors.city} />
+                  <TextField
+                    label="City"
+                    name="city"
+                    autoComplete="address-level2"
+                    required
+                    value={data.city}
+                    onChange={set('city')}
+                    error={errors.city}
+                  />
                   <SelectField
                     label="State"
+                    name="state"
+                    autoComplete="address-level1"
+                    required
                     value={data.state}
                     onChange={set('state')}
                     options={US_STATES}
                     error={errors.state}
                   />
-                  <TextField label="ZIP code" value={data.zip} onChange={set('zip')} error={errors.zip} />
+                  <TextField
+                    label="ZIP code"
+                    name="zip"
+                    autoComplete="postal-code"
+                    required
+                    value={data.zip}
+                    onChange={set('zip')}
+                    error={errors.zip}
+                  />
                 </div>
                 <div className="flex items-center justify-between gap-3 pt-1">
                   <Link

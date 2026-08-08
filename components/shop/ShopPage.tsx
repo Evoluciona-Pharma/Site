@@ -15,6 +15,7 @@ import {
 } from '@/lib/catalog';
 import { asset } from '@/lib/asset';
 import { filterProducts, SortId, sortProducts } from '@/lib/search';
+import { peerRing, resetButton } from '@/lib/ui';
 import Reveal from '@/components/Reveal';
 import { useRequestList } from '@/components/RequestListContext';
 
@@ -55,8 +56,14 @@ function FacetRow({
   onToggle: () => void;
 }) {
   return (
-    <div onClick={onToggle} className="flex cursor-pointer items-center gap-[11px] py-[5px] hover:opacity-75">
-      <span className="relative h-[18px] w-[18px] shrink-0 rounded-[5px] border-[1.5px] border-line-strongest bg-white">
+    // A real checkbox drives the row — it carries the checked state and the
+    // accessible name, while the design's custom tick box is drawn beside it.
+    <label className="flex cursor-pointer items-center gap-[11px] py-[5px] hover:opacity-75">
+      <input type="checkbox" checked={on} onChange={onToggle} className="peer sr-only" />
+      <span
+        aria-hidden="true"
+        className={`relative h-[18px] w-[18px] shrink-0 rounded-[5px] border-[1.5px] border-line-strongest bg-white ${peerRing}`}
+      >
         {on && (
           <span className="absolute -inset-[1.5px] flex items-center justify-center rounded-[5px] bg-brand">
             {tick}
@@ -65,7 +72,7 @@ function FacetRow({
       </span>
       <span className="flex-1 text-sm leading-[19px] text-ink-700">{label}</span>
       <span className="text-xs text-muted-3">{count}</span>
-    </div>
+    </label>
   );
 }
 
@@ -209,26 +216,38 @@ export default function ShopPage() {
         {/* Filter sidebar — collapsible below lg, always expanded on desktop */}
         <aside className="flex flex-col gap-6 lg:sticky lg:top-6">
           <div className="flex items-baseline justify-between gap-3">
-            <span
-              onClick={() => setFiltersOpen((v) => !v)}
-              className="flex cursor-pointer items-center gap-2 font-display text-2xl text-navy lg:cursor-default"
-            >
-              Filter
-              <svg
-                width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#14253F" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"
-                className="lg:hidden"
-                style={{ transform: filtersOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}
+            {/* Below lg the heading doubles as the disclosure toggle; at lg the
+                panel is always open, so the heading is static there and no dead
+                tab stop is left behind. */}
+            <h2 className="font-display text-2xl text-navy">
+              <button
+                type="button"
+                onClick={() => setFiltersOpen((v) => !v)}
+                aria-expanded={filtersOpen}
+                aria-controls="shop-filters"
+                className={`${resetButton} flex items-center gap-2 font-display text-2xl text-navy lg:hidden`}
               >
-                <path d="M6 9 L12 15 L18 9" />
-              </svg>
-            </span>
+                Filter
+                <svg
+                  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#14253F" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"
+                  style={{ transform: filtersOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}
+                >
+                  <path d="M6 9 L12 15 L18 9" />
+                </svg>
+              </button>
+              <span className="hidden lg:inline">Filter</span>
+            </h2>
             {hasFilters && (
-              <span onClick={clearAll} className="cursor-pointer text-xs font-semibold text-brand underline">
+              <button
+                type="button"
+                onClick={clearAll}
+                className={`${resetButton} text-xs font-semibold text-brand underline`}
+              >
                 Clear all
-              </span>
+              </button>
             )}
           </div>
-          <div className={`${filtersOpen ? 'flex flex-col gap-6' : 'hidden'} lg:contents`}>
+          <div id="shop-filters" className={`${filtersOpen ? 'flex flex-col gap-6' : 'hidden'} lg:contents`}>
           <div className="flex flex-col gap-2 border-t border-line pt-[18px]">
             <span className="pb-1 text-xs font-semibold tracking-[0.1em] text-muted-2">PROGRAM</span>
             {programs.map((g) => (
@@ -270,21 +289,27 @@ export default function ShopPage() {
                 {n} {n === 1 ? 'product' : 'products'}
               </span>
               {chips.map((ch) => (
-                <span
+                <button
                   key={ch.label}
+                  type="button"
                   onClick={ch.remove}
-                  className="inline-flex h-8 cursor-pointer items-center gap-[7px] rounded-full border border-brand-tintBorder bg-brand-tint px-[13px] text-xs font-semibold text-brand hover:bg-brand-tintHover"
+                  aria-label={`Remove ${ch.label} filter`}
+                  className="inline-flex h-8 cursor-pointer items-center gap-[7px] rounded-full border border-brand-tintBorder bg-brand-tint px-[13px] font-sans text-xs font-semibold text-brand hover:bg-brand-tintHover"
                 >
                   {ch.label}
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#14258F" strokeWidth="3" strokeLinecap="round">
                     <path d="M6 6 L18 18 M18 6 L6 18" />
                   </svg>
-                </span>
+                </button>
               ))}
             </div>
             <div data-sort-root className="relative shrink-0">
               <button
+                type="button"
                 onClick={() => setSortOpen((v) => !v)}
+                aria-expanded={sortOpen}
+                aria-haspopup="listbox"
+                aria-controls="shop-sort"
                 className="inline-flex h-[42px] cursor-pointer items-center gap-2 rounded-full border border-line-strong bg-white px-[18px] font-sans text-[13px] font-medium text-ink-700 hover:border-muted-3"
               >
                 Sort: {sortLabel}
@@ -293,15 +318,23 @@ export default function ShopPage() {
                 </svg>
               </button>
               {sortOpen && (
-                <div className="absolute right-0 top-12 z-30 flex w-[190px] animate-[fadeIn_0.18s_ease_both] flex-col rounded-[14px] border border-line bg-white p-1.5 shadow-dropdown">
+                <div
+                  id="shop-sort"
+                  role="listbox"
+                  aria-label="Sort formulations"
+                  className="absolute right-0 top-12 z-30 flex w-[190px] animate-[fadeIn_0.18s_ease_both] flex-col rounded-[14px] border border-line bg-white p-1.5 shadow-dropdown"
+                >
                   {sortOptions.map((o) => (
-                    <div
+                    <button
                       key={o.id}
+                      type="button"
+                      role="option"
+                      aria-selected={sort === o.id}
                       onClick={() => {
                         setSortOpen(false);
                         write({ sort: o.id });
                       }}
-                      className={`flex cursor-pointer items-center justify-between gap-2 rounded-[9px] px-3 py-[9px] text-[13px] hover:bg-surface-alt ${
+                      className={`${resetButton} flex items-center justify-between gap-2 rounded-[9px] px-3 py-[9px] text-[13px] hover:bg-surface-alt ${
                         sort === o.id ? 'font-semibold text-brand' : 'font-medium text-ink-700'
                       }`}
                     >
@@ -311,7 +344,7 @@ export default function ShopPage() {
                           <path d="M4.5 12.5 L9.5 17.5 L19.5 6.5" />
                         </svg>
                       )}
-                    </div>
+                    </button>
                   ))}
                 </div>
               )}
@@ -343,16 +376,18 @@ export default function ShopPage() {
                     </span>
                   </div>
                   <div className="flex flex-col gap-[7px] px-0.5">
-                    <span
+                    <button
+                      type="button"
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
                         write({ program: [programs.find((g) => g.label === p.program)!.slug], presentation: presSlugs, q: query });
                       }}
-                      className="relative z-10 cursor-pointer self-start text-meta-xs font-semibold tracking-[0.09em] text-muted-2 hover:text-brand"
+                      aria-label={`Filter by ${p.program}`}
+                      className={`${resetButton} relative z-10 self-start text-meta-xs font-semibold tracking-[0.09em] text-muted-2 hover:text-brand`}
                     >
                       {p.program.toUpperCase()}
-                    </span>
+                    </button>
                     <Link
                       href={`/products/${p.slug}`}
                       className="font-display text-[27px] leading-[1.05] text-navy no-underline after:absolute after:inset-0 after:content-[''] group-hover:text-brand"

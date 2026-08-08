@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { asset } from '@/lib/asset';
 import { compliance, productByName, products } from '@/lib/catalog';
 import { useRequestList } from './RequestListContext';
@@ -67,15 +67,65 @@ export function RequestListDrawer({
 }) {
   const [qty, setQty] = useState<Record<string, number>>({});
   const rail = useRef<HTMLDivElement>(null);
+  const panel = useRef<HTMLDivElement>(null);
+  const closeButton = useRef<HTMLButtonElement>(null);
+  const restoreFocusTo = useRef<HTMLElement | null>(null);
+  const headingId = useId();
 
+  // Escape closes, and Tab is trapped inside the panel: a modal dialog whose
+  // background stays reachable is worse than no dialog semantics at all,
+  // because the focus ring disappears behind the overlay.
   useEffect(() => {
     if (!open) return;
-    const esc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+        return;
+      }
+      if (e.key !== 'Tab' || !panel.current) return;
+
+      const focusable = panel.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])',
+      );
+      if (!focusable.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+      const outside = !panel.current.contains(active);
+
+      if (e.shiftKey && (active === first || outside)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (active === last || outside)) {
+        e.preventDefault();
+        first.focus();
+      }
     };
-    document.addEventListener('keydown', esc);
-    return () => document.removeEventListener('keydown', esc);
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
   }, [open, onClose]);
+
+  // Move focus into the drawer on open and hand it back to the opener on close,
+  // so "Add to Request List" lands the user somewhere they can act.
+  useEffect(() => {
+    if (!open) return;
+    restoreFocusTo.current = document.activeElement as HTMLElement | null;
+    closeButton.current?.focus();
+    return () => restoreFocusTo.current?.focus();
+  }, [open]);
+
+  // Without this the page scrolls behind the open drawer.
+  useEffect(() => {
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [open]);
 
   if (!open) return null;
 
@@ -103,18 +153,29 @@ export function RequestListDrawer({
 
   return (
     <>
+      {/* Decorative: Escape and the close button are the keyboard paths out. */}
       <div
         onClick={onClose}
+        aria-hidden="true"
         className="fixed inset-0 z-[39] animate-[fadeIn_0.25s_ease_both] cursor-pointer bg-[rgba(20,37,63,0.45)]"
       />
-      <div className="fixed bottom-0 right-0 top-0 z-40 flex w-full max-w-[470px] animate-slideIn flex-col bg-white font-sans shadow-drawer">
+      <div
+        ref={panel}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={headingId}
+        className="fixed bottom-0 right-0 top-0 z-40 flex w-full max-w-[470px] animate-slideIn flex-col bg-white font-sans shadow-drawer"
+      >
         {/* Header */}
         <div className="flex items-start justify-between border-b border-[#EAECF0] px-[26px] pb-5 pt-[22px]">
           <div className="flex items-start gap-[5px]">
-            <h2 className="font-display text-[34px] leading-none text-navy">Request list</h2>
+            <h2 id={headingId} className="font-display text-[34px] leading-none text-navy">
+              Request list
+            </h2>
             <span className="pt-0.5 text-xs font-medium text-muted">{count}</span>
           </div>
           <button
+            ref={closeButton}
             onClick={onClose}
             aria-label="Close request list"
             className="-m-1.5 flex h-11 w-11 cursor-pointer items-center justify-center border-none bg-transparent text-navy transition-opacity hover:opacity-[.55] lg:m-0 lg:h-[30px] lg:w-[30px]"

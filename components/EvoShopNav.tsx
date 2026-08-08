@@ -248,7 +248,7 @@ export default function EvoShopNav() {
                 e.preventDefault();
                 submit(hi);
               }}
-              className="m-0 flex h-10 w-[224px] items-center gap-2 rounded-full border border-line-strong bg-white px-3.5 transition-colors duration-[180ms] hover:border-muted-3"
+              className="m-0 flex h-10 w-[224px] items-center gap-2 rounded-full border border-line-strong bg-white px-3.5 transition-colors duration-[180ms] hover:border-muted-3 focus-within:border-brand focus-within:ring-1 focus-within:ring-brand"
             >
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9BA5B7" strokeWidth="2" strokeLinecap="round" className="shrink-0">
                 <circle cx="10.5" cy="10.5" r="6.5" />
@@ -285,15 +285,16 @@ export default function EvoShopNav() {
                 className="h-6 min-w-0 flex-1 border-none bg-transparent p-0 font-sans text-[13px] text-navy outline-none placeholder:text-muted-3"
               />
               {trimmed.length > 0 && (
-                <span
+                <button
+                  type="button"
                   onClick={clearQuery}
-                  title="Clear search"
-                  className="flex h-[18px] w-[18px] shrink-0 cursor-pointer items-center justify-center rounded-[9px] bg-brand-tint hover:bg-[#DCE3F6]"
+                  aria-label="Clear search"
+                  className="flex h-[18px] w-[18px] shrink-0 cursor-pointer items-center justify-center rounded-[9px] border-none bg-brand-tint p-0 hover:bg-[#DCE3F6]"
                 >
                   <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#14258F" strokeWidth="3.6" strokeLinecap="round">
                     <path d="M6 6 L18 18 M18 6 L6 18" />
                   </svg>
-                </span>
+                </button>
               )}
             </form>
 
@@ -302,15 +303,16 @@ export default function EvoShopNav() {
                 <span className="font-display text-xl text-navy">Popular search</span>
                 <div className="flex flex-wrap gap-[9px]">
                   {popularSearches.map((label) => (
-                    <span
+                    <button
                       key={label}
+                      type="button"
                       onClick={() => pickPopular(label)}
                       className={`inline-flex h-[34px] cursor-pointer items-center whitespace-nowrap rounded-full border border-line bg-surface-alt2 px-4 font-sans text-[13px] font-medium transition-colors duration-[180ms] hover:border-brand hover:text-brand ${
                         trimmed.toLowerCase() === label.toLowerCase() ? 'text-brand' : 'text-ink-700'
                       }`}
                     >
                       {label}
-                    </span>
+                    </button>
                   ))}
                 </div>
                 <span className="mt-1 font-display text-xl text-navy">{resultsHeading}</span>
@@ -422,7 +424,7 @@ export default function EvoShopNav() {
               setMobileOpen(false);
               router.push(q ? `/shop?q=${encodeURIComponent(q)}` : '/shop');
             }}
-            className="m-0 flex h-11 items-center gap-2 rounded-full border border-line-strong bg-white px-3.5"
+            className="m-0 flex h-11 items-center gap-2 rounded-full border border-line-strong bg-white px-3.5 focus-within:border-brand focus-within:ring-1 focus-within:ring-brand"
           >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9BA5B7" strokeWidth="2" strokeLinecap="round" className="shrink-0">
               <circle cx="10.5" cy="10.5" r="6.5" />

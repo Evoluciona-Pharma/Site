@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { compliance, FaqTopic, faqTopics } from '@/lib/catalog';
+import { resetButton } from '@/lib/ui';
+import AccordionItem from '@/components/a11y/AccordionItem';
 
 export default function FaqPage({ topic }: { topic: FaqTopic }) {
   // The first question of each topic opens on arrival (README §6.7).
@@ -91,52 +93,51 @@ export default function FaqPage({ topic }: { topic: FaqTopic }) {
             {topic.questions.map((q, i) => {
               const isOpen = open === i;
               return (
-                <div
+                <AccordionItem
                   key={q.q}
+                  open={isOpen}
+                  onToggle={() => setOpen(isOpen ? null : i)}
                   className={`flex flex-col rounded-xl bg-white transition-[border-color,box-shadow] duration-200 ${
                     isOpen ? 'border border-line-strongest shadow-faqOpen' : 'border border-line'
                   }`}
+                  headerClassName={`${resetButton} flex items-start justify-between gap-5 px-[22px] py-[18px]`}
+                  header={
+                    <>
+                      <span className="flex-1 text-base font-semibold leading-6 text-navy">{q.q}</span>
+                      <span className="shrink-0 font-display text-[22px] leading-6 text-muted-2">
+                        {isOpen ? '−' : '+'}
+                      </span>
+                    </>
+                  }
+                  panelClassName="flex animate-[fadeIn_0.25s_ease_both] flex-col gap-3.5 border-t border-line-softer px-[22px] pb-[22px] pt-[18px]"
                 >
-                  <div
-                    onClick={() => setOpen(isOpen ? null : i)}
-                    className="flex cursor-pointer items-start justify-between gap-5 px-[22px] py-[18px]"
-                  >
-                    <span className="flex-1 text-base font-semibold leading-6 text-navy">{q.q}</span>
-                    <span className="shrink-0 font-display text-[22px] leading-6 text-muted-2">
-                      {isOpen ? '−' : '+'}
-                    </span>
-                  </div>
-                  {isOpen && (
-                    <div className="flex animate-[fadeIn_0.25s_ease_both] flex-col gap-3.5 border-t border-line-softer px-[22px] pb-[22px] pt-[18px]">
-                      {q.blocks.map((b, bi) => {
-                        if (b.type === 'h') {
-                          return (
-                            <span key={bi} className="text-sm font-semibold text-navy">
-                              {b.text}
-                            </span>
-                          );
-                        }
-                        if (b.type === 'p') {
-                          return (
-                            <span key={bi} className="max-w-[680px] text-sm leading-[23px] text-ink-650">
-                              {b.text}
-                            </span>
-                          );
-                        }
-                        return (
-                          <div key={bi} className="flex flex-col gap-[9px]">
-                            {b.items.map((it) => (
-                              <div key={it} className="flex gap-[11px]">
-                                <span className="mt-[9px] h-[5px] w-[5px] shrink-0 rounded-[3px] bg-muted-3" />
-                                <span className="max-w-[660px] flex-1 text-sm leading-[23px] text-ink-650">{it}</span>
-                              </div>
-                            ))}
+                  {q.blocks.map((b, bi) => {
+                    if (b.type === 'h') {
+                      return (
+                        <span key={bi} className="text-sm font-semibold text-navy">
+                          {b.text}
+                        </span>
+                      );
+                    }
+                    if (b.type === 'p') {
+                      return (
+                        <span key={bi} className="max-w-[680px] text-sm leading-[23px] text-ink-650">
+                          {b.text}
+                        </span>
+                      );
+                    }
+                    return (
+                      <div key={bi} className="flex flex-col gap-[9px]">
+                        {b.items.map((it) => (
+                          <div key={it} className="flex gap-[11px]">
+                            <span className="mt-[9px] h-[5px] w-[5px] shrink-0 rounded-[3px] bg-muted-3" />
+                            <span className="max-w-[660px] flex-1 text-sm leading-[23px] text-ink-650">{it}</span>
                           </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
+                        ))}
+                      </div>
+                    );
+                  })}
+                </AccordionItem>
               );
             })}
           </div>

@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { products } from '@/lib/catalog';
+import { resetButton } from '@/lib/ui';
 import { useRequestList } from '@/components/RequestListContext';
 import { SelectField } from '@/components/request/fields';
 import { useWizard } from '@/components/request/RequestWizardContext';
@@ -25,6 +26,7 @@ export default function ProfileStep() {
   const [input, setInput] = useState('');
   const [focused, setFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const interestsId = useId();
 
   // Seed the tokens from the request list on first arrival (README §6.8).
   useEffect(() => {
@@ -55,31 +57,38 @@ export default function ProfileStep() {
 
           <SelectField
             label="Practice type"
+            name="practiceType"
             value={data.practiceType}
             onChange={(v) => update({ practiceType: v })}
             options={PRACTICE_TYPES}
           />
 
           <div className="flex flex-col gap-[7px]">
-            <span className="text-[13px] font-semibold text-navy">Products or medications of interest</span>
+            <label htmlFor={interestsId} className="text-[13px] font-semibold text-navy">
+              Products or medications of interest
+            </label>
             <div
               onClick={() => inputRef.current?.focus()}
-              className="flex min-h-12 cursor-text flex-wrap items-center gap-2 rounded-[10px] border-[1.5px] border-brand bg-white px-3 py-2"
+              // The border is brand-coloured at rest, so only a ring can show focus here.
+              className="flex min-h-12 cursor-text flex-wrap items-center gap-2 rounded-[10px] border-[1.5px] border-brand bg-white px-3 py-2 focus-within:ring-1 focus-within:ring-brand"
             >
               {tokens.map((t) => (
-                <span
+                <button
                   key={t}
+                  type="button"
                   onClick={(e) => {
                     e.stopPropagation();
                     removeToken(t);
                   }}
-                  className="cursor-pointer rounded-full bg-brand-tint px-3 py-1.5 text-[13px] font-medium text-brand hover:bg-brand-tintHover"
+                  aria-label={`Remove ${t}`}
+                  className="cursor-pointer rounded-full border-none bg-brand-tint px-3 py-1.5 font-sans text-[13px] font-medium text-brand hover:bg-brand-tintHover"
                 >
                   {t} ×
-                </span>
+                </button>
               ))}
               <input
                 ref={inputRef}
+                id={interestsId}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onFocus={() => setFocused(true)}
@@ -99,18 +108,21 @@ export default function ProfileStep() {
             {showSuggestions && (
               <div className="overflow-hidden rounded-[10px] border border-line-panel bg-white shadow-suggest">
                 {remaining.map((name, i) => (
-                  <div
+                  <button
                     key={name}
+                    type="button"
+                    // mousedown, not click: the input's blur would unmount the
+                    // list before a click could land.
                     onMouseDown={(e) => {
                       e.preventDefault();
                       addToken(name);
                     }}
-                    className={`cursor-pointer px-3.5 py-[11px] text-sm text-ink-700 hover:bg-surface-alt ${
+                    className={`${resetButton} w-full px-3.5 py-[11px] text-sm text-ink-700 hover:bg-surface-alt ${
                       i === 0 ? 'bg-surface-alt' : ''
                     }`}
                   >
                     {name}
-                  </div>
+                  </button>
                 ))}
               </div>
             )}

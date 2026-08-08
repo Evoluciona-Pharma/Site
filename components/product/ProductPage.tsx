@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { asset } from '@/lib/asset';
 import {
   alsoReview,
@@ -12,7 +12,9 @@ import {
   productThumbViews,
   programByLabel,
 } from '@/lib/catalog';
+import { peerRing, resetButton } from '@/lib/ui';
 import Reveal from '@/components/Reveal';
+import AccordionItem from '@/components/a11y/AccordionItem';
 import { useRequestList } from '@/components/RequestListContext';
 
 const chev = (open: boolean) => (
@@ -36,6 +38,7 @@ export default function ProductPage({ product }: { product: Product }) {
   const [imgIndex, setImgIndex] = useState(0);
   const [acc, setAcc] = useState<string | null>('desc');
   const [size, setSize] = useState<string | null>(product.defaultPresentation);
+  const presentationLabelId = useId();
 
   const pending = product.presentationStatus === 'pending';
   const programSlug = programByLabel(product.program)?.slug ?? '';
@@ -100,10 +103,13 @@ export default function ProductPage({ product }: { product: Product }) {
           </Reveal>
           <div className="flex gap-2.5">
             {productThumbViews.map((view, i) => (
-              <div
+              <button
                 key={view}
+                type="button"
                 onClick={() => setImgIndex(i)}
-                className="flex h-[76px] w-[94px] cursor-pointer items-center justify-center overflow-hidden rounded-[10px] transition-colors duration-200"
+                aria-label={`View ${view}`}
+                aria-pressed={imgIndex === i}
+                className="flex h-[76px] w-[94px] cursor-pointer items-center justify-center overflow-hidden rounded-[10px] p-0 transition-colors duration-200"
                 style={{
                   background:
                     i === 0 ? '#ffffff' : 'repeating-linear-gradient(135deg,#EDF0F4 0 8px,#E4E9EF 8px 16px)',
@@ -116,7 +122,7 @@ export default function ProductPage({ product }: { product: Product }) {
                 ) : (
                   <span className="font-mono text-[9px] text-muted-2">0{i + 1}</span>
                 )}
-              </div>
+              </button>
             ))}
           </div>
         </div>
@@ -141,20 +147,32 @@ export default function ProductPage({ product }: { product: Product }) {
 
           {product.presentations.length > 0 && (
             <div className="flex flex-col gap-[9px]">
-              <span className="text-[13px] font-semibold text-navy">Presentation</span>
-              <div className="flex flex-wrap gap-2">
+              <span id={presentationLabelId} className="text-[13px] font-semibold text-navy">
+                Presentation
+              </span>
+              {/* Native radios: they carry the group semantics and arrow-key
+                  navigation for free. The visible chip is the label; the input
+                  itself is sr-only, so `peerRing` shows keyboard focus. */}
+              <div role="radiogroup" aria-labelledby={presentationLabelId} className="flex flex-wrap gap-2">
                 {product.presentations.map((label) => (
-                  <span
+                  <label
                     key={label}
-                    onClick={() => setSize(label)}
                     className={
                       size === label
-                        ? 'inline-flex h-[42px] cursor-pointer items-center rounded-full bg-brand px-[22px] text-sm font-semibold text-white'
-                        : 'inline-flex h-[42px] cursor-pointer items-center rounded-full border border-line-strong px-[22px] text-sm font-medium text-ink-700 transition-all duration-200 hover:border-brand hover:text-brand'
+                        ? `inline-flex h-[42px] cursor-pointer items-center rounded-full bg-brand px-[22px] text-sm font-semibold text-white ${peerRing}`
+                        : `inline-flex h-[42px] cursor-pointer items-center rounded-full border border-line-strong px-[22px] text-sm font-medium text-ink-700 transition-all duration-200 hover:border-brand hover:text-brand ${peerRing}`
                     }
                   >
+                    <input
+                      type="radio"
+                      name={`presentation-${product.slug}`}
+                      value={label}
+                      checked={size === label}
+                      onChange={() => setSize(label)}
+                      className="peer sr-only"
+                    />
                     {label}
-                  </span>
+                  </label>
                 ))}
               </div>
             </div>
@@ -197,25 +215,27 @@ export default function ProductPage({ product }: { product: Product }) {
           {/* Accordion — single-open, opens on Description */}
           <div className="flex flex-col border-b border-line-soft">
             {sections.map((s) => (
-              <div key={s.id} className="flex flex-col border-t border-line-soft">
-                <div
-                  onClick={() => setAcc(acc === s.id ? null : s.id)}
-                  className="flex cursor-pointer items-center justify-between gap-3.5 px-0.5 py-[15px]"
-                >
-                  <span className="text-body font-semibold text-navy">{s.title}</span>
-                  {chev(acc === s.id)}
-                </div>
-                {acc === s.id && (
+              <AccordionItem
+                key={s.id}
+                open={acc === s.id}
+                onToggle={() => setAcc(acc === s.id ? null : s.id)}
+                className="flex flex-col border-t border-line-soft"
+                headerClassName={`${resetButton} flex items-center justify-between gap-3.5 px-0.5 py-[15px]`}
+                header={
                   <>
-                    <p className="mb-4 text-body-sm text-muted">{s.body}</p>
-                    {s.href && (
-                      <Link href={s.href} className="-mt-2 mb-4 text-[13px] font-semibold no-underline">
-                        {s.linkLabel}
-                      </Link>
-                    )}
+                    <span className="text-body font-semibold text-navy">{s.title}</span>
+                    {chev(acc === s.id)}
                   </>
+                }
+                panelClassName="flex flex-col"
+              >
+                <p className="mb-4 text-body-sm text-muted">{s.body}</p>
+                {s.href && (
+                  <Link href={s.href} className="-mt-2 mb-4 text-[13px] font-semibold no-underline">
+                    {s.linkLabel}
+                  </Link>
                 )}
-              </div>
+              </AccordionItem>
             ))}
           </div>
 

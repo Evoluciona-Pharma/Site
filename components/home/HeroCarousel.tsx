@@ -155,22 +155,26 @@ export default function HeroCarousel() {
         <div className="h-0.5 w-[140px] overflow-hidden rounded-[1px] bg-[rgba(255,255,255,0.35)]">
           <div key={slide} className={`h-0.5 rounded-[1px] bg-white ${slide % 2 ? 'progress-b' : 'progress-a'}`} />
         </div>
-        <span
+        <button
+          type="button"
           onClick={() => go(slide - 1)}
-          className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-[22px] border border-[rgba(255,255,255,0.5)] transition-all duration-200 hover:border-white hover:bg-[rgba(255,255,255,0.22)] lg:h-[34px] lg:w-[34px] lg:rounded-[17px]"
+          aria-label="Previous slide"
+          className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-[22px] border border-[rgba(255,255,255,0.5)] bg-transparent p-0 transition-all duration-200 hover:border-white hover:bg-[rgba(255,255,255,0.22)] lg:h-[34px] lg:w-[34px] lg:rounded-[17px]"
         >
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M15 6 L9 12 L15 18" />
           </svg>
-        </span>
-        <span
+        </button>
+        <button
+          type="button"
           onClick={() => go(slide + 1)}
-          className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-[22px] border border-[rgba(255,255,255,0.5)] transition-all duration-200 hover:border-white hover:bg-[rgba(255,255,255,0.22)] lg:h-[34px] lg:w-[34px] lg:rounded-[17px]"
+          aria-label="Next slide"
+          className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-[22px] border border-[rgba(255,255,255,0.5)] bg-transparent p-0 transition-all duration-200 hover:border-white hover:bg-[rgba(255,255,255,0.22)] lg:h-[34px] lg:w-[34px] lg:rounded-[17px]"
         >
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M9 6 L15 12 L9 18" />
           </svg>
-        </span>
+        </button>
       </div>
     </div>
   );

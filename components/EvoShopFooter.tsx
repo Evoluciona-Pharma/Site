@@ -28,7 +28,7 @@ export default function EvoShopFooter() {
             type="email"
             placeholder="Work email"
             aria-label="Work email"
-            className="flex h-12 w-full max-w-[320px] items-center rounded-full border border-footer-chip bg-footer-input px-[18px] font-sans text-sm text-onDark outline-none placeholder:text-footer-text lg:w-[320px]"
+            className="flex h-12 w-full max-w-[320px] items-center rounded-full border border-footer-chip bg-footer-input px-[18px] font-sans text-sm text-onDark outline-none placeholder:text-footer-text focus:border-white focus:ring-1 focus:ring-white lg:w-[320px]"
           />
           <button className="h-12 cursor-pointer rounded-full border-none bg-white px-[26px] font-sans text-sm font-semibold text-navy hover:bg-[#DCE2EC]">
             Subscribe

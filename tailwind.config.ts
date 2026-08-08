@@ -25,10 +25,20 @@ export default {
           650: '#4A5563',
           500: '#5C6879',
         },
+        // Contrast pass (ACCESSIBILITY_AUDIT.md S2). The originals were
+        // #6B7380 / #8C93A0 / #9BA5B7, scoring 4.46 / 2.88 / 2.31 against
+        // surface.alt — all below the 4.5:1 AA floor for body text.
+        //
+        // NOTE FOR DESIGN: `muted` and `muted-2` now hold the same value. A
+        // three-step grey scale cannot survive AA on light surfaces by
+        // lightness alone — pulling muted-2 up to 4.5:1 lands it exactly where
+        // muted already sat. The scale is effectively two tiers now (muted,
+        // and the bluer muted-3). Re-differentiating muted-2 by hue or weight
+        // rather than lightness is a one-line change here.
         muted: {
-          DEFAULT: '#6B7380',
-          2: '#8C93A0',
-          3: '#9BA5B7',
+          DEFAULT: '#6A727F',
+          2: '#6A727F',
+          3: '#64728C',
         },
         line: {
           DEFAULT: '#E5E8ED',
@@ -50,7 +60,10 @@ export default {
         },
         canvas: '#EDEFF3',
         teal: {
-          DEFAULT: '#1B8B8A',
+          // Was #1B8B8A — 4.11:1 on white. `text-teal` only ever sits on white
+          // (bg-teal-tint carries icons, not text), so white is the only
+          // background this needs to clear.
+          DEFAULT: '#1A8382',
           tint: '#E4F1F0',
           border: '#B6DEDD',
         },
@@ -70,8 +83,11 @@ export default {
           line: '#24354F',
           chip: '#2C3E5C',
           text: '#8E9AB0',
-          label: '#5E6B83',
-          legal: '#6B7890',
+          // Were #5E6B83 / #6B7890 — 2.86:1 and 3.45:1 on navy. `legal` carries
+          // the reviewed compliance copy, so it was the least readable text on
+          // the page that most needs reading.
+          label: '#7F8CA3',
+          legal: '#808CA1',
           input: '#1D3050',
         },
         onDark: '#D5DBE5',

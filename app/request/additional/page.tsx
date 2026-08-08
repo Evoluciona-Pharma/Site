@@ -2,10 +2,10 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { compliance } from '@/lib/catalog';
 import { useRequestList } from '@/components/RequestListContext';
-import { ErrorBanner, SelectField } from '@/components/request/fields';
+import { CheckboxField, ErrorBanner, SelectField } from '@/components/request/fields';
 import { useWizard } from '@/components/request/RequestWizardContext';
 import { StepperCompact } from '@/components/request/steppers';
 
@@ -23,10 +23,18 @@ export default function AdditionalStep() {
   const { data, update, setSubmitted } = useWizard();
   const { items, clear } = useRequestList();
   const [error, setError] = useState(false);
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const bannerRef = useRef<HTMLDivElement>(null);
+  const messageId = useId();
+
+  useEffect(() => {
+    if (failedAttempts > 0) bannerRef.current?.focus();
+  }, [failedAttempts]);
 
   const submit = () => {
     if (!data.attestation) {
       setError(true);
+      setFailedAttempts((n) => n + 1);
       return;
     }
     const reference = `REQ-${new Date().getFullYear()}-${String(Math.floor(1000 + Math.random() * 9000))}`;
@@ -41,43 +49,42 @@ export default function AdditionalStep() {
         <div className="flex w-full max-w-card flex-col gap-[22px] overflow-hidden rounded-[14px] border border-line-card bg-white px-5 pb-11 pt-9 sm:px-10">
           <StepperCompact current={4} label="Additional information" />
 
-          {error && <ErrorBanner count={1} detail="The provider attestation is required" />}
+          {error && (
+            <ErrorBanner ref={bannerRef} count={1} detail="The provider attestation is required" />
+          )}
 
           <div className="flex flex-col gap-[7px]">
-            <span className="text-[13px] font-semibold text-navy">Message or special requirements</span>
+            <label htmlFor={messageId} className="text-[13px] font-semibold text-navy">
+              Message or special requirements
+            </label>
             <textarea
+              id={messageId}
+              name="message"
               value={data.message}
               onChange={(e) => update({ message: e.target.value })}
               placeholder="Optional. Share program context, expected volume, or questions for the pharmacy team."
-              className="h-[118px] resize-none rounded-[10px] border border-line-strong px-[15px] py-3 text-body text-navy outline-none placeholder:text-muted-3 focus:border-[1.5px] focus:border-brand"
+              className="h-[118px] resize-none rounded-[10px] border border-line-strong px-[15px] py-3 text-body text-navy outline-none placeholder:text-muted-3 focus:border-brand focus:ring-1 focus:ring-brand"
             />
           </div>
 
           <SelectField
             label="How did you hear about Evoluciona Pharma?"
+            name="hearAbout"
             value={data.hearAbout}
             onChange={(v) => update({ hearAbout: v })}
             options={HEAR_ABOUT}
           />
 
-          <label className="flex cursor-pointer items-start gap-2.5">
-            <span
-              onClick={() => {
-                update({ attestation: !data.attestation });
-                setError(false);
-              }}
-              className={`mt-px flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] border-[1.5px] ${
-                data.attestation ? 'border-brand bg-brand' : 'border-line-strongest bg-white'
-              }`}
-            >
-              {data.attestation && (
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M6 12.5 L10 16.5 L18 8" />
-                </svg>
-              )}
-            </span>
-            <span className="text-[13px] leading-5 text-ink-600">{compliance.attestation}</span>
-          </label>
+          <CheckboxField
+            checked={data.attestation}
+            error={error}
+            onChange={(v) => {
+              update({ attestation: v });
+              setError(false);
+            }}
+          >
+            {compliance.attestation}
+          </CheckboxField>
 
           <div className="flex justify-between gap-3">
             <Link
